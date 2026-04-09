@@ -120,11 +120,18 @@ export default function DatenschutzPage() {
           </a>
         </p>
 
-        <h3>Technische Betreuung</h3>
+        <h3>Konzeption, Entwicklung &amp; Hosting</h3>
         <p>
-          Die technische Umsetzung und Betreuung dieser Website erfolgt durch:
+          Konzeption, Entwicklung und Hosting dieser Website erfolgen durch:
+        </p>
+        <p>
+          <strong>becoss GmbH</strong>
           <br />
-          becoss GmbH
+          Gesch&auml;ftsf&uuml;hrer: Lars Bertram
+          <br />
+          H&auml;cklinger Weg 61
+          <br />
+          21335 L&uuml;neburg
           <br />
           <a href="https://www.becoss.de" target="_blank" rel="noopener noreferrer">
             www.becoss.de

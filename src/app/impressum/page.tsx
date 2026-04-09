@@ -70,9 +70,18 @@ export default function ImpressumPage() {
           </li>
         </ul>
 
-        <h2>Technische Umsetzung</h2>
+        <h2>Konzeption, Entwicklung &amp; Hosting</h2>
         <p>
-          becoss GmbH
+          Diese Website wurde konzipiert, entwickelt und wird gehostet von:
+        </p>
+        <p>
+          <strong>becoss GmbH</strong>
+          <br />
+          Gesch&auml;ftsf&uuml;hrer: Lars Bertram
+          <br />
+          H&auml;cklinger Weg 61
+          <br />
+          21335 L&uuml;neburg
           <br />
           <a href="https://www.becoss.de" target="_blank" rel="noopener noreferrer">
             www.becoss.de
