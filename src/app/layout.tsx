@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { PrevoteFloat } from "@/components/prevote-section";
 
 export const metadata: Metadata = {
   title: "Heiko Meyer für Lüneburg | Unabhängig für ein Miteinander",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <PrevoteFloat />
       </body>
     </html>
   );
