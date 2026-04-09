@@ -1,0 +1,442 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { Conversation } from "@elevenlabs/client";
+
+const AGENT_ID = "agent_1001knrqm87sfm59cg7m29mv51fz";
+
+const TOPICS = [
+  "Sicherheit",
+  "Innenstadt",
+  "Wohnen",
+  "Verkehr",
+  "Verwaltung",
+  "Bürgernähe",
+];
+
+const PROMPTS = [
+  "\u201EWas tust du am Sande?\u201C",
+  "\u201EWarum parteilos?\u201C",
+  "\u201EDein Plan f\u00FCr L\u00FCneburg?\u201C",
+];
+
+type ChatMessage = {
+  type: "agent" | "user" | "system";
+  text: string;
+};
+
+type Status = "ready" | "connecting" | "active" | "ended";
+
+export default function SprachagentPage() {
+  const [status, setStatus] = useState<Status>("ready");
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [showChat, setShowChat] = useState(false);
+
+  const conversationRef = useRef<Conversation | null>(null);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+  const vizBarsRef = useRef<HTMLDivElement[]>([]);
+  const vizIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Auto-scroll chat
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const addMessage = useCallback((type: ChatMessage["type"], text: string) => {
+    if (!text?.trim()) return;
+    setMessages((prev) => [...prev, { type, text }]);
+  }, []);
+
+  const startVisualization = useCallback(() => {
+    if (vizIntervalRef.current) return;
+    vizIntervalRef.current = setInterval(() => {
+      const conv = conversationRef.current;
+      const bars = vizBarsRef.current;
+      if (!bars.length) return;
+
+      let usedReal = false;
+      if (conv) {
+        try {
+          const outputData = (conv as unknown as Record<string, () => Uint8Array>)
+            .getOutputByteFrequencyData?.();
+          const inputData = (conv as unknown as Record<string, () => Uint8Array>)
+            .getInputByteFrequencyData?.();
+          const data = outputData || inputData;
+          if (data && data.length > 0) {
+            const step = Math.floor(data.length / bars.length);
+            bars.forEach((bar, i) => {
+              const val = data[i * step] || 0;
+              bar.style.height = `${Math.max(3, (val / 255) * 40)}px`;
+            });
+            usedReal = true;
+          }
+        } catch {
+          /* fallback below */
+        }
+      }
+
+      if (!usedReal) {
+        bars.forEach((bar, i) => {
+          const t = Date.now() / 300 + i * 0.4;
+          const h = 3 + Math.sin(t) * 6 + Math.random() * 4;
+          bar.style.height = `${Math.max(3, h)}px`;
+        });
+      }
+    }, 80);
+  }, []);
+
+  const stopVisualization = useCallback(() => {
+    if (vizIntervalRef.current) {
+      clearInterval(vizIntervalRef.current);
+      vizIntervalRef.current = null;
+    }
+    vizBarsRef.current.forEach((b) => {
+      b.style.height = "3px";
+    });
+  }, []);
+
+  const startConversation = useCallback(async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      setStatus("connecting");
+      setShowChat(true);
+      addMessage("system", "Verbindung wird hergestellt...");
+
+      const { Conversation } = await import("@elevenlabs/client");
+
+      const conv = await Conversation.startSession({
+        agentId: AGENT_ID,
+        onConnect: () => {
+          setStatus("active");
+          addMessage("system", "Verbunden – sprechen Sie jetzt!");
+          startVisualization();
+        },
+        onDisconnect: () => {
+          setStatus("ended");
+          addMessage("system", "Gespräch beendet. Danke für Ihr Interesse!");
+          stopVisualization();
+        },
+        onMessage: (message: { source: string; message: string }) => {
+          if (message.source === "ai") {
+            addMessage("agent", message.message);
+          } else if (message.source === "user") {
+            addMessage("user", message.message);
+          }
+        },
+        onError: (error: unknown) => {
+          console.error("ElevenLabs error:", error);
+          addMessage(
+            "system",
+            "Verbindungsfehler. Bitte versuchen Sie es erneut."
+          );
+          setStatus("ready");
+          stopVisualization();
+        },
+        onModeChange: () => {
+          // Visualizer stays active while conversation is running
+        },
+      });
+
+      conversationRef.current = conv;
+    } catch (err) {
+      console.error("Start error:", err);
+      if ((err as DOMException).name === "NotAllowedError") {
+        addMessage(
+          "system",
+          "Mikrofon-Zugriff verweigert. Bitte erlauben Sie den Zugriff in Ihrem Browser."
+        );
+      } else {
+        addMessage(
+          "system",
+          "Fehler beim Verbinden. Bitte versuchen Sie es erneut."
+        );
+      }
+      setStatus("ready");
+    }
+  }, [addMessage, startVisualization, stopVisualization]);
+
+  const stopConversation = useCallback(async () => {
+    if (conversationRef.current) {
+      await conversationRef.current.endSession();
+      conversationRef.current = null;
+    }
+    setStatus("ended");
+    stopVisualization();
+  }, [stopVisualization]);
+
+  const handleMainButton = () => {
+    if (status === "active") {
+      stopConversation();
+    } else {
+      startConversation();
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (conversationRef.current) {
+        conversationRef.current.endSession();
+      }
+      if (vizIntervalRef.current) {
+        clearInterval(vizIntervalRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col lg:flex-row">
+      {/* ===== LEFT PANEL: Hero ===== */}
+      <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-12 lg:px-10">
+        {/* Subtle gradient overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_500px_400px_at_30%_80%,rgba(88,176,70,0.06),transparent),radial-gradient(ellipse_400px_400px_at_70%_20%,rgba(255,255,255,0.04),transparent)]" />
+
+        <div className="relative z-10 max-w-md text-center lg:text-left">
+          {/* Badge */}
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
+            OB-Wahl · 14. September 2026
+          </div>
+
+          <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl">
+            Heiko Meyer
+          </h1>
+          <p className="mt-2 text-lg font-light tracking-wide text-[#58b046]">
+            Gestalten statt verwalten.
+          </p>
+
+          <p className="mt-6 text-sm leading-relaxed text-white/45">
+            Parteilos. Unabhängig. Bürgernah.
+            <br />
+            Stellen Sie Heiko Ihre Fragen – direkt per Sprache, rund um die Uhr.
+            Heiko Digital antwortet auf Basis seines Wahlprogramms.
+          </p>
+
+          {/* Topic Tags */}
+          <div className="mt-8 flex flex-wrap justify-center gap-2 lg:justify-start">
+            {TOPICS.map((t) => (
+              <span
+                key={t}
+                className="rounded-full border border-white/[0.08] bg-white/[0.06] px-3.5 py-1.5 text-xs text-white/50 transition-colors hover:border-[#58b046]/20 hover:bg-[#58b046]/10 hover:text-[#58b046]"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer (desktop only) */}
+        <div className="absolute bottom-6 left-10 right-10 z-10 hidden items-end justify-between lg:flex">
+          <p className="max-w-[260px] text-[0.65rem] leading-relaxed text-white/20">
+            KI-Assistent auf Basis des Wahlprogramms. Keine verbindlichen
+            Aussagen. Transparenz gemäß EU AI Act.
+          </p>
+          <Link href="/" className="text-[0.65rem] text-white/20 hover:text-white/40">
+            ← Zurück zur Startseite
+          </Link>
+        </div>
+      </div>
+
+      {/* ===== RIGHT PANEL: Voice Interface ===== */}
+      <div className="flex flex-1 flex-col items-center justify-center bg-[#f5f0e8] p-4 lg:max-w-[560px] lg:p-8">
+        <div className="flex w-full max-w-[440px] flex-col" style={{ height: "calc(100vh - 8rem)", maxHeight: "800px" }}>
+          {/* Header */}
+          <div className="flex items-center gap-3 border-b border-black/[0.06] pb-4">
+            <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border-2 border-[#1a3eaf]">
+              <Image
+                src="/logo-AIP8sSah.webp"
+                alt="Heiko Meyer"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[#1a1a2e]">
+                Heiko Meyer
+              </h3>
+              <p className="text-xs text-[#6b6b7b]">
+                OB-Kandidat · Heiko Digital
+              </p>
+            </div>
+            <div className="ml-auto">
+              <span
+                className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-medium ${
+                  status === "active"
+                    ? "bg-red-500/[0.08] text-red-500"
+                    : "bg-[#58b046]/[0.08] text-[#58b046]"
+                }`}
+              >
+                <span
+                  className={`h-1.5 w-1.5 rounded-full bg-current ${
+                    status === "active" ? "animate-pulse" : ""
+                  }`}
+                />
+                {status === "ready" && "Bereit"}
+                {status === "connecting" && "Verbinde..."}
+                {status === "active" && "Live"}
+                {status === "ended" && "Beendet"}
+              </span>
+            </div>
+          </div>
+
+          {/* Welcome State */}
+          {!showChat && (
+            <div className="flex flex-1 flex-col items-center justify-center gap-5 py-8 text-center">
+              <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-[#1a3eaf] bg-gradient-to-br from-[#0f1d5e] to-[#2551c7] shadow-lg">
+                <Image
+                  src="/logo-AIP8sSah.webp"
+                  alt="Heiko Meyer"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold text-[#1a1a2e]">
+                Moin! Ich bin Heiko.
+              </h3>
+              <p className="max-w-xs text-sm leading-relaxed text-[#6b6b7b]">
+                Starten Sie das Gespräch und fragen Sie mich, was Ihnen auf dem
+                Herzen liegt. Ich antworte Ihnen persönlich – digital, ehrlich
+                und direkt.
+              </p>
+              <div className="flex flex-wrap justify-center gap-1.5">
+                {PROMPTS.map((p) => (
+                  <span
+                    key={p}
+                    className="rounded-full border border-black/[0.06] bg-black/[0.04] px-3 py-1.5 text-xs text-[#6b6b7b]"
+                  >
+                    {p}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Chat Area */}
+          {showChat && (
+            <div className="flex flex-1 flex-col gap-3 overflow-y-auto py-4 scrollbar-thin">
+              {messages.map((msg, i) => (
+                <div
+                  key={i}
+                  className={`max-w-[88%] animate-[msgSlide_0.35s_ease-out] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                    msg.type === "agent"
+                      ? "self-start rounded-bl-md bg-[#f0f0f5] text-[#2c2c3a]"
+                      : msg.type === "user"
+                        ? "self-end rounded-br-md bg-[#1a3eaf] text-white"
+                        : "self-center bg-transparent text-center text-xs italic text-[#6b6b7b]"
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              ))}
+              <div ref={chatEndRef} />
+            </div>
+          )}
+
+          {/* Audio Visualizer */}
+          <div
+            className={`flex h-12 items-center justify-center gap-[3px] transition-opacity duration-300 ${
+              status === "active" ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {Array.from({ length: 24 }).map((_, i) => (
+              <div
+                key={i}
+                ref={(el) => {
+                  if (el) vizBarsRef.current[i] = el;
+                }}
+                className="w-[3px] rounded-full bg-[#1a3eaf]"
+                style={{ height: "3px", transition: "height 0.1s ease" }}
+              />
+            ))}
+          </div>
+
+          {/* Controls */}
+          <div className="flex flex-col items-center gap-3 border-t border-black/[0.06] pt-4">
+            {/* Privacy Checkbox */}
+            {status !== "active" && (
+              <label className="flex cursor-pointer items-center gap-2 text-xs text-[#6b6b7b]">
+                <input
+                  type="checkbox"
+                  checked={privacyAccepted}
+                  onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                  className="h-4 w-4 accent-[#1a3eaf]"
+                />
+                Ich akzeptiere die{" "}
+                <a
+                  href="/datenschutz"
+                  className="text-[#1a3eaf] no-underline hover:underline"
+                >
+                  Datenschutzrichtlinie
+                </a>
+              </label>
+            )}
+
+            {/* Main Button */}
+            <button
+              onClick={handleMainButton}
+              disabled={
+                (!privacyAccepted && status !== "active") ||
+                status === "connecting"
+              }
+              className={`flex w-full items-center justify-center gap-2.5 rounded-2xl px-4 py-4 text-base font-semibold transition-all duration-300 ${
+                status === "active"
+                  ? "bg-black/[0.06] text-[#2c2c3a] hover:bg-black/10"
+                  : "bg-gradient-to-r from-[#1a3eaf] to-[#2551c7] text-white shadow-lg shadow-[#1a3eaf]/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#1a3eaf]/35 disabled:translate-y-0 disabled:opacity-50 disabled:shadow-none"
+              }`}
+            >
+              {status === "connecting" ? (
+                <>
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 animate-spin fill-current"
+                  >
+                    <path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z" />
+                  </svg>
+                  Verbinde...
+                </>
+              ) : status === "active" ? (
+                <>
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
+                    <rect x="6" y="6" width="12" height="12" rx="2" />
+                  </svg>
+                  Gespräch beenden
+                </>
+              ) : (
+                <>
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 animate-[pulse-mic_1.5s_ease-in-out_infinite] fill-current"
+                  >
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                  </svg>
+                  {status === "ended"
+                    ? "Neues Gespräch starten"
+                    : "Sprich mit Heiko"}
+                </>
+              )}
+            </button>
+
+            <p className="text-center text-[0.68rem] leading-relaxed text-[#6b6b7b]">
+              Dieser Assistent nutzt KI. Antworten basieren auf Heiko Meyers
+              Wahlprogramm.
+              <br />
+              Für verbindliche Aussagen wenden Sie sich an das Wahlkampfteam.
+            </p>
+          </div>
+        </div>
+
+        {/* Mobile back link */}
+        <Link
+          href="/"
+          className="mt-4 text-xs text-[#6b6b7b] hover:text-[#1a3eaf] lg:hidden"
+        >
+          ← Zurück zur Startseite
+        </Link>
+      </div>
+    </div>
+  );
+}

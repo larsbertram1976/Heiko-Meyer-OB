@@ -14,7 +14,10 @@
 
 | ID | Feature | Status | Spec | Created |
 |----|---------|--------|------|---------|
+| PROJ-1 | Kampagnen-Website (Header, Hero, Über Mich, Wahlprogramm, Footer) | In Progress | [Spec](PROJ-1-kampagnen-website.md) | 2026-04-09 |
+| PROJ-2 | Rechtliche Seiten (Impressum & Datenschutz) | Planned | [Spec](PROJ-2-rechtliche-seiten.md) | 2026-04-09 |
+| PROJ-3 | ElevenLabs Sprachagent | Planned | [Spec](PROJ-3-elevenlabs-sprachagent.md) | 2026-04-09 |
 
 <!-- Add features above this line -->
 
-## Next Available ID: PROJ-1
+## Next Available ID: PROJ-4

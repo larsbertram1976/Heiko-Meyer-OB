@@ -1,29 +1,39 @@
 # Product Requirements Document
 
 ## Vision
-_Describe what you are building and why._
+Neuaufbau der Kampagnen-Website für Heiko Meyer, unabhängiger Oberbürgermeister-Kandidat für Lüneburg. Die bestehende Website (meyer-lueneburg.de) wird als Next.js-Anwendung im gleichen Look & Feel neu erstellt und um einen KI-Sprachagenten (ElevenLabs) erweitert, der Bürgerfragen zum Wahlprogramm beantworten kann.
 
 ## Target Users
-_Who will use this product? Describe their needs and pain points._
+**Bürgerinnen und Bürger von Lüneburg**, die sich über den OB-Kandidaten Heiko Meyer und sein Wahlprogramm informieren möchten. Sie suchen nach:
+- Informationen zur Person und Qualifikation
+- Dem 9-Punkte-Wahlprogramm
+- Einer einfachen Möglichkeit, Fragen zu stellen (Sprachagent)
+- Kontaktmöglichkeiten
 
 ## Core Features (Roadmap)
 
 | Priority | Feature | Status |
 |----------|---------|--------|
-| P0 (MVP) | _Feature 1_ | Planned |
-| P0 (MVP) | _Feature 2_ | Planned |
-| P1 | _Feature 3_ | Planned |
-| P2 | _Feature 4_ | Planned |
+| P0 (MVP) | PROJ-1: Kampagnen-Website (Header, Hero, Über Mich, Wahlprogramm, Footer) | Planned |
+| P0 (MVP) | PROJ-2: Rechtliche Seiten (Impressum & Datenschutz) | Planned |
+| P1 | PROJ-3: ElevenLabs Sprachagent | Planned |
 
 ## Success Metrics
-_How will you measure success? (e.g., user signups, retention, task completion rate)_
+- Website ist live und erreichbar unter neuer Domain/Vercel
+- Alle Inhalte der bestehenden Seite sind vollständig übernommen
+- Sprachagent ist funktional und beantwortet Fragen zum Wahlprogramm
+- Ladezeit < 3 Sekunden (Lighthouse Score > 90)
 
 ## Constraints
-_Budget, timeline, technical limitations, team size._
+- Design muss dem bestehenden Look & Feel von meyer-lueneburg.de entsprechen
+- Farbschema: Dunkelblau (Primary), Grün (Accent), Weiß (Background)
+- Alle Bilder und Assets liegen bereits vor
+- Kein Backend/Datenbank nötig (statische Seite + ElevenLabs Widget)
+- Tech Stack: Next.js, Tailwind CSS, shadcn/ui
 
 ## Non-Goals
-_What are you explicitly NOT building in this version?_
-
----
-
-Use `/requirements` to create detailed feature specifications for each item in the roadmap above.
+- Kein CMS oder Admin-Bereich
+- Kein Kontaktformular (nur Kontaktdaten anzeigen)
+- Keine Terminbuchung
+- Kein Blog oder News-Bereich
+- Keine Social-Media-Feed-Integration
