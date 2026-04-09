@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerkl\u00e4rung | Heiko Meyer f\u00fcr L\u00fcneburg",
+  title: "Datenschutzerklärung | Heiko Meyer für Lüneburg",
+  description: "Datenschutzerklärung der Wahlkampfwebsite von Heiko Meyer, parteiloser OB-Kandidat für Lüneburg, OB-Wahl 14. September 2026.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: "https://meyer-lueneburg.de/datenschutz",
+  },
 };
 
 export default function DatenschutzPage() {

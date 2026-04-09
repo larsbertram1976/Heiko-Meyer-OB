@@ -7,14 +7,34 @@ export function generateStaticParams() {
   return programTopics.map((topic) => ({ slug: topic.slug }));
 }
 
+const BASE_URL = "https://meyer-lueneburg.de";
+
 export function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  // Use a sync-safe approach for metadata
   return params.then(({ slug }) => {
     const topic = programTopics.find((t) => t.slug === slug);
     if (!topic) return { title: "Nicht gefunden" };
+    const url = `${BASE_URL}/wahlprogramm/${topic.slug}`;
     return {
-      title: `${topic.title} | Heiko Meyer für Lüneburg`,
-      description: topic.subtitle,
+      title: `${topic.title} | Heiko Meyer Lüneburg`,
+      description: `${topic.subtitle} – Wahlprogramm Punkt ${topic.number} von Heiko Meyer, parteiloser OB-Kandidat für Lüneburg. OB-Wahl 14. September 2026.`,
+      keywords: [
+        topic.title,
+        "Lüneburg",
+        "Heiko Meyer",
+        "Wahlprogramm Lüneburg",
+        "OB-Wahl Lüneburg 2026",
+        "Oberbürgermeister Lüneburg",
+        "parteilos Lüneburg",
+      ],
+      alternates: {
+        canonical: url,
+      },
+      openGraph: {
+        title: `${topic.title} | Heiko Meyer Lüneburg`,
+        description: `${topic.subtitle} – Wahlprogramm Punkt ${topic.number} von Heiko Meyer, parteiloser OB-Kandidat für Lüneburg.`,
+        url,
+        images: [{ url: topic.image, alt: topic.title }],
+      },
     };
   });
 }

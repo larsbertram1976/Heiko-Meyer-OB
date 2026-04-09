@@ -3,9 +3,29 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Der richtige Mann für Lüneburg | Heiko Meyer",
+  title: "Warum Heiko Meyer? | OB-Kandidat Lüneburg 2026",
   description:
-    "Warum Heiko Meyer der beste Kandidat für das Oberbürgermeisteramt ist – Kompetenz, Erfahrung und Herzblut für Lüneburg.",
+    "Warum Heiko Meyer der richtige Oberbürgermeister-Kandidat für Lüneburg ist: 20+ Jahre Erfahrung, parteilos und unabhängig, 45% in der Stichwahl 2021. OB-Wahl 14. September 2026 in der Hansestadt Lüneburg.",
+  keywords: [
+    "Heiko Meyer Lüneburg",
+    "Warum Heiko Meyer",
+    "OB-Kandidat Lüneburg",
+    "parteiloser Kandidat Lüneburg",
+    "unabhängiger Kandidat Lüneburg",
+    "Oberbürgermeister Lüneburg 2026",
+    "Lüneburger City Management",
+    "LCM Vorsitzender Lüneburg",
+    "OB-Wahl Lüneburg 2026",
+  ],
+  alternates: {
+    canonical: "https://meyer-lueneburg.de/warum-heiko",
+  },
+  openGraph: {
+    title: "Warum Heiko Meyer? | OB-Kandidat Lüneburg 2026",
+    description:
+      "20+ Jahre Erfahrung, parteilos und unabhängig. Heiko Meyer ist der richtige OB-Kandidat für Lüneburg. OB-Wahl 14. September 2026.",
+    url: "https://meyer-lueneburg.de/warum-heiko",
+  },
 };
 
 const competenceMatches = [

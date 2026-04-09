@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Impressum | Heiko Meyer f\u00fcr L\u00fcneburg",
+  title: "Impressum | Heiko Meyer für Lüneburg",
+  description: "Impressum der Wahlkampfwebsite von Heiko Meyer, parteiloser OB-Kandidat für Lüneburg, OB-Wahl 14. September 2026.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+  alternates: {
+    canonical: "https://meyer-lueneburg.de/impressum",
+  },
 };
 
 export default function ImpressumPage() {

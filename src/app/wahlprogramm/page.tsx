@@ -4,9 +4,26 @@ import type { Metadata } from "next";
 import { programTopics } from "@/lib/program-data";
 
 export const metadata: Metadata = {
-  title: "Mein Wahlprogramm | Heiko Meyer für Lüneburg",
+  title: "Wahlprogramm Lüneburg 2026 | Heiko Meyer",
   description:
-    "9 Punkte für ein besseres Lüneburg – das Wahlprogramm von Heiko Meyer, unabhängiger OB-Kandidat.",
+    "Das Wahlprogramm von Heiko Meyer: 9 konkrete Punkte für ein besseres Lüneburg. Parteiloser OB-Kandidat für die OB-Wahl am 14. September 2026 in der Hansestadt Lüneburg.",
+  keywords: [
+    "Wahlprogramm Lüneburg",
+    "Heiko Meyer Wahlprogramm",
+    "OB-Wahl Lüneburg 2026",
+    "Oberbürgermeister Lüneburg Programm",
+    "Kommunalwahl Lüneburg",
+    "parteilos Lüneburg",
+  ],
+  alternates: {
+    canonical: "https://meyer-lueneburg.de/wahlprogramm",
+  },
+  openGraph: {
+    title: "Wahlprogramm Lüneburg 2026 | Heiko Meyer",
+    description:
+      "9 konkrete Punkte für ein besseres Lüneburg – parteiloser OB-Kandidat Heiko Meyer, OB-Wahl 14. September 2026.",
+    url: "https://meyer-lueneburg.de/wahlprogramm",
+  },
 };
 
 export default function WahlprogrammPage() {
