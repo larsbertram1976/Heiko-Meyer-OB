@@ -1,16 +1,6 @@
 import Image from "next/image";
-
-const programItems = [
-  { number: "01", title: "Miteinander für Lüneburg: #TeamLueneburg", image: "/programmpunkt_1.webp" },
-  { number: "02", title: "Für ein sicheres Lüneburg", image: "/programmpunkt_2.webp" },
-  { number: "03", title: "Für mehr bezahlbaren Wohnraum", image: "/programmpunkt_3.webp" },
-  { number: "04", title: "Für einen starken und attraktiven Wirtschaftsstandort", image: "/programmpunkt_4.webp" },
-  { number: "05", title: "Für eine attraktive Bildungs- und Universitätsstadt", image: "/programmpunkt_5.webp" },
-  { number: "06", title: "Für ein soziales Lüneburg", image: "/programmpunkt_6.webp" },
-  { number: "07", title: "Für ein zukunftsfähiges Umwelt- und Verkehrskonzept", image: "/programmpunkt_7.webp" },
-  { number: "08", title: "Für ein kulturell reiches Lüneburg", image: "/programmpunkt_8.webp" },
-  { number: "09", title: "Für ein sportliches Lüneburg", image: "/programmpunkt_9.webp" },
-];
+import Link from "next/link";
+import { programTopics } from "@/lib/program-data";
 
 export function ProgramSection() {
   return (
@@ -22,16 +12,17 @@ export function ProgramSection() {
             Mein Wahlprogramm
           </h2>
           <p className="mt-2 text-lg text-white/80">
-            9 Punkte für ein besseres Lüneburg
+            9 Punkte f\u00fcr ein besseres L\u00fcneburg
           </p>
         </div>
 
         {/* Program Cards Grid */}
         <div className="grid gap-6 sm:grid-cols-2">
-          {programItems.map((item) => (
-            <div
+          {programTopics.map((item) => (
+            <Link
               key={item.number}
-              className="group relative overflow-hidden rounded-sm"
+              href={`/wahlprogramm/${item.slug}`}
+              className="group relative overflow-hidden rounded-sm transition-transform hover:-translate-y-1"
             >
               {/* Card Image */}
               <div className="relative aspect-[16/10]">
@@ -49,12 +40,24 @@ export function ProgramSection() {
                 </div>
               </div>
               {/* Title Bar */}
-              <div className="bg-[#58b046] px-4 py-3">
+              <div className="flex items-center justify-between bg-[#58b046] px-4 py-3">
                 <h3 className="text-sm font-bold uppercase text-white md:text-base">
                   {item.title}
                 </h3>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5 flex-shrink-0 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  <path d="m12 19 7-7-7-7" />
+                </svg>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
