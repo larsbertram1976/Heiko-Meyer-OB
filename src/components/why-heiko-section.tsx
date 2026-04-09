@@ -1,63 +1,35 @@
 import Link from "next/link";
 
-const reasons = [
+const competenceMatches = [
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-    title: "Parteilos – nur Ihnen verpflichtet",
-    text: "Kein Parteivorstand bestimmt, was ich tue. Meine einzige Verpflichtung gilt den Lüneburgerinnen und Lüneburgern. Nicht die Partei geht vor, sondern der Mensch.",
+    theme: "Sicherheit & Ordnung",
+    competence: "20 Jahre Brücke zwischen Kaufleuten und Rathaus",
+    fact: "Als LCM-Vorsitzender hat Heiko das Sicherheitsproblem Am Sande seit Jahren auf die politische Agenda gebracht – lange bevor es Wahlkampfthema wurde.",
+    emotion: "Er spricht nicht über Probleme. Er kennt die Menschen, die darunter leiden – Händler, Anwohner, Familien.",
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-        <path d="M3 7V5a2 2 0 0 1 2-2h2" /><path d="M17 3h2a2 2 0 0 1 2 2v2" /><path d="M21 17v2a2 2 0 0 1-2 2h-2" /><path d="M7 21H5a2 2 0 0 1-2-2v-2" />
-        <rect x="7" y="7" width="10" height="10" rx="1" />
-      </svg>
-    ),
-    title: "20 Jahre Erfahrung – kein Neuling",
-    text: "Als LCM-Vorsitzender kenne ich jeden Winkel der Verwaltung, jeden Händler in der Innenstadt und die Herausforderungen unserer Stadt aus erster Hand.",
+    theme: "Wirtschaft & Innenstadt",
+    competence: "250+ Mitglieder im LCM aufgebaut",
+    fact: "Von 80 auf über 250 Mitglieder: Heiko hat das Lüneburger City Management zur stärksten Stimme der Innenstadt gemacht. Er kennt jeden Eigentümer persönlich.",
+    emotion: "Wenn ein Laden schließt, ist das für ihn nicht nur eine Statistik – es sind Menschen, deren Lebenswerk auf dem Spiel steht.",
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-        <path d="M12 20V10" /><path d="M18 20V4" /><path d="M6 20v-4" />
-      </svg>
-    ),
-    title: "45% in der Stichwahl 2021",
-    text: "Fast die Hälfte der Lüneburger hat mir 2021 ihr Vertrauen geschenkt – mehr als den Kandidaten von SPD und CDU. Dieses Mal will ich es über die Ziellinie schaffen.",
+    theme: "Verwaltung & Bürgernähe",
+    competence: "5 Jahre Stadtrat + 20 Jahre Bauausschuss",
+    fact: "Heiko kennt die Verwaltung von innen. Er weiß, wo Prozesse haken, welche Entscheidungswege zu lang sind und wo Steuergelder besser eingesetzt werden könnten.",
+    emotion: "Sein Versprechen: Ein Oberbürgermeister, den man ansprechen kann. Nicht abgehoben, sondern mittendrin.",
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-        <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-      </svg>
-    ),
-    title: "Unternehmer – kein Berufspolitiker",
-    text: "Ich weiß, was es heißt, Verantwortung zu tragen, Mitarbeiter zu führen und Ergebnisse zu liefern. Diesen Macher-Blick bringe ich ins Rathaus.",
+    theme: "Wohnraum & Soziales",
+    competence: "Unternehmer mit Praxisblick",
+    fact: "Als Geschäftsführer von HM Objekteinrichtungen weiß Heiko, was Bürokratie bedeutet. Sein Ansatz: Leerstand aktivieren statt jahrelang auf Neubau warten.",
+    emotion: "Wohnen ist ein Grundbedürfnis. Heiko kämpft dafür, dass Lüneburg eine Stadt für alle bleibt – nicht nur für die, die es sich leisten können.",
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /><path d="m9 12 2 2 4-4" />
-      </svg>
-    ),
-    title: "Pragmatisch statt ideologisch",
-    text: "Mich interessiert nicht, ob eine Idee links oder rechts ist – mich interessiert, ob sie gut für Lüneburg ist. Entscheidungen treffen wir pragmatisch, transparent und gemeinsam.",
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-      </svg>
-    ),
-    title: "Ur-Lüneburger mit Herzblut",
-    text: "57 Jahre in dieser Stadt. Hier aufgewachsen, hier verwurzelt, hier geerdet. Ich liebe Lüneburg – und ich will, dass es unserer Hansestadt gut geht.",
+    theme: "Verkehr & Mobilität",
+    competence: "20 Jahre im Mobilitätsausschuss",
+    fact: "Heiko sitzt seit zwei Jahrzehnten im Bauausschuss und kennt jede Baustelle, jede Verkehrsplanung, jeden Engpass. Er weiß, warum drei Hauptstraßen gleichzeitig dicht waren.",
+    emotion: "Pragmatisch statt ideologisch: Nicht Auto gegen Rad, sondern ein Konzept, das für alle funktioniert.",
   },
 ];
 
@@ -66,43 +38,96 @@ export function WhyHeikoSection() {
     <section className="bg-[#f8f8fa] py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/* Header */}
-        <div className="mb-12 border-l-4 border-[#58b046] pl-4">
+        <div className="mb-6 border-l-4 border-[#58b046] pl-4">
           <h2 className="text-3xl font-black uppercase text-[#1a3eaf] md:text-5xl">
-            Warum Heiko Meyer?
+            Der richtige Mann für Lüneburg
           </h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            6 Gründe, mir Ihre Stimme zu geben
+            Warum Heiko Meyer den Unterschied macht
           </p>
         </div>
 
-        {/* Reasons Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r) => (
+        {/* Intro */}
+        <p className="mb-12 max-w-3xl text-base leading-relaxed text-[#6b6b7b]">
+          Lüneburg braucht keinen Berufspolitiker, der verwaltet. Lüneburg
+          braucht jemanden, der diese Stadt lebt, ihre Menschen kennt und den Mut
+          hat, Dinge anders zu machen. Heiko Meyer bringt etwas mit, das kein
+          anderer Kandidat hat: <span className="font-bold text-[#1a1a2e]">20 Jahre Erfahrung an der Schnittstelle
+          zwischen Bürgern, Wirtschaft und Verwaltung</span> – ohne Parteibrille.
+        </p>
+
+        {/* Key Numbers */}
+        <div className="mb-12 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="rounded-sm bg-white p-5 text-center shadow-sm">
+            <p className="text-3xl font-black text-[#1a3eaf]">57</p>
+            <p className="mt-1 text-xs text-[#6b6b7b]">Jahre Lüneburger</p>
+          </div>
+          <div className="rounded-sm bg-white p-5 text-center shadow-sm">
+            <p className="text-3xl font-black text-[#1a3eaf]">20+</p>
+            <p className="mt-1 text-xs text-[#6b6b7b]">Jahre für die Stadt aktiv</p>
+          </div>
+          <div className="rounded-sm bg-white p-5 text-center shadow-sm">
+            <p className="text-3xl font-black text-[#58b046]">45%</p>
+            <p className="mt-1 text-xs text-[#6b6b7b]">Stichwahl 2021</p>
+          </div>
+          <div className="rounded-sm bg-white p-5 text-center shadow-sm">
+            <p className="text-3xl font-black text-[#58b046]">0</p>
+            <p className="mt-1 text-xs text-[#6b6b7b]">Parteiverpflichtungen</p>
+          </div>
+        </div>
+
+        {/* Competence Matching */}
+        <div className="mb-4 border-l-4 border-[#1a3eaf] pl-4">
+          <h3 className="text-xl font-black uppercase text-[#1a3eaf] md:text-2xl">
+            Kompetenz trifft Thema
+          </h3>
+          <p className="mt-1 text-sm text-[#6b6b7b]">
+            Für jedes Thema die richtige Erfahrung
+          </p>
+        </div>
+
+        <div className="mb-12 space-y-4">
+          {competenceMatches.map((m) => (
             <div
-              key={r.title}
-              className="group rounded-sm border-l-4 border-[#1a3eaf] bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+              key={m.theme}
+              className="group overflow-hidden rounded-sm bg-white shadow-sm transition-all hover:shadow-md"
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-sm bg-[#1a3eaf]/10 text-[#1a3eaf] transition-colors group-hover:bg-[#1a3eaf] group-hover:text-white">
-                {r.icon}
+              <div className="flex flex-col md:flex-row">
+                {/* Left: Theme + Competence */}
+                <div className="flex items-center gap-4 border-b border-black/[0.06] bg-[#1a3eaf]/[0.03] p-5 md:w-72 md:flex-shrink-0 md:border-b-0 md:border-r">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-[#1a3eaf]">
+                      {m.theme}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-[#1a1a2e]">
+                      {m.competence}
+                    </p>
+                  </div>
+                </div>
+                {/* Right: Fact + Emotion */}
+                <div className="flex-1 p-5">
+                  <p className="text-sm leading-relaxed text-[#2c2c3a]">
+                    {m.fact}
+                  </p>
+                  <p className="mt-3 border-l-2 border-[#58b046] pl-3 text-sm italic text-[#6b6b7b]">
+                    {m.emotion}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base font-bold text-[#1a1a2e]">{r.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#6b6b7b]">
-                {r.text}
-              </p>
             </div>
           ))}
         </div>
 
-        {/* Quote + CTA */}
-        <div className="mt-12 rounded-sm bg-[#1a3eaf] p-8 md:p-10">
+        {/* Closing CTA */}
+        <div className="rounded-sm bg-[#1a3eaf] p-8 md:p-10">
           <div className="flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
             <div className="flex-1">
-              <blockquote className="text-lg font-semibold italic text-white md:text-xl">
-                &bdquo;Ich trete an, um Oberbürgermeister der wunderschönen
-                Hansestadt Lüneburg zu werden – bürgernah und unabhängig.&ldquo;
-              </blockquote>
+              <p className="text-2xl font-black text-white md:text-3xl">
+                Nicht die Partei geht vor –<br />
+                <span className="text-[#58b046]">sondern der Mensch.</span>
+              </p>
               <p className="mt-3 text-sm text-white/50">
-                Heiko Meyer · Unabhängiger OB-Kandidat · 14. September 2026
+                14. September 2026 · Ihre Stimme für ein Lüneburg, das gestaltet statt verwaltet.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
