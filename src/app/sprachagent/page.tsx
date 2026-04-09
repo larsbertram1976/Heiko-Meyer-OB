@@ -204,9 +204,9 @@ export default function SprachagentPage() {
   }, []);
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] flex-col lg:flex-row">
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col lg:h-[calc(100vh-4rem)] lg:flex-row">
       {/* ===== LEFT PANEL: Hero ===== */}
-      <div className="relative flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-6 lg:flex-1 lg:px-10 lg:py-12">
+      <div className="relative flex shrink-0 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-6 lg:flex-1 lg:px-10 lg:py-12">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_500px_400px_at_30%_80%,rgba(88,176,70,0.06),transparent),radial-gradient(ellipse_400px_400px_at_70%_20%,rgba(255,255,255,0.04),transparent)]" />
 
         <div className="relative z-10 max-w-md text-center lg:text-left">
@@ -260,8 +260,8 @@ export default function SprachagentPage() {
       </div>
 
       {/* ===== RIGHT PANEL: Voice Interface ===== */}
-      <div className="flex min-h-0 flex-1 flex-col items-center justify-center bg-[#f5f0e8] p-4 lg:max-w-[560px] lg:p-8">
-        <div className="flex w-full max-w-[440px] flex-1 flex-col overflow-hidden">
+      <div className="flex min-h-[70vh] flex-1 flex-col items-center bg-[#f5f0e8] p-4 lg:max-w-[560px] lg:justify-center lg:p-8">
+        <div className="flex w-full max-w-[440px] flex-1 flex-col lg:max-h-[800px]">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-black/[0.06] pb-4">
             <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border-2 border-[#1a3eaf]">
