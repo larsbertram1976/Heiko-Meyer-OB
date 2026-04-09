@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const AGENT_ID = "agent_1001knrqm87sfm59cg7m29mv51fz";
+const AGENT_ID = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "";
+const API_KEY = process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY ?? "";
 
 const TOPICS = [
   "Sicherheit",
@@ -106,6 +107,7 @@ export default function SprachagentPage() {
 
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
+        ...(API_KEY ? { authorization: API_KEY } : {}),
         onConnect: () => {
           setStatus("active");
           addMessage("system", "Verbunden \u2013 sprechen Sie jetzt!");
