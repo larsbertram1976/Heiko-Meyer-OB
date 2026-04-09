@@ -9,7 +9,7 @@ import { Menu } from "lucide-react";
 const navLinks = [
   { label: "Start", href: "/#start" },
   { label: "Über mich", href: "/#ueber-mich" },
-  { label: "Wahlprogramm", href: "/#wahlprogramm" },
+  { label: "Wahlprogramm", href: "/wahlprogramm" },
   { label: "Frag Heiko", href: "/sprachagent" },
 ];
 
