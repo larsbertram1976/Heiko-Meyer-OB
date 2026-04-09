@@ -107,7 +107,7 @@ export default function SprachagentPage() {
 
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
-        ...(API_KEY ? { authorization: API_KEY } : {}),
+        connectionType: "websocket",
         onConnect: () => {
           setStatus("active");
           addMessage("system", "Verbunden \u2013 sprechen Sie jetzt!");
@@ -125,11 +125,10 @@ export default function SprachagentPage() {
             addMessage("user", message.message);
           }
         },
-        onError: (message: string) => {
-          console.error("ElevenLabs error:", message);
-          addMessage("system", "Verbindungsfehler. Bitte versuchen Sie es erneut.");
+        onError: (message: string, context?: unknown) => {
+          console.error("ElevenLabs error:", message, context);
+          addMessage("system", `DEBUG onError: ${message} | Context: ${JSON.stringify(context)}`);
           setStatus("ready");
-          setShowChat(false);
           stopVisualization();
         },
         onModeChange: () => {
@@ -143,7 +142,11 @@ export default function SprachagentPage() {
       conversationRef.current = conv;
     } catch (err) {
       console.error("Start error:", err);
-      if ((err as DOMException).name === "NotAllowedError") {
+      const error = err as Error & { name?: string };
+      const details = JSON.stringify(err, Object.getOwnPropertyNames(err as object), 2);
+      console.error("Error details:", details);
+
+      if (error.name === "NotAllowedError") {
         addMessage(
           "system",
           "Mikrofon-Zugriff verweigert. Bitte erlauben Sie den Zugriff in Ihrem Browser."
@@ -151,11 +154,10 @@ export default function SprachagentPage() {
       } else {
         addMessage(
           "system",
-          `Fehler beim Verbinden: ${(err as Error).message || "Unbekannter Fehler"}. Bitte versuchen Sie es erneut.`
+          `DEBUG: ${error.message || "Unbekannt"} | Agent: ${AGENT_ID ? "gesetzt" : "FEHLT"} | Key: ${API_KEY ? "gesetzt" : "FEHLT"} | Details: ${details}`
         );
       }
       setStatus("ready");
-      setShowChat(false);
     }
   }, [addMessage, startVisualization, stopVisualization]);
 
