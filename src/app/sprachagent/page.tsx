@@ -13,7 +13,7 @@ const TOPICS = [
   "Wohnen",
   "Verkehr",
   "Verwaltung",
-  "B\u00FCrgern\u00E4he",
+  "Bürgernähe",
 ];
 
 const PROMPTS = [
@@ -111,12 +111,12 @@ export default function SprachagentPage() {
         connectionType: "websocket",
         onConnect: () => {
           setStatus("active");
-          addMessage("system", "Verbunden \u2013 sprechen Sie jetzt!");
+          addMessage("system", "Verbunden – sprechen Sie jetzt!");
           startVisualization();
         },
         onDisconnect: () => {
           setStatus("ended");
-          addMessage("system", "Gespr\u00E4ch beendet. Danke f\u00FCr Ihr Interesse!");
+          addMessage("system", "Gespräch beendet. Danke für Ihr Interesse!");
           stopVisualization();
         },
         onMessage: (message: { source: string; message: string }) => {
@@ -469,7 +469,7 @@ export default function SprachagentPage() {
                     <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
                   </svg>
                   {status === "ended"
-                    ? "Neues Gespr\u00E4ch starten"
+                    ? "Neues Gespräch starten"
                     : "Sprich mit Heiko"}
                 </>
               )}

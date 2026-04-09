@@ -13,7 +13,7 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
     const topic = programTopics.find((t) => t.slug === slug);
     if (!topic) return { title: "Nicht gefunden" };
     return {
-      title: `${topic.title} | Heiko Meyer f\u00fcr L\u00fcneburg`,
+      title: `${topic.title} | Heiko Meyer für Lüneburg`,
       description: topic.subtitle,
     };
   });
@@ -69,7 +69,7 @@ export default async function ProgramTopicPage({
               <path d="m12 19-7-7 7-7" />
               <path d="M19 12H5" />
             </svg>
-            Zur\u00fcck zum Wahlprogramm
+            Zurück zum Wahlprogramm
           </Link>
 
           <div className="flex items-center gap-4">
@@ -135,7 +135,7 @@ export default async function ProgramTopicPage({
         <div className="mx-auto max-w-5xl px-4 md:px-8">
           <div className="border-l-4 border-[#58b046] pl-4">
             <p className="text-sm font-semibold uppercase tracking-wider text-[#58b046]">
-              Heikos L\u00f6sungen
+              Heikos Lösungen
             </p>
             <h2 className="mt-1 text-2xl font-black text-[#1a1a2e] md:text-3xl">
               {topic.positions.headline}

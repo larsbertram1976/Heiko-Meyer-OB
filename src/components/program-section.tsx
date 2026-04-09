@@ -12,7 +12,7 @@ export function ProgramSection() {
             Mein Wahlprogramm
           </h2>
           <p className="mt-2 text-lg text-white/80">
-            9 Punkte f\u00fcr ein besseres L\u00fcneburg
+            9 Punkte für ein besseres Lüneburg
           </p>
         </div>
 

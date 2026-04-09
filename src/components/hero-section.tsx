@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export function HeroSection() {
@@ -17,12 +18,34 @@ export function HeroSection() {
             Zukunft gestalten, Wirtschaft stärken und unsere Heimat lebenswert
             erhalten. Mit klarer Kante für unsere Stadt.
           </p>
-          <a
-            href="#wahlprogramm"
-            className="inline-flex w-fit items-center justify-center rounded-sm bg-[#1a3eaf] px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-[#15349a]"
-          >
-            Zum Wahlprogramm
-          </a>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#wahlprogramm"
+              className="inline-flex w-fit items-center justify-center rounded-sm bg-[#1a3eaf] px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-[#15349a]"
+            >
+              Zum Wahlprogramm
+            </a>
+            <Link
+              href="/sprachagent"
+              className="inline-flex w-fit items-center gap-2 rounded-sm border-2 border-[#1a3eaf] px-8 py-4 text-base font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf] hover:text-white"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" x2="12" y1="19" y2="22" />
+              </svg>
+              Heiko sprechen
+            </Link>
+          </div>
         </div>
 
         {/* Portrait + Slogan Graphic */}
