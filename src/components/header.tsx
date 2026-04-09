@@ -10,7 +10,7 @@ const navLinks = [
   { label: "Start", href: "/#start" },
   { label: "Über mich", href: "/#ueber-mich" },
   { label: "Wahlprogramm", href: "/wahlprogramm" },
-  { label: "Ihre Stimme", href: "/themenprioritaeten" },
+  { label: "Themenpuls", href: "/themenprioritaeten" },
   { label: "Frag Heiko", href: "/sprachagent" },
 ];
 
