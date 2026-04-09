@@ -165,6 +165,23 @@ export default async function ProgramTopicPage({
         </div>
       </section>
 
+      {/* Concrete Example */}
+      <section className="bg-white py-12 md:py-20">
+        <div className="mx-auto max-w-5xl px-4 md:px-8">
+          <div className="rounded-sm border-2 border-[#58b046] bg-[#58b046]/5 p-8 md:p-10">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#58b046] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white">
+              So geht&apos;s konkret
+            </div>
+            <h2 className="text-xl font-black text-[#1a1a2e] md:text-2xl">
+              {topic.concreteExample.headline}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-[#2c2c3a] md:text-lg">
+              {topic.concreteExample.text}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-[#1a3eaf] py-12 md:py-16">
         <div className="mx-auto max-w-5xl px-4 text-center md:px-8">

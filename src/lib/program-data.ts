@@ -14,6 +14,10 @@ export type ProgramTopic = {
     headline: string;
     items: { title: string; text: string }[];
   };
+  concreteExample: {
+    headline: string;
+    text: string;
+  };
   cta: string;
 };
 
@@ -64,6 +68,10 @@ export const programTopics: ProgramTopic[] = [
         },
       ],
     },
+    concreteExample: {
+      headline: "Konkret: B\u00fcrger-Kompetenzteams f\u00fcr jedes Gro\u00dfprojekt",
+      text: "Bevor die Stadt ein Projekt wie den Umbau des Marktplatzes oder eine neue Verkehrsf\u00fchrung beschlie\u00dft, wird ein B\u00fcrger-Kompetenzteam aus Anwohnern, Gewerbetreibenden und Fachleuten gebildet. Das Team wird fr\u00fchzeitig eingebunden \u2013 nicht erst, wenn alles beschlossen ist. So w\u00e4re es beim ARENA-Projekt nie so weit gekommen: B\u00fcrger h\u00e4tten fr\u00fch die Kosten hinterfragt. Heiko hat dieses Modell 20 Jahre lang im LCM praktiziert \u2013 250 Mitglieder, die gemeinsam Entscheidungen treffen.",
+    },
     cta: "Gestalten statt verwalten \u2013 mit Heiko Meyer.",
   },
   {
@@ -107,6 +115,10 @@ export const programTopics: ProgramTopic[] = [
         },
       ],
     },
+    concreteExample: {
+      headline: "Konkret: Sicherheits-Partnerschaft Am Sande",
+      text: "In den ersten 100 Tagen als OB wird Heiko eine Sicherheits-Partnerschaft Am Sande gr\u00fcnden: Ein fester runder Tisch aus Polizeiinspektion, Kommunalem Ordnungsdienst, Streetworkern, LCM-Vertretern und Anwohnern. Monatliche Treffen, klare Zust\u00e4ndigkeiten, messbare Ziele. Vorbild: Das LCM-Modell, bei dem Heiko seit 20 Jahren Kaufleute, Verwaltung und Politik an einen Tisch bringt. Die Ladendiebst\u00e4hle sind 2023 um 70% gestiegen \u2013 das erfordert koordiniertes Handeln, nicht Einzelma\u00dfnahmen.",
+    },
     cta: "Sicherheit ist kein Luxus \u2013 sie ist ein Grundrecht.",
   },
   {
@@ -141,6 +153,10 @@ export const programTopics: ProgramTopic[] = [
           text: "Bezahlbarer Wohnraum ist eine Grundvoraussetzung f\u00fcr ein soziales L\u00fcneburg, in dem jeder die gleichen Chancen hat.",
         },
       ],
+    },
+    concreteExample: {
+      headline: "Konkret: Leerstand-Offensive in der Innenstadt",
+      text: "Als LCM-Vorsitzender kennt Heiko jeden Hausbesitzer in der Innenstadt pers\u00f6nlich. Sein Plan: Innerhalb von sechs Monaten jede leerstehende Wohnung \u00fcber Gesch\u00e4ften in der Bardowicker Stra\u00dfe und am Sande erfassen. Dann direkte Gespr\u00e4che mit den Eigent\u00fcmern: Was brauchen Sie, damit die Wohnung wieder vermietet wird? Sanierungszusch\u00fcsse vermitteln, Genehmigungsverfahren beschleunigen, N\u00f6te ernst nehmen. Ergebnis: Neue Wohnungen ohne einen Quadratmeter Neubaufl\u00e4che \u2013 und eine belebtere Innenstadt.",
     },
     cta: "Wohnraum schaffen, nicht verwalten.",
   },
@@ -182,6 +198,10 @@ export const programTopics: ProgramTopic[] = [
         },
       ],
     },
+    concreteExample: {
+      headline: "Konkret: Leerstand-Lotse im Rathaus",
+      text: "Heiko wird eine Leerstand-Lotsen-Stelle in der Verwaltung schaffen \u2013 eine zentrale Ansprechperson, die leerstehende Gewerbefl\u00e4chen erfasst, aktiv auf Eigent\u00fcmer zugeht und potenzielle Mieter vermittelt. Kein Warten, bis sich jemand meldet \u2013 sondern aktive Vermarktung. Der LCM hat mit \u00fcber 250 Mitgliedern bereits ein Netzwerk aus H\u00e4ndlern, Gastronomen und Dienstleistern. Diese Kontakte werden genutzt, um jede leere Fl\u00e4che m\u00f6glichst schnell wieder zu f\u00fcllen.",
+    },
     cta: "Wer die Wirtschaft versteht, kann die Stadt gestalten.",
   },
   {
@@ -217,6 +237,10 @@ export const programTopics: ProgramTopic[] = [
         },
       ],
     },
+    concreteExample: {
+      headline: "Konkret: Gr\u00fcnder-Stipendium mit der Leuphana",
+      text: "Gemeinsam mit der Leuphana Universit\u00e4t richtet Heiko ein L\u00fcneburger Gr\u00fcnder-Stipendium ein: Absolventinnen und Absolventen, die ihr Unternehmen in L\u00fcneburg gr\u00fcnden, erhalten f\u00fcr 12 Monate vergünstigte B\u00fcrofl\u00e4chen in leerstehenden Gewerbeeinheiten der Innenstadt plus Mentoring durch das L\u00fcneburger Unternehmernetzwerk. So bleiben kluge K\u00f6pfe in der Stadt, Leerstand wird sinnvoll genutzt und der Wirtschaftsstandort profitiert. Eine Ma\u00dfnahme, drei Fliegen mit einer Klappe.",
+    },
     cta: "Wer in Bildung investiert, investiert in L\u00fcneburgs Zukunft.",
   },
   {
@@ -251,6 +275,10 @@ export const programTopics: ProgramTopic[] = [
           text: "Jedes Kind in L\u00fcneburg verdient die gleiche Chance \u2013 unabh\u00e4ngig vom Geldbeutel der Eltern. Bildung, Sport und Kultur m\u00fcssen f\u00fcr alle zug\u00e4nglich sein.",
         },
       ],
+    },
+    concreteExample: {
+      headline: "Konkret: Stadtteil-Treffpunkte mit B\u00fcrgercaf\u00e9s",
+      text: "In jedem L\u00fcneburger Stadtteil soll ein B\u00fcrgercaf\u00e9 entstehen \u2013 ein offener Treffpunkt, der von der Stadt gef\u00f6rdert und von Ehrenamtlichen betrieben wird. Hier treffen sich Jung und Alt, es gibt Beratungsangebote, Sprachkurse und Nachhilfe. Die R\u00e4ume k\u00f6nnen aus leerstehenden st\u00e4dtischen Immobilien kommen. Heiko kennt als LCM-Chef das Prinzip: Menschen brauchen einen Ort, um sich zu treffen und auszutauschen. Das ist kein Luxus, sondern die Grundlage f\u00fcr Zusammenhalt.",
     },
     cta: "Ein L\u00fcneburg, das zusammenh\u00e4lt.",
   },
@@ -291,6 +319,10 @@ export const programTopics: ProgramTopic[] = [
         },
       ],
     },
+    concreteExample: {
+      headline: "Konkret: Baustellen-Koordinator und Landkreis-Pakt",
+      text: "Heiko schafft die Stelle eines Baustellen-Koordinators in der Verwaltung, der jede geplante Stra\u00dfensperrung mit dem Landkreis abstimmt \u2013 bevor der erste Bagger rollt. Nie wieder Bleckeder Landstra\u00dfe, Dahlenburger Landstra\u00dfe und Soltauer Stra\u00dfe gleichzeitig dicht. Zus\u00e4tzlich verhandelt Heiko einen Verkehrspakt mit dem Landrat: Gemeinsame Planung, gemeinsame Kommunikation an die B\u00fcrger, gemeinsame Umleitungskonzepte. Das kostet wenig, bringt aber enorm viel f\u00fcr den Alltag der L\u00fcneburger.",
+    },
     cta: "Ein Verkehrskonzept, das funktioniert \u2013 f\u00fcr alle.",
   },
   {
@@ -326,6 +358,10 @@ export const programTopics: ProgramTopic[] = [
         },
       ],
     },
+    concreteExample: {
+      headline: "Konkret: Zwischennutzung leerer Ladenlokale f\u00fcr Kultur",
+      text: "Jedes leerstehende Gesch\u00e4ft in der Innenstadt, das l\u00e4nger als drei Monate leer steht, wird f\u00fcr kulturelle Zwischennutzung angeboten \u2013 als Pop-up-Galerie, Proberaum oder Werkstatt f\u00fcr K\u00fcnstler. Die Stadt vermittelt, der Eigent\u00fcmer tr\u00e4gt keine Kosten, die Nebenkosten \u00fcbernimmt ein Kulturfonds. Heiko kennt die Eigent\u00fcmer pers\u00f6nlich aus 20 Jahren LCM-Arbeit. So wird aus Leerstand Leben \u2013 und K\u00fcnstler bekommen bezahlbare R\u00e4ume direkt in der Altstadt.",
+    },
     cta: "Kultur macht L\u00fcneburg lebenswert.",
   },
   {
@@ -360,6 +396,10 @@ export const programTopics: ProgramTopic[] = [
           text: "Parks, Laufstrecken und Fitness-Bereiche im Freien machen Sport niedrigschwellig verf\u00fcgbar \u2013 f\u00fcr alle Altersgruppen.",
         },
       ],
+    },
+    concreteExample: {
+      headline: "Konkret: Sportst\u00e4tten-Offensive und Vereins-Sprechstunde",
+      text: "Heiko l\u00e4dt in den ersten 60 Tagen als OB alle L\u00fcneburger Sportvereine zu einer Vereins-Sprechstunde ins Rathaus ein. Jeder Verein kann seine dr\u00e4ngendsten Probleme vortragen \u2013 marode Umkleiden, fehlende Hallenzeiten, b\u00fcrokratische H\u00fcrden. Daraus entsteht ein priorisierter Sanierungsplan mit klaren Zeitvorgaben. Zus\u00e4tzlich: Eine zentrale Online-Plattform f\u00fcr die Hallenbelegung, damit freie Zeiten sofort sichtbar und buchbar sind. Weniger Verwaltung, mehr Sportzeit.",
     },
     cta: "Ein sportliches L\u00fcneburg ist ein starkes L\u00fcneburg.",
   },

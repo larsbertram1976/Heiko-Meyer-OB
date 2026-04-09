@@ -8,9 +8,9 @@ import { Menu } from "lucide-react";
 
 const navLinks = [
   { label: "Start", href: "/#start" },
-  { label: "Über mich", href: "/#ueber-mich" },
+  { label: "\u00dcber mich", href: "/#ueber-mich" },
   { label: "Wahlprogramm", href: "/#wahlprogramm" },
-  { label: "Sprachagent", href: "/sprachagent" },
+  { label: "Frag Heiko", href: "/sprachagent" },
 ];
 
 export function Header() {
