@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Conversation } from "@elevenlabs/client";
 
 const AGENT_ID = "agent_1001knrqm87sfm59cg7m29mv51fz";
 
@@ -13,7 +12,7 @@ const TOPICS = [
   "Wohnen",
   "Verkehr",
   "Verwaltung",
-  "Bürgernähe",
+  "B\u00FCrgern\u00E4he",
 ];
 
 const PROMPTS = [
@@ -35,12 +34,11 @@ export default function SprachagentPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [showChat, setShowChat] = useState(false);
 
-  const conversationRef = useRef<Conversation | null>(null);
+  const conversationRef = useRef<unknown>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const vizBarsRef = useRef<HTMLDivElement[]>([]);
   const vizIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Auto-scroll chat
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -53,18 +51,16 @@ export default function SprachagentPage() {
   const startVisualization = useCallback(() => {
     if (vizIntervalRef.current) return;
     vizIntervalRef.current = setInterval(() => {
-      const conv = conversationRef.current;
+      const conv = conversationRef.current as Record<string, unknown> | null;
       const bars = vizBarsRef.current;
       if (!bars.length) return;
 
       let usedReal = false;
       if (conv) {
         try {
-          const outputData = (conv as unknown as Record<string, () => Uint8Array>)
-            .getOutputByteFrequencyData?.();
-          const inputData = (conv as unknown as Record<string, () => Uint8Array>)
-            .getInputByteFrequencyData?.();
-          const data = outputData || inputData;
+          const getOutput = conv.getOutputByteFrequencyData as (() => Uint8Array) | undefined;
+          const getInput = conv.getInputByteFrequencyData as (() => Uint8Array) | undefined;
+          const data = getOutput?.() || getInput?.();
           if (data && data.length > 0) {
             const step = Math.floor(data.length / bars.length);
             bars.forEach((bar, i) => {
@@ -112,12 +108,12 @@ export default function SprachagentPage() {
         agentId: AGENT_ID,
         onConnect: () => {
           setStatus("active");
-          addMessage("system", "Verbunden – sprechen Sie jetzt!");
+          addMessage("system", "Verbunden \u2013 sprechen Sie jetzt!");
           startVisualization();
         },
         onDisconnect: () => {
           setStatus("ended");
-          addMessage("system", "Gespräch beendet. Danke für Ihr Interesse!");
+          addMessage("system", "Gespr\u00E4ch beendet. Danke f\u00FCr Ihr Interesse!");
           stopVisualization();
         },
         onMessage: (message: { source: string; message: string }) => {
@@ -127,17 +123,18 @@ export default function SprachagentPage() {
             addMessage("user", message.message);
           }
         },
-        onError: (error: unknown) => {
-          console.error("ElevenLabs error:", error);
-          addMessage(
-            "system",
-            "Verbindungsfehler. Bitte versuchen Sie es erneut."
-          );
+        onError: (message: string) => {
+          console.error("ElevenLabs error:", message);
+          addMessage("system", "Verbindungsfehler. Bitte versuchen Sie es erneut.");
           setStatus("ready");
+          setShowChat(false);
           stopVisualization();
         },
         onModeChange: () => {
-          // Visualizer stays active while conversation is running
+          // visualizer active during conversation
+        },
+        onStatusChange: (prop: { status: string }) => {
+          console.log("Status:", prop.status);
         },
       });
 
@@ -152,16 +149,18 @@ export default function SprachagentPage() {
       } else {
         addMessage(
           "system",
-          "Fehler beim Verbinden. Bitte versuchen Sie es erneut."
+          `Fehler beim Verbinden: ${(err as Error).message || "Unbekannter Fehler"}. Bitte versuchen Sie es erneut.`
         );
       }
       setStatus("ready");
+      setShowChat(false);
     }
   }, [addMessage, startVisualization, stopVisualization]);
 
   const stopConversation = useCallback(async () => {
-    if (conversationRef.current) {
-      await conversationRef.current.endSession();
+    const conv = conversationRef.current as { endSession?: () => Promise<void> } | null;
+    if (conv?.endSession) {
+      await conv.endSession();
       conversationRef.current = null;
     }
     setStatus("ended");
@@ -176,11 +175,11 @@ export default function SprachagentPage() {
     }
   };
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (conversationRef.current) {
-        conversationRef.current.endSession();
+      const conv = conversationRef.current as { endSession?: () => Promise<void> } | null;
+      if (conv?.endSession) {
+        conv.endSession();
       }
       if (vizIntervalRef.current) {
         clearInterval(vizIntervalRef.current);
@@ -192,14 +191,12 @@ export default function SprachagentPage() {
     <div className="flex min-h-[calc(100vh-4rem)] flex-col lg:flex-row">
       {/* ===== LEFT PANEL: Hero ===== */}
       <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-12 lg:px-10">
-        {/* Subtle gradient overlay */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_500px_400px_at_30%_80%,rgba(88,176,70,0.06),transparent),radial-gradient(ellipse_400px_400px_at_70%_20%,rgba(255,255,255,0.04),transparent)]" />
 
         <div className="relative z-10 max-w-md text-center lg:text-left">
-          {/* Badge */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
-            OB-Wahl · 14. September 2026
+            OB-Wahl &middot; 14. September 2026
           </div>
 
           <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl">
@@ -210,13 +207,12 @@ export default function SprachagentPage() {
           </p>
 
           <p className="mt-6 text-sm leading-relaxed text-white/45">
-            Parteilos. Unabhängig. Bürgernah.
+            Parteilos. Unabh&auml;ngig. B&uuml;rgernah.
             <br />
-            Stellen Sie Heiko Ihre Fragen – direkt per Sprache, rund um die Uhr.
+            Stellen Sie Heiko Ihre Fragen &ndash; direkt per Sprache, rund um die Uhr.
             Heiko Digital antwortet auf Basis seines Wahlprogramms.
           </p>
 
-          {/* Topic Tags */}
           <div className="mt-8 flex flex-wrap justify-center gap-2 lg:justify-start">
             {TOPICS.map((t) => (
               <span
@@ -229,21 +225,23 @@ export default function SprachagentPage() {
           </div>
         </div>
 
-        {/* Footer (desktop only) */}
         <div className="absolute bottom-6 left-10 right-10 z-10 hidden items-end justify-between lg:flex">
           <p className="max-w-[260px] text-[0.65rem] leading-relaxed text-white/20">
             KI-Assistent auf Basis des Wahlprogramms. Keine verbindlichen
-            Aussagen. Transparenz gemäß EU AI Act.
+            Aussagen. Transparenz gem&auml;&szlig; EU AI Act.
           </p>
           <Link href="/" className="text-[0.65rem] text-white/20 hover:text-white/40">
-            ← Zurück zur Startseite
+            &larr; Zur&uuml;ck zur Startseite
           </Link>
         </div>
       </div>
 
       {/* ===== RIGHT PANEL: Voice Interface ===== */}
       <div className="flex flex-1 flex-col items-center justify-center bg-[#f5f0e8] p-4 lg:max-w-[560px] lg:p-8">
-        <div className="flex w-full max-w-[440px] flex-col" style={{ height: "calc(100vh - 8rem)", maxHeight: "800px" }}>
+        <div
+          className="flex w-full max-w-[440px] flex-col"
+          style={{ height: "calc(100vh - 8rem)", maxHeight: "800px" }}
+        >
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-black/[0.06] pb-4">
             <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border-2 border-[#1a3eaf]">
@@ -259,7 +257,7 @@ export default function SprachagentPage() {
                 Heiko Meyer
               </h3>
               <p className="text-xs text-[#6b6b7b]">
-                OB-Kandidat · Heiko Digital
+                OB-Kandidat &middot; Heiko Digital
               </p>
             </div>
             <div className="ml-auto">
@@ -298,8 +296,8 @@ export default function SprachagentPage() {
                 Moin! Ich bin Heiko.
               </h3>
               <p className="max-w-xs text-sm leading-relaxed text-[#6b6b7b]">
-                Starten Sie das Gespräch und fragen Sie mich, was Ihnen auf dem
-                Herzen liegt. Ich antworte Ihnen persönlich – digital, ehrlich
+                Starten Sie das Gespr&auml;ch und fragen Sie mich, was Ihnen auf dem
+                Herzen liegt. Ich antworte Ihnen pers&ouml;nlich &ndash; digital, ehrlich
                 und direkt.
               </p>
               <div className="flex flex-wrap justify-center gap-1.5">
@@ -317,11 +315,11 @@ export default function SprachagentPage() {
 
           {/* Chat Area */}
           {showChat && (
-            <div className="flex flex-1 flex-col gap-3 overflow-y-auto py-4 scrollbar-thin">
+            <div className="flex flex-1 flex-col gap-3 overflow-y-auto py-4">
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`max-w-[88%] animate-[msgSlide_0.35s_ease-out] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                  className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                     msg.type === "agent"
                       ? "self-start rounded-bl-md bg-[#f0f0f5] text-[#2c2c3a]"
                       : msg.type === "user"
@@ -356,7 +354,6 @@ export default function SprachagentPage() {
 
           {/* Controls */}
           <div className="flex flex-col items-center gap-3 border-t border-black/[0.06] pt-4">
-            {/* Privacy Checkbox */}
             {status !== "active" && (
               <label className="flex cursor-pointer items-center gap-2 text-xs text-[#6b6b7b]">
                 <input
@@ -375,7 +372,6 @@ export default function SprachagentPage() {
               </label>
             )}
 
-            {/* Main Button */}
             <button
               onClick={handleMainButton}
               disabled={
@@ -403,18 +399,19 @@ export default function SprachagentPage() {
                   <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
                     <rect x="6" y="6" width="12" height="12" rx="2" />
                   </svg>
-                  Gespräch beenden
+                  Gespr&auml;ch beenden
                 </>
               ) : (
                 <>
                   <svg
                     viewBox="0 0 24 24"
-                    className="h-5 w-5 animate-[pulse-mic_1.5s_ease-in-out_infinite] fill-current"
+                    className="h-5 w-5 fill-current"
+                    style={{ animation: "pulse-mic 1.5s ease-in-out infinite" }}
                   >
                     <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
                   </svg>
                   {status === "ended"
-                    ? "Neues Gespräch starten"
+                    ? "Neues Gespr\u00E4ch starten"
                     : "Sprich mit Heiko"}
                 </>
               )}
@@ -424,17 +421,16 @@ export default function SprachagentPage() {
               Dieser Assistent nutzt KI. Antworten basieren auf Heiko Meyers
               Wahlprogramm.
               <br />
-              Für verbindliche Aussagen wenden Sie sich an das Wahlkampfteam.
+              F&uuml;r verbindliche Aussagen wenden Sie sich an das Wahlkampfteam.
             </p>
           </div>
         </div>
 
-        {/* Mobile back link */}
         <Link
           href="/"
           className="mt-4 text-xs text-[#6b6b7b] hover:text-[#1a3eaf] lg:hidden"
         >
-          ← Zurück zur Startseite
+          &larr; Zur&uuml;ck zur Startseite
         </Link>
       </div>
     </div>
