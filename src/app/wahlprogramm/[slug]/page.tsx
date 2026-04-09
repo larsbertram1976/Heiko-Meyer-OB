@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { programTopics } from "@/lib/program-data";
+import { NewsletterBanner } from "@/components/newsletter-banner";
 
 export function generateStaticParams() {
   return programTopics.map((topic) => ({ slug: topic.slug }));
@@ -238,6 +239,9 @@ export default async function ProgramTopicPage({
           </div>
         </div>
       </section>
+
+      {/* Newsletter Banner */}
+      <NewsletterBanner />
 
       {/* Prev/Next Navigation */}
       <section className="border-t bg-white py-8">

@@ -514,7 +514,65 @@ export default function DatenschutzPage() {
         </p>
 
         {/* 5 */}
-        <h2>5. Plugins und Tools</h2>
+        <h2>5. Newsletter und E-Mail-Benachrichtigungen</h2>
+
+        <h3>Art der verarbeiteten Daten</h3>
+        <p>
+          Wenn Sie sich f&uuml;r unseren Newsletter anmelden, erheben wir
+          folgende Daten:
+        </p>
+        <ul>
+          <li>
+            <strong>E-Mail-Adresse</strong> (Pflichtfeld)
+          </li>
+          <li>
+            <strong>Name</strong> (freiwillig)
+          </li>
+          <li>
+            <strong>Interessenschwerpunkte</strong> (freiwillig, z.&thinsp;B.
+            Flyer verteilen, Infostand betreuen)
+          </li>
+          <li>
+            <strong>Zeitpunkt der Anmeldung</strong>
+          </li>
+        </ul>
+
+        <h3>Zweck der Datenverarbeitung</h3>
+        <p>
+          Die erhobenen Daten werden ausschlie&szlig;lich zur Zusendung von
+          Wahlkampf-Updates, Veranstaltungshinweisen und Informationen zum
+          Wahlprogramm von Heiko Meyer verwendet.
+        </p>
+
+        <h3>Rechtsgrundlage</h3>
+        <p>
+          Die Verarbeitung erfolgt auf Grundlage Ihrer ausdr&uuml;cklichen
+          Einwilligung gem&auml;&szlig; Art. 6 Abs. 1 lit. a DSGVO. Die
+          Einwilligung erteilen Sie durch die aktive Anmeldung &uuml;ber das
+          Formular auf dieser Website.
+        </p>
+
+        <h3>Speicherdauer</h3>
+        <p>
+          Ihre Daten werden gespeichert, bis Sie Ihre Einwilligung widerrufen
+          oder der Wahlkampf von Heiko Meyer endet. Nach Ablauf der Kampagne
+          werden alle gespeicherten E-Mail-Adressen und zugeh&ouml;rigen Daten
+          gel&ouml;scht.
+        </p>
+
+        <h3>Abmelderecht</h3>
+        <p>
+          Sie k&ouml;nnen Ihre Einwilligung jederzeit widerrufen und sich vom
+          Newsletter abmelden. Senden Sie hierf&uuml;r eine formlose E-Mail an{" "}
+          <a href="mailto:heiko@meyer-lueneburg.de">
+            heiko@meyer-lueneburg.de
+          </a>
+          . Die Rechtm&auml;&szlig;igkeit der bis zum Widerruf erfolgten
+          Verarbeitung bleibt unber&uuml;hrt.
+        </p>
+
+        {/* 6 */}
+        <h2>6. Plugins und Tools</h2>
 
         <h3>YouTube mit erweitertem Datenschutz</h3>
         <p>

@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Wahlprogramm", href: "/wahlprogramm" },
   { label: "Termine", href: "/termine" },
   { label: "Themenpuls", href: "/themenprioritaeten" },
+  { label: "Mitmachen", href: "/mitmachen" },
   { label: "Frag Heiko", href: "/sprachagent" },
 ];
 

@@ -1,8 +1,50 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Countdown } from "@/components/countdown";
 
 export function HeroSection() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alreadySubscribed, setAlreadySubscribed] = useState(false);
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/newsletter")
+      .then((r) => r.json())
+      .then((data) => setCount(data.count ?? null))
+      .catch(() => {});
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email || loading) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.alreadySubscribed) {
+        setAlreadySubscribed(true);
+        setSuccess(true);
+      } else if (data.success) {
+        setSuccess(true);
+        if (data.count) setCount(data.count);
+      }
+    } catch {
+      // silent fail
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <section id="start" className="relative overflow-hidden bg-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 py-12 md:flex-row md:gap-12 md:px-8 md:py-20">
@@ -18,6 +60,15 @@ export function HeroSection() {
             Zukunft gestalten, Wirtschaft stärken und unsere Heimat lebenswert
             erhalten. Mit klarer Kante für unsere Stadt.
           </p>
+
+          {/* Countdown */}
+          <div className="inline-flex flex-col gap-1 rounded-sm bg-[#1a3eaf] px-5 py-3 w-fit">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-white/50">
+              Noch bis zur OB-Wahl am 14. September 2026
+            </span>
+            <Countdown />
+          </div>
+
           <div className="flex flex-row gap-3">
             <a
               href="#wahlprogramm"
@@ -46,6 +97,55 @@ export function HeroSection() {
               Mit Heiko sprechen
             </Link>
           </div>
+
+          {/* Compact email signup */}
+          {success ? (
+            <div className="flex items-center gap-2 rounded-sm border border-[#58b046] bg-[#58b046]/10 px-4 py-3 text-sm font-medium text-[#58b046]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 flex-shrink-0"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              {alreadySubscribed
+                ? "Diese E-Mail ist bereits angemeldet – danke!"
+                : "Danke! Sie sind jetzt dabei."}
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Ihre E-Mail-Adresse"
+                  required
+                  className="flex-1 rounded-sm border border-gray-200 px-3 py-2.5 text-sm outline-none focus:border-[#1a3eaf] focus:ring-1 focus:ring-[#1a3eaf]"
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="rounded-sm bg-[#58b046] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#4e9e3f] disabled:opacity-60"
+                >
+                  {loading ? "..." : "Dabei sein!"}
+                </button>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                {count !== null && count > 0 && (
+                  <span className="font-medium text-[#1a3eaf]">
+                    {count} {count === 1 ? "Lüneburger ist" : "Lüneburger sind"} schon dabei
+                  </span>
+                )}
+                <span>Kein Spam, jederzeit abmeldbar.</span>
+              </div>
+            </form>
+          )}
         </div>
 
         {/* Portrait + Slogan Graphic */}
