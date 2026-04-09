@@ -18,16 +18,16 @@ export function HeroSection() {
             Zukunft gestalten, Wirtschaft stärken und unsere Heimat lebenswert
             erhalten. Mit klarer Kante für unsere Stadt.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-row gap-3">
             <a
               href="#wahlprogramm"
-              className="inline-flex w-fit items-center justify-center rounded-sm bg-[#1a3eaf] px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-[#15349a]"
+              className="inline-flex items-center justify-center rounded-sm bg-[#1a3eaf] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#15349a] sm:px-8 sm:py-4 sm:text-base"
             >
               Zum Wahlprogramm
             </a>
             <Link
               href="/sprachagent"
-              className="inline-flex w-fit items-center gap-2 rounded-sm border-2 border-[#1a3eaf] px-8 py-4 text-base font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf] hover:text-white"
+              className="inline-flex items-center gap-2 rounded-sm border-2 border-[#1a3eaf] px-5 py-3 text-sm font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf] hover:text-white sm:px-8 sm:py-4 sm:text-base"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -37,13 +37,13 @@ export function HeroSection() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="h-5 w-5"
+                className="h-4 w-4 sm:h-5 sm:w-5"
               >
                 <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
                 <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
                 <line x1="12" x2="12" y1="19" y2="22" />
               </svg>
-              Heiko sprechen
+              Mit Heiko sprechen
             </Link>
           </div>
         </div>
