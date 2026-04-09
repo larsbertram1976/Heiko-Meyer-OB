@@ -53,7 +53,7 @@ export default async function ProgramTopicPage({
 
         <div className="relative mx-auto max-w-5xl px-4 py-16 md:px-8 md:py-24">
           <Link
-            href="/#wahlprogramm"
+            href="/wahlprogramm"
             className="mb-6 inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white"
           >
             <svg
@@ -210,7 +210,7 @@ export default async function ProgramTopicPage({
               Fragen? Sprich mit Heiko
             </Link>
             <Link
-              href="/#wahlprogramm"
+              href="/wahlprogramm"
               className="inline-flex items-center gap-2 rounded-sm border-2 border-white/30 px-8 py-4 font-semibold text-white transition-colors hover:bg-white/10"
             >
               Alle 9 Punkte ansehen

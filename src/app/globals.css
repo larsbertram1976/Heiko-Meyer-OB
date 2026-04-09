@@ -47,7 +47,8 @@
   body {
     @apply bg-background text-foreground;
   }
-  html {
+  /* Smooth scroll only for anchor links, not page navigation */
+  html.smooth-scroll {
     scroll-behavior: smooth;
   }
 

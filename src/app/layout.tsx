@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { PrevoteFloat } from "@/components/prevote-section";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 export const metadata: Metadata = {
   title: "Heiko Meyer für Lüneburg | Unabhängig für ein Miteinander",
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className="antialiased">
+        <SmoothScroll />
         <Header />
         <main>{children}</main>
         <Footer />
