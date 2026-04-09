@@ -34,6 +34,7 @@ export default function SprachagentPage() {
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [showChat, setShowChat] = useState(false);
+  const [textInput, setTextInput] = useState("");
 
   const conversationRef = useRef<unknown>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -179,6 +180,17 @@ export default function SprachagentPage() {
     }
   };
 
+  const sendTextMessage = useCallback(() => {
+    const text = textInput.trim();
+    if (!text || status !== "active") return;
+    const conv = conversationRef.current as { sendUserMessage?: (text: string) => void } | null;
+    if (conv?.sendUserMessage) {
+      conv.sendUserMessage(text);
+      addMessage("user", text);
+      setTextInput("");
+    }
+  }, [textInput, status, addMessage]);
+
   useEffect(() => {
     return () => {
       const conv = conversationRef.current as { endSession?: () => Promise<void> } | null;
@@ -192,32 +204,39 @@ export default function SprachagentPage() {
   }, []);
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] flex-col lg:flex-row">
+    <div className="flex h-[calc(100vh-4rem)] flex-col lg:flex-row">
       {/* ===== LEFT PANEL: Hero ===== */}
-      <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-12 lg:px-10">
+      <div className="relative flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-6 lg:flex-1 lg:px-10 lg:py-12">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_500px_400px_at_30%_80%,rgba(88,176,70,0.06),transparent),radial-gradient(ellipse_400px_400px_at_70%_20%,rgba(255,255,255,0.04),transparent)]" />
 
         <div className="relative z-10 max-w-md text-center lg:text-left">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50">
+          {/* Mobile: compact header */}
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50 lg:mb-8">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
             OB-Wahl &middot; 14. September 2026
           </div>
 
-          <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl">
+          <h1 className="text-2xl font-bold leading-tight text-white lg:text-5xl">
             Heiko Meyer
           </h1>
-          <p className="mt-2 text-lg font-light tracking-wide text-[#58b046]">
+          <p className="mt-1 text-base font-light tracking-wide text-[#58b046] lg:mt-2 lg:text-lg">
             Gestalten statt verwalten.
           </p>
 
-          <p className="mt-6 text-sm leading-relaxed text-white/45">
+          {/* Desktop only: full description */}
+          <p className="mt-6 hidden text-sm leading-relaxed text-white/45 lg:block">
             Parteilos. Unabh&auml;ngig. B&uuml;rgernah.
             <br />
             Stellen Sie Heiko Ihre Fragen &ndash; direkt per Sprache, rund um die Uhr.
             Heiko Digital antwortet auf Basis seines Wahlprogramms.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-2 lg:justify-start">
+          {/* Mobile: one-liner */}
+          <p className="mt-2 text-xs text-white/40 lg:hidden">
+            Stellen Sie Heiko Ihre Fragen &ndash; per Sprache oder Text.
+          </p>
+
+          <div className="mt-4 hidden flex-wrap gap-2 lg:flex">
             {TOPICS.map((t) => (
               <span
                 key={t}
@@ -241,11 +260,8 @@ export default function SprachagentPage() {
       </div>
 
       {/* ===== RIGHT PANEL: Voice Interface ===== */}
-      <div className="flex flex-1 flex-col items-center justify-center bg-[#f5f0e8] p-4 lg:max-w-[560px] lg:p-8">
-        <div
-          className="flex w-full max-w-[440px] flex-col"
-          style={{ height: "calc(100vh - 8rem)", maxHeight: "800px" }}
-        >
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center bg-[#f5f0e8] p-4 lg:max-w-[560px] lg:p-8">
+        <div className="flex w-full max-w-[440px] flex-1 flex-col overflow-hidden">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-black/[0.06] pb-4">
             <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border-2 border-[#1a3eaf]">
@@ -355,6 +371,44 @@ export default function SprachagentPage() {
               />
             ))}
           </div>
+
+          {/* Text Input (visible when active) */}
+          {status === "active" && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendTextMessage();
+              }}
+              className="flex gap-2 border-t border-black/[0.06] pt-3"
+            >
+              <input
+                type="text"
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                placeholder="Nachricht eingeben..."
+                className="flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-[#2c2c3a] placeholder:text-[#6b6b7b]/50 focus:border-[#1a3eaf] focus:outline-none"
+              />
+              <button
+                type="submit"
+                disabled={!textInput.trim()}
+                className="flex items-center justify-center rounded-xl bg-[#1a3eaf] px-4 py-3 text-white transition-colors hover:bg-[#15349a] disabled:opacity-40"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                >
+                  <path d="m22 2-7 20-4-9-9-4Z" />
+                  <path d="M22 2 11 13" />
+                </svg>
+              </button>
+            </form>
+          )}
 
           {/* Controls */}
           <div className="flex flex-col items-center gap-3 border-t border-black/[0.06] pt-4">
