@@ -347,8 +347,8 @@ export default function SprachagentPage() {
 
           {/* Audio Visualizer */}
           <div
-            className={`flex h-12 items-center justify-center gap-[3px] transition-opacity duration-300 ${
-              status === "active" ? "opacity-100" : "opacity-0"
+            className={`flex items-center justify-center gap-[3px] transition-all duration-300 ${
+              status === "active" ? "h-6 opacity-100 lg:h-10" : "h-0 opacity-0"
             }`}
           >
             {Array.from({ length: 24 }).map((_, i) => (
@@ -363,26 +363,27 @@ export default function SprachagentPage() {
             ))}
           </div>
 
-          {/* Text Input (visible when active) */}
+          {/* ===== ACTIVE STATE: Compact input + end button ===== */}
           {status === "active" && (
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 sendTextMessage();
               }}
-              className="flex gap-2 border-t border-black/[0.06] pt-3"
+              className="flex gap-2 border-t border-black/[0.06] pt-2"
             >
               <input
                 type="text"
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 placeholder="Nachricht eingeben..."
-                className="flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-[#2c2c3a] placeholder:text-[#6b6b7b]/50 focus:border-[#1a3eaf] focus:outline-none"
+                className="flex-1 rounded-lg border border-black/10 bg-white px-3 py-2.5 text-sm text-[#2c2c3a] placeholder:text-[#6b6b7b]/50 focus:border-[#1a3eaf] focus:outline-none"
               />
               <button
                 type="submit"
                 disabled={!textInput.trim()}
-                className="flex items-center justify-center rounded-xl bg-[#1a3eaf] px-4 py-3 text-white transition-colors hover:bg-[#15349a] disabled:opacity-40"
+                className="flex items-center justify-center rounded-lg bg-[#1a3eaf] px-3 py-2.5 text-white transition-colors hover:bg-[#15349a] disabled:opacity-40"
+                aria-label="Senden"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -392,18 +393,29 @@ export default function SprachagentPage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="h-5 w-5"
+                  className="h-4 w-4"
                 >
                   <path d="m22 2-7 20-4-9-9-4Z" />
                   <path d="M22 2 11 13" />
                 </svg>
               </button>
+              <button
+                type="button"
+                onClick={handleMainButton}
+                className="flex items-center justify-center rounded-lg bg-red-500/10 px-3 py-2.5 text-red-600 transition-colors hover:bg-red-500/20"
+                aria-label="Gespr\u00e4ch beenden"
+                title="Gespr\u00e4ch beenden"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
+                  <rect x="6" y="6" width="12" height="12" rx="2" />
+                </svg>
+              </button>
             </form>
           )}
 
-          {/* Controls */}
-          <div className="flex flex-col items-center gap-3 border-t border-black/[0.06] pt-4">
-            {status !== "active" && (
+          {/* ===== IDLE STATE: Privacy + big start button ===== */}
+          {status !== "active" && (
+            <div className="flex flex-col items-center gap-2 border-t border-black/[0.06] pt-3">
               <label className="flex cursor-pointer items-center gap-2 text-xs text-[#6b6b7b]">
                 <input
                   type="checkbox"
@@ -419,68 +431,42 @@ export default function SprachagentPage() {
                   Datenschutzrichtlinie
                 </a>
               </label>
-            )}
 
-            <button
-              onClick={handleMainButton}
-              disabled={
-                (!privacyAccepted && status !== "active") ||
-                status === "connecting"
-              }
-              className={`flex w-full items-center justify-center gap-2.5 rounded-2xl px-4 py-4 text-base font-semibold transition-all duration-300 ${
-                status === "active"
-                  ? "bg-black/[0.06] text-[#2c2c3a] hover:bg-black/10"
-                  : "bg-gradient-to-r from-[#1a3eaf] to-[#2551c7] text-white shadow-lg shadow-[#1a3eaf]/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#1a3eaf]/35 disabled:translate-y-0 disabled:opacity-50 disabled:shadow-none"
-              }`}
-            >
-              {status === "connecting" ? (
-                <>
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 animate-spin fill-current"
-                  >
-                    <path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z" />
-                  </svg>
-                  Verbinde...
-                </>
-              ) : status === "active" ? (
-                <>
-                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
-                    <rect x="6" y="6" width="12" height="12" rx="2" />
-                  </svg>
-                  Gespr&auml;ch beenden
-                </>
-              ) : (
-                <>
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 fill-current"
-                    style={{ animation: "pulse-mic 1.5s ease-in-out infinite" }}
-                  >
-                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
-                  </svg>
-                  {status === "ended"
-                    ? "Neues Gespräch starten"
-                    : "Sprich mit Heiko"}
-                </>
-              )}
-            </button>
+              <button
+                onClick={handleMainButton}
+                disabled={!privacyAccepted || status === "connecting"}
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-[#1a3eaf] to-[#2551c7] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1a3eaf]/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#1a3eaf]/35 disabled:translate-y-0 disabled:opacity-50 disabled:shadow-none"
+              >
+                {status === "connecting" ? (
+                  <>
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4 animate-spin fill-current"
+                    >
+                      <path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z" />
+                    </svg>
+                    Verbinde...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4 fill-current"
+                      style={{ animation: "pulse-mic 1.5s ease-in-out infinite" }}
+                    >
+                      <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                    </svg>
+                    {status === "ended" ? "Neues Gespr\u00e4ch" : "Sprich mit Heiko"}
+                  </>
+                )}
+              </button>
 
-            <p className="text-center text-[0.68rem] leading-relaxed text-[#6b6b7b]">
-              Dieser Assistent nutzt KI. Antworten basieren auf Heiko Meyers
-              Wahlprogramm.
-              <br />
-              F&uuml;r verbindliche Aussagen wenden Sie sich an das Wahlkampfteam.
-            </p>
-          </div>
+              <p className="hidden text-center text-[0.6rem] text-[#6b6b7b]/70 lg:block">
+                KI-basiert. Keine verbindlichen Aussagen.
+              </p>
+            </div>
+          )}
         </div>
-
-        <Link
-          href="/"
-          className="mt-4 text-xs text-[#6b6b7b] hover:text-[#1a3eaf] lg:hidden"
-        >
-          &larr; Zur&uuml;ck zur Startseite
-        </Link>
       </div>
     </div>
   );
