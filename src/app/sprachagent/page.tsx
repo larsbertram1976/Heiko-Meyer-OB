@@ -180,23 +180,41 @@ export default function SprachagentPage() {
     };
   }, []);
 
+  const heroCompact = showChat;
+
   return (
-    <div className="flex h-[calc(100vh-4rem)] w-full flex-col overflow-hidden lg:flex-row">
+    <div className="fixed inset-x-0 bottom-0 top-16 flex w-full flex-col overflow-hidden lg:flex-row">
       {/* ===== LEFT PANEL: Hero ===== */}
-      <div className="relative flex w-full shrink-0 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-4 lg:h-full lg:w-auto lg:flex-1 lg:px-10 lg:py-12">
+      <div
+        className={`relative flex w-full shrink-0 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] transition-all duration-500 ease-in-out lg:h-full lg:w-auto lg:flex-1 lg:px-10 lg:py-12 ${
+          heroCompact ? "px-4 py-2" : "px-6 py-5"
+        }`}
+      >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_500px_400px_at_30%_80%,rgba(88,176,70,0.06),transparent),radial-gradient(ellipse_400px_400px_at_70%_20%,rgba(255,255,255,0.04),transparent)]" />
 
         <div className="relative z-10 w-full max-w-md px-2 text-center lg:px-0 lg:text-left">
-          {/* Badge */}
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[0.6rem] uppercase tracking-wider text-white/50 lg:mb-8 lg:px-4 lg:py-1.5 lg:text-xs">
+          {/* Badge – hidden on mobile when chat active */}
+          <div
+            className={`items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[0.6rem] uppercase tracking-wider text-white/50 lg:mb-8 lg:inline-flex lg:px-4 lg:py-1.5 lg:text-xs ${
+              heroCompact ? "hidden lg:inline-flex" : "mb-2 inline-flex"
+            }`}
+          >
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
             OB-Wahl &middot; 14. September 2026
           </div>
 
-          <h1 className="text-xl font-bold leading-tight text-white lg:text-5xl">
+          <h1
+            className={`font-bold leading-tight text-white transition-all duration-500 lg:text-5xl ${
+              heroCompact ? "text-base lg:text-5xl" : "text-xl"
+            }`}
+          >
             Heiko Meyer
           </h1>
-          <p className="mt-0.5 text-sm font-light tracking-wide text-[#58b046] lg:mt-2 lg:text-lg">
+          <p
+            className={`font-light tracking-wide text-[#58b046] transition-all duration-500 lg:mt-2 lg:text-lg ${
+              heroCompact ? "mt-0 text-xs lg:text-lg" : "mt-0.5 text-sm"
+            }`}
+          >
             Gestalten statt verwalten.
           </p>
 
