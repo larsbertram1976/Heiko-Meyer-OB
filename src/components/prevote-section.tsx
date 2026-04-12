@@ -1,13 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function PrevoteFloat() {
+  const pathname = usePathname();
   const [count, setCount] = useState<number | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [justVoted, setJustVoted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+
+  // Hide on voice agent page – would overlap chat controls
+  if (pathname === "/sprachagent") return null;
 
   useEffect(() => {
     const voted = localStorage.getItem("heiko-prevote") === "true";
