@@ -33,6 +33,8 @@ export default function SprachagentPage() {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const vizBarsRef = useRef<HTMLDivElement[]>([]);
   const vizIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const mountedRef = useRef(true);
+  const conversationRef = useRef<{ endSession?: () => Promise<void> } | null>(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,7 +42,16 @@ export default function SprachagentPage() {
 
   const addMessage = useCallback((type: ChatMessage["type"], text: string) => {
     if (!text?.trim()) return;
+    if (!mountedRef.current) return;
     setMessages((prev) => [...prev, { type, text }]);
+  }, []);
+
+  const resetToWelcome = useCallback(() => {
+    if (!mountedRef.current) return;
+    setStatus("ready");
+    setShowChat(false);
+    setMessages([]);
+    setPrivacyAccepted(false);
   }, []);
 
   const stopVisualization = useCallback(() => {
@@ -58,17 +69,16 @@ export default function SprachagentPage() {
   // audio pipeline setup, connection, and greeting timing correctly.
   const conversation = useConversation({
     onConnect: () => {
+      if (!mountedRef.current) return;
       setStatus("active");
       addMessage("system", "Verbunden \u2013 Heiko spricht gleich!");
     },
     onDisconnect: () => {
       stopVisualization();
-      setStatus("ready");
-      setShowChat(false);
-      setMessages([]);
-      setPrivacyAccepted(false);
+      resetToWelcome();
     },
     onMessage: (message: { source: string; message: string }) => {
+      if (!mountedRef.current) return;
       if (message.source === "ai" || message.source === "agent") {
         addMessage("agent", message.message);
       } else if (message.source === "user") {
@@ -77,6 +87,7 @@ export default function SprachagentPage() {
     },
     onError: (error: unknown) => {
       console.error("ElevenLabs error:", error);
+      if (!mountedRef.current) return;
       addMessage("system", "Verbindungsfehler. Bitte versuchen Sie es erneut.");
       setStatus("ready");
       stopVisualization();
@@ -86,12 +97,18 @@ export default function SprachagentPage() {
   const startVisualization = useCallback(() => {
     if (vizIntervalRef.current) return;
     vizIntervalRef.current = setInterval(() => {
+      if (!mountedRef.current) return;
       const bars = vizBarsRef.current;
       if (!bars.length) return;
 
-      const volume =
-        (conversation as unknown as { getOutputVolume?: () => number })
-          .getOutputVolume?.() ?? 0;
+      let volume = 0;
+      try {
+        volume =
+          (conversation as unknown as { getOutputVolume?: () => number })
+            .getOutputVolume?.() ?? 0;
+      } catch {
+        volume = 0;
+      }
 
       bars.forEach((bar, i) => {
         const t = Date.now() / 300 + i * 0.4;
@@ -137,6 +154,13 @@ export default function SprachagentPage() {
     }
   }, [addMessage, conversation]);
 
+  // Keep ref in sync so cleanup can access without stale closure
+  useEffect(() => {
+    conversationRef.current = conversation as {
+      endSession?: () => Promise<void>;
+    };
+  }, [conversation]);
+
   const stopConversation = useCallback(async () => {
     try {
       await conversation.endSession();
@@ -144,12 +168,8 @@ export default function SprachagentPage() {
       /* ignore */
     }
     stopVisualization();
-    // Reset to welcome state for a clean experience
-    setStatus("ready");
-    setShowChat(false);
-    setMessages([]);
-    setPrivacyAccepted(false);
-  }, [conversation, stopVisualization]);
+    resetToWelcome();
+  }, [conversation, stopVisualization, resetToWelcome]);
 
   const handleMainButton = () => {
     if (status === "active") {
@@ -172,20 +192,24 @@ export default function SprachagentPage() {
     }
   }, [textInput, status, conversation, addMessage]);
 
-  // Cleanup on unmount: end session gracefully so navigating away
-  // doesn't leave an active ElevenLabs connection or throw errors.
+  // Cleanup on unmount: mark unmounted first so callbacks skip state
+  // updates, then end any active ElevenLabs session via the ref.
+  // Avoid async/await here – we don't want to await a promise that
+  // might reject during unmount and crash React.
   useEffect(() => {
     return () => {
+      mountedRef.current = false;
       if (vizIntervalRef.current) {
         clearInterval(vizIntervalRef.current);
+        vizIntervalRef.current = null;
       }
-      try {
-        conversation.endSession?.();
-      } catch {
-        /* ignore */
+      const conv = conversationRef.current;
+      if (conv?.endSession) {
+        Promise.resolve()
+          .then(() => conv.endSession?.())
+          .catch(() => {});
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const heroCompact = showChat;
