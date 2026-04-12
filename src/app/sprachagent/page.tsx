@@ -235,22 +235,22 @@ export default function SprachagentPage() {
   }, []);
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] flex-col lg:h-[calc(100vh-4rem)] lg:flex-row">
+    <div className="flex h-[calc(100vh-4rem)] w-full flex-col overflow-hidden lg:flex-row">
       {/* ===== LEFT PANEL: Hero ===== */}
-      <div className="relative flex shrink-0 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-6 lg:flex-1 lg:px-10 lg:py-12">
+      <div className="relative flex w-full shrink-0 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1d5e] via-[#1a3eaf] to-[#2551c7] px-6 py-4 lg:h-full lg:w-auto lg:flex-1 lg:px-10 lg:py-12">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_500px_400px_at_30%_80%,rgba(88,176,70,0.06),transparent),radial-gradient(ellipse_400px_400px_at_70%_20%,rgba(255,255,255,0.04),transparent)]" />
 
-        <div className="relative z-10 max-w-md text-center lg:text-left">
-          {/* Mobile: compact header */}
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50 lg:mb-8">
+        <div className="relative z-10 w-full max-w-md px-2 text-center lg:px-0 lg:text-left">
+          {/* Badge */}
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[0.6rem] uppercase tracking-wider text-white/50 lg:mb-8 lg:px-4 lg:py-1.5 lg:text-xs">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
             OB-Wahl &middot; 14. September 2026
           </div>
 
-          <h1 className="text-2xl font-bold leading-tight text-white lg:text-5xl">
+          <h1 className="text-xl font-bold leading-tight text-white lg:text-5xl">
             Heiko Meyer
           </h1>
-          <p className="mt-1 text-base font-light tracking-wide text-[#58b046] lg:mt-2 lg:text-lg">
+          <p className="mt-0.5 text-sm font-light tracking-wide text-[#58b046] lg:mt-2 lg:text-lg">
             Gestalten statt verwalten.
           </p>
 
@@ -262,11 +262,7 @@ export default function SprachagentPage() {
             Heiko Digital antwortet auf Basis seines Wahlprogramms.
           </p>
 
-          {/* Mobile: one-liner */}
-          <p className="mt-2 text-xs text-white/40 lg:hidden">
-            Stellen Sie Heiko Ihre Fragen &ndash; per Sprache oder Text.
-          </p>
-
+          {/* Desktop only: topic tags */}
           <div className="mt-4 hidden flex-wrap gap-2 lg:flex">
             {TOPICS.map((t) => (
               <span
@@ -291,8 +287,8 @@ export default function SprachagentPage() {
       </div>
 
       {/* ===== RIGHT PANEL: Voice Interface ===== */}
-      <div className="flex min-h-[70vh] flex-1 flex-col items-center bg-[#f5f0e8] p-4 lg:max-w-[560px] lg:justify-center lg:p-8">
-        <div className="flex w-full max-w-[440px] flex-1 flex-col lg:max-h-[800px]">
+      <div className="flex min-h-0 w-full flex-1 flex-col items-center bg-[#f5f0e8] p-4 lg:h-full lg:w-auto lg:max-w-[560px] lg:justify-center lg:p-8">
+        <div className="flex w-full min-w-0 max-w-[440px] flex-1 flex-col overflow-hidden">
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-black/[0.06] pb-4">
             <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border-2 border-[#1a3eaf]">
@@ -334,7 +330,7 @@ export default function SprachagentPage() {
 
           {/* Welcome State */}
           {!showChat && (
-            <div className="flex flex-1 flex-col items-center justify-center gap-5 py-8 text-center">
+            <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-5 overflow-y-auto py-8 text-center">
               <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-[#1a3eaf] bg-gradient-to-br from-[#0f1d5e] to-[#2551c7] shadow-lg">
                 <Image
                   src="/logo-AIP8sSah.webp"
@@ -366,7 +362,7 @@ export default function SprachagentPage() {
 
           {/* Chat Area */}
           {showChat && (
-            <div className="flex flex-1 flex-col gap-3 overflow-y-auto py-4">
+            <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto py-4">
               {messages.map((msg, i) => (
                 <div
                   key={i}
