@@ -98,7 +98,38 @@ export default function SprachagentPage() {
 
   const startConversation = useCallback(async () => {
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Step 1: Request microphone permission FIRST and wait for user approval.
+      // The popup blocks here until the user clicks "Allow" or "Deny".
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      // Step 2: Warmup the AudioContext so the first audio frames from the
+      // agent are not lost while the output pipeline spins up. Browsers
+      // require a user gesture to resume audio – we have one (the button click).
+      try {
+        const AudioCtx =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (AudioCtx) {
+          const audioCtx = new AudioCtx();
+          if (audioCtx.state === "suspended") {
+            await audioCtx.resume();
+          }
+          // Keep context open for a short moment, then close – ElevenLabs will
+          // create its own. This just primes the browser audio subsystem.
+          setTimeout(() => audioCtx.close().catch(() => {}), 2000);
+        }
+      } catch {
+        /* audio context warmup optional */
+      }
+
+      // Step 3: Release our probe stream – ElevenLabs will request its own
+      // (permission is already granted, so no second popup).
+      stream.getTracks().forEach((t) => t.stop());
+
+      // Step 4: Brief delay so the browser audio pipeline is truly ready
+      // before the agent starts streaming its greeting. Without this, the
+      // first few hundred milliseconds of the first sentence get clipped.
+      await new Promise((r) => setTimeout(r, 400));
 
       setStatus("connecting");
       setShowChat(true);
