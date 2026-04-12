@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useConversation } from "@elevenlabs/react";
 
 const AGENT_ID = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "";
 
@@ -35,7 +36,6 @@ export default function SprachagentPage() {
   const [showChat, setShowChat] = useState(false);
   const [textInput, setTextInput] = useState("");
 
-  const conversationRef = useRef<unknown>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const vizBarsRef = useRef<HTMLDivElement[]>([]);
   const vizIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -49,42 +49,6 @@ export default function SprachagentPage() {
     setMessages((prev) => [...prev, { type, text }]);
   }, []);
 
-  const startVisualization = useCallback(() => {
-    if (vizIntervalRef.current) return;
-    vizIntervalRef.current = setInterval(() => {
-      const conv = conversationRef.current as Record<string, unknown> | null;
-      const bars = vizBarsRef.current;
-      if (!bars.length) return;
-
-      let usedReal = false;
-      if (conv) {
-        try {
-          const getOutput = conv.getOutputByteFrequencyData as (() => Uint8Array) | undefined;
-          const getInput = conv.getInputByteFrequencyData as (() => Uint8Array) | undefined;
-          const data = getOutput?.() || getInput?.();
-          if (data && data.length > 0) {
-            const step = Math.floor(data.length / bars.length);
-            bars.forEach((bar, i) => {
-              const val = data[i * step] || 0;
-              bar.style.height = `${Math.max(3, (val / 255) * 40)}px`;
-            });
-            usedReal = true;
-          }
-        } catch {
-          /* fallback below */
-        }
-      }
-
-      if (!usedReal) {
-        bars.forEach((bar, i) => {
-          const t = Date.now() / 300 + i * 0.4;
-          const h = 3 + Math.sin(t) * 6 + Math.random() * 4;
-          bar.style.height = `${Math.max(3, h)}px`;
-        });
-      }
-    }, 80);
-  }, []);
-
   const stopVisualization = useCallback(() => {
     if (vizIntervalRef.current) {
       clearInterval(vizIntervalRef.current);
@@ -95,52 +59,70 @@ export default function SprachagentPage() {
     });
   }, []);
 
+  // Use the official @elevenlabs/react hook – same approach as the
+  // working KIM project and the official widget. This handles all the
+  // audio pipeline setup, connection, and greeting timing correctly.
+  const conversation = useConversation({
+    onConnect: () => {
+      setStatus("active");
+      addMessage("system", "Verbunden \u2013 Heiko spricht gleich!");
+    },
+    onDisconnect: () => {
+      setStatus("ended");
+      addMessage("system", "Gespr\u00e4ch beendet. Danke f\u00fcr Ihr Interesse!");
+      stopVisualization();
+    },
+    onMessage: (message: { source: string; message: string }) => {
+      if (message.source === "ai" || message.source === "agent") {
+        addMessage("agent", message.message);
+      } else if (message.source === "user") {
+        addMessage("user", message.message);
+      }
+    },
+    onError: (error: unknown) => {
+      console.error("ElevenLabs error:", error);
+      addMessage("system", "Verbindungsfehler. Bitte versuchen Sie es erneut.");
+      setStatus("ready");
+      stopVisualization();
+    },
+  });
+
+  const startVisualization = useCallback(() => {
+    if (vizIntervalRef.current) return;
+    vizIntervalRef.current = setInterval(() => {
+      const bars = vizBarsRef.current;
+      if (!bars.length) return;
+
+      const volume =
+        (conversation as unknown as { getOutputVolume?: () => number })
+          .getOutputVolume?.() ?? 0;
+
+      bars.forEach((bar, i) => {
+        const t = Date.now() / 300 + i * 0.4;
+        const base = volume > 0 ? volume * 35 : 3;
+        const h = Math.max(3, base + Math.sin(t) * 5 + Math.random() * 4);
+        bar.style.height = `${h}px`;
+      });
+    }, 80);
+  }, [conversation]);
+
+  // Start visualization when status becomes active
+  useEffect(() => {
+    if (status === "active") {
+      startVisualization();
+    }
+  }, [status, startVisualization]);
+
   const startConversation = useCallback(async () => {
     try {
       setStatus("connecting");
       setShowChat(true);
       addMessage("system", "Verbindung zu Heiko wird aufgebaut...");
 
-      const { Conversation } = await import("@elevenlabs/client");
-
-      // Use WebRTC + 300ms connectionDelay – exact same config as the
-      // official ElevenLabs widget (see convai-widget-core source).
-      // WebRTC negotiates the full audio pipeline BEFORE any audio flows,
-      // so the first frames of the agent's greeting are never lost.
-      // WebSocket mode has cold-start audio pipeline issues on mobile.
-      const conv = await Conversation.startSession({
+      await conversation.startSession({
         agentId: AGENT_ID,
         connectionType: "webrtc",
-        connectionDelay: { default: 300 },
-        onConnect: () => {
-          setStatus("active");
-          startVisualization();
-          addMessage("system", "Verbunden – Heiko spricht gleich!");
-        },
-        onDisconnect: () => {
-          setStatus("ended");
-          addMessage("system", "Gespräch beendet. Danke für Ihr Interesse!");
-          stopVisualization();
-        },
-        onMessage: (message: { source: string; message: string }) => {
-          if (message.source === "ai") {
-            addMessage("agent", message.message);
-          } else if (message.source === "user") {
-            addMessage("user", message.message);
-          }
-        },
-        onError: (message: string, context?: unknown) => {
-          console.error("ElevenLabs error:", message, context);
-          addMessage("system", "Verbindungsfehler. Bitte versuchen Sie es erneut.");
-          setStatus("ready");
-          stopVisualization();
-        },
-        onModeChange: () => {
-          // visualizer active during conversation
-        },
       });
-
-      conversationRef.current = conv;
     } catch (err) {
       console.error("Start error:", err);
       const error = err as Error & { name?: string };
@@ -158,17 +140,17 @@ export default function SprachagentPage() {
       }
       setStatus("ready");
     }
-  }, [addMessage, startVisualization, stopVisualization]);
+  }, [addMessage, conversation]);
 
   const stopConversation = useCallback(async () => {
-    const conv = conversationRef.current as { endSession?: () => Promise<void> } | null;
-    if (conv?.endSession) {
-      await conv.endSession();
-      conversationRef.current = null;
+    try {
+      await conversation.endSession();
+    } catch {
+      /* ignore */
     }
     setStatus("ended");
     stopVisualization();
-  }, [stopVisualization]);
+  }, [conversation, stopVisualization]);
 
   const handleMainButton = () => {
     if (status === "active") {
@@ -181,20 +163,18 @@ export default function SprachagentPage() {
   const sendTextMessage = useCallback(() => {
     const text = textInput.trim();
     if (!text || status !== "active") return;
-    const conv = conversationRef.current as { sendUserMessage?: (text: string) => void } | null;
-    if (conv?.sendUserMessage) {
-      conv.sendUserMessage(text);
+    try {
+      (conversation as unknown as { sendUserMessage?: (t: string) => void })
+        .sendUserMessage?.(text);
       addMessage("user", text);
       setTextInput("");
+    } catch (e) {
+      console.warn("Could not send text:", e);
     }
-  }, [textInput, status, addMessage]);
+  }, [textInput, status, conversation, addMessage]);
 
   useEffect(() => {
     return () => {
-      const conv = conversationRef.current as { endSession?: () => Promise<void> } | null;
-      if (conv?.endSession) {
-        conv.endSession();
-      }
       if (vizIntervalRef.current) {
         clearInterval(vizIntervalRef.current);
       }
