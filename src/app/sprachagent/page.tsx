@@ -34,7 +34,6 @@ export default function SprachagentPage() {
   const vizBarsRef = useRef<HTMLDivElement[]>([]);
   const vizIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const mountedRef = useRef(true);
-  const conversationRef = useRef<{ endSession?: () => Promise<void> } | null>(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -154,13 +153,6 @@ export default function SprachagentPage() {
     }
   }, [addMessage, conversation]);
 
-  // Keep ref in sync so cleanup can access without stale closure
-  useEffect(() => {
-    conversationRef.current = conversation as {
-      endSession?: () => Promise<void>;
-    };
-  }, [conversation]);
-
   const stopConversation = useCallback(async () => {
     try {
       await conversation.endSession();
@@ -192,22 +184,16 @@ export default function SprachagentPage() {
     }
   }, [textInput, status, conversation, addMessage]);
 
-  // Cleanup on unmount: mark unmounted first so callbacks skip state
-  // updates, then end any active ElevenLabs session via the ref.
-  // Avoid async/await here – we don't want to await a promise that
-  // might reject during unmount and crash React.
+  // Cleanup on unmount: mark unmounted and clear interval.
+  // Do NOT call conversation.endSession() here – the @elevenlabs/react
+  // hook handles its own cleanup internally, and calling it manually
+  // during unmount causes a client-side error on the next route.
   useEffect(() => {
     return () => {
       mountedRef.current = false;
       if (vizIntervalRef.current) {
         clearInterval(vizIntervalRef.current);
         vizIntervalRef.current = null;
-      }
-      const conv = conversationRef.current;
-      if (conv?.endSession) {
-        Promise.resolve()
-          .then(() => conv.endSession?.())
-          .catch(() => {});
       }
     };
   }, []);
