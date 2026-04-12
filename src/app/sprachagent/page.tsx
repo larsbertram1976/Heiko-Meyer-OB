@@ -62,9 +62,11 @@ export default function SprachagentPage() {
       addMessage("system", "Verbunden \u2013 Heiko spricht gleich!");
     },
     onDisconnect: () => {
-      setStatus("ended");
-      addMessage("system", "Gespr\u00e4ch beendet. Danke f\u00fcr Ihr Interesse!");
       stopVisualization();
+      setStatus("ready");
+      setShowChat(false);
+      setMessages([]);
+      setPrivacyAccepted(false);
     },
     onMessage: (message: { source: string; message: string }) => {
       if (message.source === "ai" || message.source === "agent") {
@@ -141,8 +143,12 @@ export default function SprachagentPage() {
     } catch {
       /* ignore */
     }
-    setStatus("ended");
     stopVisualization();
+    // Reset to welcome state for a clean experience
+    setStatus("ready");
+    setShowChat(false);
+    setMessages([]);
+    setPrivacyAccepted(false);
   }, [conversation, stopVisualization]);
 
   const handleMainButton = () => {
@@ -166,12 +172,20 @@ export default function SprachagentPage() {
     }
   }, [textInput, status, conversation, addMessage]);
 
+  // Cleanup on unmount: end session gracefully so navigating away
+  // doesn't leave an active ElevenLabs connection or throw errors.
   useEffect(() => {
     return () => {
       if (vizIntervalRef.current) {
         clearInterval(vizIntervalRef.current);
       }
+      try {
+        conversation.endSession?.();
+      } catch {
+        /* ignore */
+      }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const heroCompact = showChat;
@@ -331,7 +345,7 @@ export default function SprachagentPage() {
 
           {/* Audio Visualizer */}
           <div
-            className={`flex items-center justify-center gap-[3px] transition-all duration-300 ${
+            className={`flex items-center justify-center gap-[3px] overflow-hidden transition-all duration-300 ${
               status === "active" ? "h-12 opacity-100" : "h-0 opacity-0"
             }`}
           >
