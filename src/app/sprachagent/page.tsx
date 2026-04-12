@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const AGENT_ID = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "";
-const API_KEY = process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY ?? "";
 
 const TOPICS = [
   "Sicherheit",
@@ -111,7 +110,7 @@ export default function SprachagentPage() {
       // WebSocket mode has cold-start audio pipeline issues on mobile.
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
-        connectionType: "webrtc",
+        connectionType: "websocket",
         connectionDelay: { default: 300 },
         onConnect: () => {
           setStatus("active");
@@ -145,8 +144,6 @@ export default function SprachagentPage() {
     } catch (err) {
       console.error("Start error:", err);
       const error = err as Error & { name?: string };
-      const details = JSON.stringify(err, Object.getOwnPropertyNames(err as object), 2);
-      console.error("Error details:", details);
 
       if (error.name === "NotAllowedError") {
         addMessage(
@@ -156,7 +153,7 @@ export default function SprachagentPage() {
       } else {
         addMessage(
           "system",
-          `DEBUG: ${error.message || "Unbekannt"} | Agent: ${AGENT_ID ? "gesetzt" : "FEHLT"} | Key: ${API_KEY ? "gesetzt" : "FEHLT"} | Details: ${details}`
+          "Verbindungsfehler. Bitte versuchen Sie es erneut."
         );
       }
       setStatus("ready");
