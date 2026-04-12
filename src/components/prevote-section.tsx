@@ -11,9 +11,6 @@ export function PrevoteFloat() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // Hide on voice agent page – would overlap chat controls
-  if (pathname === "/sprachagent") return null;
-
   useEffect(() => {
     const voted = localStorage.getItem("heiko-prevote") === "true";
     if (voted) setHasVoted(true);
@@ -57,6 +54,10 @@ export function PrevoteFloat() {
   }, [hasVoted, loading]);
 
   const formattedCount = count !== null ? count.toLocaleString("de-DE") : "...";
+
+  // Hide on voice agent page – would overlap chat controls.
+  // Placed AFTER all hooks to respect rules of hooks.
+  if (pathname === "/sprachagent") return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
