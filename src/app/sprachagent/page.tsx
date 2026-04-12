@@ -98,13 +98,27 @@ export default function SprachagentPage() {
 
   const startConversation = useCallback(async () => {
     try {
-      // Step 1: Request microphone permission FIRST and wait for user approval.
-      // The popup blocks here until the user clicks "Allow" or "Deny".
+      // ====================================================================
+      // STEP 1: Show "connecting" UI immediately so user knows something
+      // is happening. Do this BEFORE the mic popup so it's visually clear.
+      // ====================================================================
+      setStatus("connecting");
+      setShowChat(true);
+      addMessage("system", "Mikrofon-Zugriff wird angefragt...");
+
+      // ====================================================================
+      // STEP 2: Request microphone permission and WAIT for user approval.
+      // The popup blocks here. If denied, we stop immediately.
+      // ====================================================================
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // Step 2: Warmup the AudioContext so the first audio frames from the
-      // agent are not lost while the output pipeline spins up. Browsers
-      // require a user gesture to resume audio – we have one (the button click).
+      // ====================================================================
+      // STEP 3: Fully warm up the browser audio output pipeline.
+      // Chrome/Safari lazily initialize audio – the first frames from the
+      // agent can be lost if we don't force the pipeline to be ready.
+      // We play a tiny silent buffer through an AudioContext to ensure the
+      // output is actually flowing before the agent starts streaming.
+      // ====================================================================
       try {
         const AudioCtx =
           window.AudioContext ||
@@ -114,36 +128,59 @@ export default function SprachagentPage() {
           if (audioCtx.state === "suspended") {
             await audioCtx.resume();
           }
-          // Keep context open for a short moment, then close – ElevenLabs will
-          // create its own. This just primes the browser audio subsystem.
-          setTimeout(() => audioCtx.close().catch(() => {}), 2000);
+          // Play 200ms of silence to force the output pipeline to spin up
+          const silentBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.2, audioCtx.sampleRate);
+          const src = audioCtx.createBufferSource();
+          src.buffer = silentBuffer;
+          src.connect(audioCtx.destination);
+          src.start();
+          await new Promise<void>((resolve) => {
+            src.onended = () => resolve();
+            // Fallback if onended doesn't fire
+            setTimeout(resolve, 300);
+          });
+          // Keep context open a bit longer, ElevenLabs will use its own
+          setTimeout(() => audioCtx.close().catch(() => {}), 3000);
         }
       } catch {
-        /* audio context warmup optional */
+        /* warmup is best-effort */
       }
 
-      // Step 3: Release our probe stream – ElevenLabs will request its own
-      // (permission is already granted, so no second popup).
+      // ====================================================================
+      // STEP 4: Release probe stream – ElevenLabs SDK will request its own
+      // (permission already granted, no second popup).
+      // ====================================================================
       stream.getTracks().forEach((t) => t.stop());
 
-      // Step 4: Brief delay so the browser audio pipeline is truly ready
-      // before the agent starts streaming its greeting. Without this, the
-      // first few hundred milliseconds of the first sentence get clipped.
-      await new Promise((r) => setTimeout(r, 400));
-
-      setStatus("connecting");
-      setShowChat(true);
       addMessage("system", "Verbindung wird hergestellt...");
 
+      // ====================================================================
+      // STEP 5: Start the ElevenLabs session. We wrap it in a promise that
+      // only resolves once `onConnect` has actually fired AND we've waited
+      // a short grace period for the audio output to be fully active.
+      // Only THEN do we flip the UI to "active" – this is the signal that
+      // the connection is fully established.
+      // ====================================================================
       const { Conversation } = await import("@elevenlabs/client");
+
+      let resolveConnected: () => void;
+      const connectedPromise = new Promise<void>((resolve) => {
+        resolveConnected = resolve;
+      });
 
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
         connectionType: "websocket",
         onConnect: () => {
-          setStatus("active");
-          addMessage("system", "Verbunden – sprechen Sie jetzt!");
-          startVisualization();
+          // Give the audio output pipeline a last grace period to fully
+          // activate before we consider the conversation "ready". The agent
+          // may start streaming immediately, but without this delay the
+          // first frames can still get clipped.
+          setTimeout(() => {
+            resolveConnected();
+            setStatus("active");
+            startVisualization();
+          }, 500);
         },
         onDisconnect: () => {
           setStatus("ended");
@@ -159,7 +196,7 @@ export default function SprachagentPage() {
         },
         onError: (message: string, context?: unknown) => {
           console.error("ElevenLabs error:", message, context);
-          addMessage("system", `DEBUG onError: ${message} | Context: ${JSON.stringify(context)}`);
+          addMessage("system", "Verbindungsfehler. Bitte versuchen Sie es erneut.");
           setStatus("ready");
           stopVisualization();
         },
@@ -172,6 +209,9 @@ export default function SprachagentPage() {
       });
 
       conversationRef.current = conv;
+
+      // Wait until onConnect has fired + grace period passed
+      await connectedPromise;
     } catch (err) {
       console.error("Start error:", err);
       const error = err as Error & { name?: string };
