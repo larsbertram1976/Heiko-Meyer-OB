@@ -110,7 +110,7 @@ export default function SprachagentPage() {
       // WebSocket mode has cold-start audio pipeline issues on mobile.
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
-        connectionType: "websocket",
+        connectionType: "webrtc",
         connectionDelay: { default: 300 },
         onConnect: () => {
           setStatus("active");
