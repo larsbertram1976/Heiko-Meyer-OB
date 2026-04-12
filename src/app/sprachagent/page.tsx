@@ -102,21 +102,45 @@ export default function SprachagentPage() {
       setShowChat(true);
       addMessage("system", "Verbindung zu Heiko wird aufgebaut...");
 
+      // Pre-warm a silent AudioContext while the user gesture is still
+      // active. On iOS Safari, this is critical – once the gesture is lost,
+      // new audio contexts can't play. We create one here, play a silent
+      // tone, and keep it alive so the SDK's internal context inherits
+      // the "unlocked" state.
+      try {
+        const AudioCtx =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (AudioCtx) {
+          const warmupCtx = new AudioCtx();
+          if (warmupCtx.state === "suspended") {
+            await warmupCtx.resume();
+          }
+          // Play a completely silent buffer to unlock audio output on iOS
+          const buffer = warmupCtx.createBuffer(1, 1, 22050);
+          const source = warmupCtx.createBufferSource();
+          source.buffer = buffer;
+          source.connect(warmupCtx.destination);
+          source.start(0);
+          // Keep context alive – don't close, let browser GC it when done
+        }
+      } catch {
+        /* best effort */
+      }
+
       const { Conversation } = await import("@elevenlabs/client");
 
-      // Use the ElevenLabs SDK's built-in connectionDelay option. The SDK
-      // applies this delay AFTER mic permission is granted and BEFORE the
-      // websocket connects to the agent – exactly where the cut-off happens.
-      // Android has a default of 3000ms baked in, iOS/Desktop default to 0.
-      // We set 2000ms across all platforms so the audio pipeline has plenty
-      // of time to warm up before the agent starts streaming its greeting.
+      // connectionDelay lets ElevenLabs SDK pause between mic-permission
+      // and session setup. Android needs ~3s (SDK default). iOS/Desktop
+      // we keep short (500ms) so we don't lose the user gesture context –
+      // longer delays on iOS break AudioContext autoplay.
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
         connectionType: "websocket",
         connectionDelay: {
-          default: 2000,
+          default: 500,
           android: 3000,
-          ios: 2000,
+          ios: 500,
         },
         onConnect: () => {
           setStatus("active");
