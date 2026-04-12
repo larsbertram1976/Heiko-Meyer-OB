@@ -102,46 +102,17 @@ export default function SprachagentPage() {
       setShowChat(true);
       addMessage("system", "Verbindung zu Heiko wird aufgebaut...");
 
-      // Pre-warm a silent AudioContext while the user gesture is still
-      // active. On iOS Safari, this is critical – once the gesture is lost,
-      // new audio contexts can't play. We create one here, play a silent
-      // tone, and keep it alive so the SDK's internal context inherits
-      // the "unlocked" state.
-      try {
-        const AudioCtx =
-          window.AudioContext ||
-          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        if (AudioCtx) {
-          const warmupCtx = new AudioCtx();
-          if (warmupCtx.state === "suspended") {
-            await warmupCtx.resume();
-          }
-          // Play a completely silent buffer to unlock audio output on iOS
-          const buffer = warmupCtx.createBuffer(1, 1, 22050);
-          const source = warmupCtx.createBufferSource();
-          source.buffer = buffer;
-          source.connect(warmupCtx.destination);
-          source.start(0);
-          // Keep context alive – don't close, let browser GC it when done
-        }
-      } catch {
-        /* best effort */
-      }
-
       const { Conversation } = await import("@elevenlabs/client");
 
-      // connectionDelay lets ElevenLabs SDK pause between mic-permission
-      // and session setup. Android needs ~3s (SDK default). iOS/Desktop
-      // we keep short (500ms) so we don't lose the user gesture context –
-      // longer delays on iOS break AudioContext autoplay.
+      // Use WebRTC + 300ms connectionDelay – exact same config as the
+      // official ElevenLabs widget (see convai-widget-core source).
+      // WebRTC negotiates the full audio pipeline BEFORE any audio flows,
+      // so the first frames of the agent's greeting are never lost.
+      // WebSocket mode has cold-start audio pipeline issues on mobile.
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
-        connectionType: "websocket",
-        connectionDelay: {
-          default: 500,
-          android: 3000,
-          ios: 500,
-        },
+        connectionType: "webrtc",
+        connectionDelay: { default: 300 },
         onConnect: () => {
           setStatus("active");
           startVisualization();
