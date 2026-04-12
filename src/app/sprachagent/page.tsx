@@ -16,12 +16,6 @@ const TOPICS = [
   "Bürgernähe",
 ];
 
-const PROMPTS = [
-  "\u201EWas tust du am Sande?\u201C",
-  "\u201EWarum parteilos?\u201C",
-  "\u201EDein Plan f\u00FCr L\u00FCneburg?\u201C",
-];
-
 type ChatMessage = {
   type: "agent" | "user" | "system";
   text: string;
@@ -311,16 +305,6 @@ export default function SprachagentPage() {
                 Herzen liegt. Ich antworte Ihnen pers&ouml;nlich &ndash; digital, ehrlich
                 und direkt.
               </p>
-              <div className="flex flex-wrap justify-center gap-1.5">
-                {PROMPTS.map((p) => (
-                  <span
-                    key={p}
-                    className="rounded-full border border-black/[0.06] bg-black/[0.04] px-3 py-1.5 text-xs text-[#6b6b7b]"
-                  >
-                    {p}
-                  </span>
-                ))}
-              </div>
             </div>
           )}
 
@@ -348,7 +332,7 @@ export default function SprachagentPage() {
           {/* Audio Visualizer */}
           <div
             className={`flex items-center justify-center gap-[3px] transition-all duration-300 ${
-              status === "active" ? "h-6 opacity-100 lg:h-10" : "h-0 opacity-0"
+              status === "active" ? "h-12 opacity-100" : "h-0 opacity-0"
             }`}
           >
             {Array.from({ length: 24 }).map((_, i) => (
@@ -365,13 +349,14 @@ export default function SprachagentPage() {
 
           {/* ===== ACTIVE STATE: Compact input + end button ===== */}
           {status === "active" && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                sendTextMessage();
-              }}
-              className="flex gap-2 border-t border-black/[0.06] pt-2"
-            >
+            <div className="flex flex-col gap-1.5 border-t border-black/[0.06] pt-2">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  sendTextMessage();
+                }}
+                className="flex gap-2"
+              >
               <input
                 type="text"
                 value={textInput}
@@ -410,7 +395,14 @@ export default function SprachagentPage() {
                   <rect x="6" y="6" width="12" height="12" rx="2" />
                 </svg>
               </button>
-            </form>
+              </form>
+              <p className="text-center text-[0.6rem] text-[#6b6b7b]/60">
+                KI-basiert &middot; Keine verbindlichen Aussagen &middot;{" "}
+                <a href="/datenschutz" className="hover:text-[#1a3eaf]">
+                  Datenschutz
+                </a>
+              </p>
+            </div>
           )}
 
           {/* ===== IDLE STATE: Privacy + big start button ===== */}
