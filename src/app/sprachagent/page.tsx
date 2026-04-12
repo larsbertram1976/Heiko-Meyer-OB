@@ -99,70 +99,29 @@ export default function SprachagentPage() {
   const startConversation = useCallback(async () => {
     try {
       // ====================================================================
-      // STEP 1: Show "connecting" UI immediately so user knows something
-      // is happening. Do this BEFORE the mic popup so it's visually clear.
+      // STEP 1: Show "connecting" state immediately
       // ====================================================================
       setStatus("connecting");
       setShowChat(true);
       addMessage("system", "Mikrofon-Zugriff wird angefragt...");
 
       // ====================================================================
-      // STEP 2: Request microphone permission and WAIT for user approval.
-      // The popup blocks here. If denied, we stop immediately.
+      // STEP 2: Request microphone permission and WAIT for user
       // ====================================================================
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      // ====================================================================
-      // STEP 3: Fully warm up the browser audio output pipeline.
-      // Chrome/Safari lazily initialize audio – the first frames from the
-      // agent can be lost if we don't force the pipeline to be ready.
-      // We play a tiny silent buffer through an AudioContext to ensure the
-      // output is actually flowing before the agent starts streaming.
-      // ====================================================================
-      try {
-        const AudioCtx =
-          window.AudioContext ||
-          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        if (AudioCtx) {
-          const audioCtx = new AudioCtx();
-          if (audioCtx.state === "suspended") {
-            await audioCtx.resume();
-          }
-          // Play 200ms of silence to force the output pipeline to spin up
-          const silentBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.2, audioCtx.sampleRate);
-          const src = audioCtx.createBufferSource();
-          src.buffer = silentBuffer;
-          src.connect(audioCtx.destination);
-          src.start();
-          await new Promise<void>((resolve) => {
-            src.onended = () => resolve();
-            // Fallback if onended doesn't fire
-            setTimeout(resolve, 300);
-          });
-          // Keep context open a bit longer, ElevenLabs will use its own
-          setTimeout(() => audioCtx.close().catch(() => {}), 3000);
-        }
-      } catch {
-        /* warmup is best-effort */
-      }
-
-      // ====================================================================
-      // STEP 4: Release probe stream – ElevenLabs SDK will request its own
-      // (permission already granted, no second popup).
-      // ====================================================================
       stream.getTracks().forEach((t) => t.stop());
 
-      addMessage("system", "Verbindung wird hergestellt...");
+      addMessage("system", "Verbindung zu Heiko wird aufgebaut...");
 
       // ====================================================================
-      // STEP 5: Start the ElevenLabs session. We wrap it in a promise that
-      // only resolves once `onConnect` has actually fired AND we've waited
-      // a short grace period for the audio output to be fully active.
-      // Only THEN do we flip the UI to "active" – this is the signal that
-      // the connection is fully established.
+      // STEP 3: Start ElevenLabs session with the agent's first_message
+      // SUPPRESSED. The agent will connect but stay silent until we
+      // explicitly tell it to speak. This avoids any cut-off because we
+      // control exactly when the greeting starts.
       // ====================================================================
       const { Conversation } = await import("@elevenlabs/client");
 
+      // Promise that resolves when websocket is fully connected
       let resolveConnected: () => void;
       const connectedPromise = new Promise<void>((resolve) => {
         resolveConnected = resolve;
@@ -171,16 +130,14 @@ export default function SprachagentPage() {
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
         connectionType: "websocket",
+        // Suppress the automatic first message – we trigger it manually
+        overrides: {
+          agent: {
+            firstMessage: "",
+          },
+        },
         onConnect: () => {
-          // Give the audio output pipeline a last grace period to fully
-          // activate before we consider the conversation "ready". The agent
-          // may start streaming immediately, but without this delay the
-          // first frames can still get clipped.
-          setTimeout(() => {
-            resolveConnected();
-            setStatus("active");
-            startVisualization();
-          }, 500);
+          resolveConnected();
         },
         onDisconnect: () => {
           setStatus("ended");
@@ -204,14 +161,48 @@ export default function SprachagentPage() {
           // visualizer active during conversation
         },
         onStatusChange: (prop: { status: string }) => {
-          console.log("Status:", prop.status);
+          console.log("ElevenLabs status:", prop.status);
         },
       });
 
       conversationRef.current = conv;
 
-      // Wait until onConnect has fired + grace period passed
+      // ====================================================================
+      // STEP 4: Wait for onConnect to fire (websocket actually open)
+      // ====================================================================
       await connectedPromise;
+
+      // ====================================================================
+      // STEP 5: Extra grace period so audio pipeline is 100% ready
+      // ====================================================================
+      await new Promise((r) => setTimeout(r, 800));
+
+      // ====================================================================
+      // STEP 6: NOW we flip UI to active and trigger the greeting
+      // manually by sending a user activity signal. The agent is fully
+      // connected, the audio pipeline is warm, and only now does the
+      // agent start speaking.
+      // ====================================================================
+      setStatus("active");
+      startVisualization();
+      addMessage("system", "Verbunden – Heiko ist bereit!");
+
+      // Trigger the greeting by sending a contextual update that tells
+      // the agent to introduce itself. This works even with
+      // firstMessage: "" because the agent will respond to context.
+      try {
+        const c = conv as unknown as {
+          sendContextualUpdate?: (text: string) => void;
+          sendUserMessage?: (text: string) => void;
+        };
+        if (c.sendContextualUpdate) {
+          c.sendContextualUpdate("Der Nutzer hat das Gespräch gestartet. Bitte begrüße ihn jetzt mit deiner Standard-Begrüßung.");
+        } else if (c.sendUserMessage) {
+          c.sendUserMessage("Hallo");
+        }
+      } catch (e) {
+        console.warn("Could not trigger greeting:", e);
+      }
     } catch (err) {
       console.error("Start error:", err);
       const error = err as Error & { name?: string };
