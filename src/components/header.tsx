@@ -11,6 +11,7 @@ const navLinks = [
   { label: "Über mich", href: "/#ueber-mich" },
   { label: "Warum Heiko", href: "/warum-heiko" },
   { label: "Wahlprogramm", href: "/wahlprogramm" },
+  { label: "Stadtteile", href: "/stadtteile" },
   { label: "Termine", href: "/termine" },
   { label: "Themenpuls", href: "/themenprioritaeten" },
   { label: "Mitmachen", href: "/mitmachen" },
