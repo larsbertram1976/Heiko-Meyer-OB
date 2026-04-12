@@ -121,7 +121,6 @@ export default function SprachagentPage() {
 
       await conversation.startSession({
         agentId: AGENT_ID,
-        connectionType: "webrtc",
       });
     } catch (err) {
       console.error("Start error:", err);
