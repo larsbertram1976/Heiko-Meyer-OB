@@ -98,46 +98,30 @@ export default function SprachagentPage() {
 
   const startConversation = useCallback(async () => {
     try {
-      // ====================================================================
-      // STEP 1: Show "connecting" state immediately
-      // ====================================================================
       setStatus("connecting");
       setShowChat(true);
-      addMessage("system", "Mikrofon-Zugriff wird angefragt...");
-
-      // ====================================================================
-      // STEP 2: Request microphone permission and WAIT for user
-      // ====================================================================
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      stream.getTracks().forEach((t) => t.stop());
-
       addMessage("system", "Verbindung zu Heiko wird aufgebaut...");
 
-      // ====================================================================
-      // STEP 3: Start ElevenLabs session with the agent's first_message
-      // SUPPRESSED. The agent will connect but stay silent until we
-      // explicitly tell it to speak. This avoids any cut-off because we
-      // control exactly when the greeting starts.
-      // ====================================================================
       const { Conversation } = await import("@elevenlabs/client");
 
-      // Promise that resolves when websocket is fully connected
-      let resolveConnected: () => void;
-      const connectedPromise = new Promise<void>((resolve) => {
-        resolveConnected = resolve;
-      });
-
+      // Use the ElevenLabs SDK's built-in connectionDelay option. The SDK
+      // applies this delay AFTER mic permission is granted and BEFORE the
+      // websocket connects to the agent – exactly where the cut-off happens.
+      // Android has a default of 3000ms baked in, iOS/Desktop default to 0.
+      // We set 2000ms across all platforms so the audio pipeline has plenty
+      // of time to warm up before the agent starts streaming its greeting.
       const conv = await Conversation.startSession({
         agentId: AGENT_ID,
         connectionType: "websocket",
-        // Suppress the automatic first message – we trigger it manually
-        overrides: {
-          agent: {
-            firstMessage: "",
-          },
+        connectionDelay: {
+          default: 2000,
+          android: 3000,
+          ios: 2000,
         },
         onConnect: () => {
-          resolveConnected();
+          setStatus("active");
+          startVisualization();
+          addMessage("system", "Verbunden – Heiko spricht gleich!");
         },
         onDisconnect: () => {
           setStatus("ended");
@@ -160,49 +144,9 @@ export default function SprachagentPage() {
         onModeChange: () => {
           // visualizer active during conversation
         },
-        onStatusChange: (prop: { status: string }) => {
-          console.log("ElevenLabs status:", prop.status);
-        },
       });
 
       conversationRef.current = conv;
-
-      // ====================================================================
-      // STEP 4: Wait for onConnect to fire (websocket actually open)
-      // ====================================================================
-      await connectedPromise;
-
-      // ====================================================================
-      // STEP 5: Extra grace period so audio pipeline is 100% ready
-      // ====================================================================
-      await new Promise((r) => setTimeout(r, 800));
-
-      // ====================================================================
-      // STEP 6: NOW we flip UI to active and trigger the greeting
-      // manually by sending a user activity signal. The agent is fully
-      // connected, the audio pipeline is warm, and only now does the
-      // agent start speaking.
-      // ====================================================================
-      setStatus("active");
-      startVisualization();
-      addMessage("system", "Verbunden – Heiko ist bereit!");
-
-      // Trigger the greeting by sending a contextual update that tells
-      // the agent to introduce itself. This works even with
-      // firstMessage: "" because the agent will respond to context.
-      try {
-        const c = conv as unknown as {
-          sendContextualUpdate?: (text: string) => void;
-          sendUserMessage?: (text: string) => void;
-        };
-        if (c.sendContextualUpdate) {
-          c.sendContextualUpdate("Der Nutzer hat das Gespräch gestartet. Bitte begrüße ihn jetzt mit deiner Standard-Begrüßung.");
-        } else if (c.sendUserMessage) {
-          c.sendUserMessage("Hallo");
-        }
-      } catch (e) {
-        console.warn("Could not trigger greeting:", e);
-      }
     } catch (err) {
       console.error("Start error:", err);
       const error = err as Error & { name?: string };
