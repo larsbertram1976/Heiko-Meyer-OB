@@ -11,6 +11,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { PrevoteFloat } from "@/components/prevote-section";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { Analytics } from "@vercel/analytics/next";
 
 const BASE_URL = "https://meyer-lueneburg.de";
 
@@ -257,6 +258,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <PrevoteFloat />
+        <Analytics />
       </body>
     </html>
   );
