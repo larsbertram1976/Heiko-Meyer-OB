@@ -538,6 +538,41 @@ export default function MitmachenPage() {
         </div>
       </section>
 
+      {/* Themenpuls Teaser */}
+      <section className="bg-[#1a3eaf] py-12 md:py-16">
+        <div className="mx-auto max-w-3xl px-4 text-center md:px-8">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
+            Ihre Meinung z&auml;hlt
+          </div>
+          <h2 className="text-2xl font-black text-white md:text-3xl">
+            Was soll Heiko zuerst anpacken?
+          </h2>
+          <p className="mx-auto mt-3 max-w-lg text-sm text-white/60">
+            45 Vorhaben f&uuml;r 8 Jahre &ndash; helfen Sie Heiko zu priorisieren.
+            W&auml;hlen Sie Ihre Top 10 und sehen Sie live, was ganz L&uuml;neburg bewegt.
+          </p>
+          <Link
+            href="/themenprioritaeten"
+            className="mt-6 inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-bold text-white transition-colors hover:bg-[#4e9e3f]"
+          >
+            Zum Themenpuls
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4"
+            >
+              <path d="m12 19 7-7-7-7" />
+            </svg>
+          </Link>
+        </div>
+      </section>
+
       {/* Disclaimer */}
       <section className="border-t bg-white py-6">
         <div className="mx-auto max-w-5xl px-4 md:px-8">
