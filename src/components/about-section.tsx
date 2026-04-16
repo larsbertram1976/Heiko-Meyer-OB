@@ -13,7 +13,10 @@ const priorities = [
   "Bezahlbarer Wohnraum",
   "Starker Wirtschaftsstandort",
   "Bildung & Universität",
-  "Verkehr, der alle versöhnt",
+  "Soziales Lüneburg",
+  "Verkehr & Umwelt",
+  "Kulturelles Leben",
+  "Sport & Gemeinschaft",
 ];
 
 export function AboutSection() {

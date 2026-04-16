@@ -46,7 +46,7 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Bürgerbeteiligung fördern",
-          text: "Lüneburger werden in Projekte und Kompetenzteams eingebunden. Mehr reden, mehr zuhören, schneller lösen. Heiko will für jeden Bürger ansprechbar sein.",
+          text: "Lüneburger werden in Projekte und Kompetenzteams eingebunden. Mehr reden, mehr zuhören, schneller lösen. Stadtplanung richtet sich nach den Bedürfnissen aller: Jüngere, Ältere und Menschen mit Handicap. Heiko will für jeden Bürger ansprechbar sein.",
         },
         {
           title: "Verwaltung neuorganisieren",
@@ -58,7 +58,7 @@ export const programTopics: ProgramTopic[] = [
         },
         {
           title: "Transparenz stärken",
-          text: "Offene Informationsflüsse: Bürger sollen nachvollziehen können, welche Entscheidungen getroffen werden und warum.",
+          text: "Entscheidungen, Abläufe und Finanzmittel werden offen, nachvollziehbar und leicht zugänglich kommuniziert. Bürger sollen wissen, was beschlossen wird, warum – und was es kostet.",
         },
         {
           title: "Begegnungsräume schaffen",
@@ -66,7 +66,7 @@ export const programTopics: ProgramTopic[] = [
         },
         {
           title: "Digitalisierung der Verwaltung",
-          text: "Alle behördlichen Dienstleistungen digital verfügbar machen. Das Rathaus muss ins 21. Jahrhundert kommen.",
+          text: "Nutzerfreundliche, sichere digitale Angebote ersetzen klassische Behördengänge – damit Bürger ihre Freiräume für die Dinge nutzen können, die wirklich zählen. Digitale Infrastruktur über die Verwaltung hinaus ausbauen.",
         },
       ],
     },
@@ -142,19 +142,19 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Wohnraum über Geschäften aktivieren",
-          text: "Über vielen Geschäften in der Innenstadt liegt ungenutzter Wohnraum. Heiko geht direkt auf Hauseigentümer zu. Das schafft Wohnungen ohne Neubau – und belebt die Innenstadt.",
+          text: "Über vielen Geschäften in der Innenstadt liegt ungenutzter Wohnraum. Heiko geht direkt auf Hauseigentümer zu. Dazu kommen Dachgeschossausbau, Dachaufstockungen und Nachverdichtung im Bestand – neuer Wohnraum ohne neue Bauflächen.",
         },
         {
-          title: "Neubau beschleunigen",
-          text: "Lüneburg braucht neue Wohnungen. Bauprojekte müssen schneller genehmigt und umgesetzt werden. Die Verwaltung muss hier Tempo machen.",
+          title: "Digitales Bauamt: Neubau beschleunigen",
+          text: "Baugenehmigungsverfahren werden durch ein digitales Bauamt beschleunigt. Zusätzlich setzt Heiko auf Konzeptvergabe: Grundstücke werden günstiger an Investoren vergeben, die Auflagen bei Mietpreisen, Ökologie oder Architektur erfüllen.",
         },
         {
           title: "Bürokratie beim Bauen abbauen",
-          text: "Zu viele Vorschriften, zu lange Genehmigungsverfahren. Heiko will die Verwaltung so organisieren, dass Bauprojekte schneller vorankommen.",
+          text: "Zu viele Vorschriften, zu lange Genehmigungsverfahren. Fördermöglichkeiten werden ausgeschöpft und flächeneffiziente Wohnformate gezielt gefördert – damit Bauen in Lüneburg wieder schneller geht.",
         },
         {
           title: "Sozial und fair",
-          text: "Bezahlbarer Wohnraum ist eine Grundvoraussetzung für ein soziales Lüneburg, in dem jeder die gleichen Chancen hat.",
+          text: "Die städtische Lüneburger Wohnungsbau GmbH wird aktiver geführt – die Stadt ist größter Teilhaber. Neuer bezahlbarer Wohnraum geht bevorzugt an Lüneburger Wohnungssuchende.",
         },
       ],
     },
@@ -187,19 +187,19 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Leerstand aktiv bekämpfen",
-          text: "Direkte Gespräche mit Hausbesitzern, um leerstehende Geschäfte wieder zu füllen. Nicht abwarten, sondern aktiv auf Eigentümer zugehen und Lösungen finden.",
+          text: "Direkte Gespräche mit Hausbesitzern, aktives Leerstands- und Citymanagement und ein Einzelhandelskonzept mit regionalen Ansiedlungsregeln. Nicht abwarten – sondern Umbaumaßnahmen vereinfachen und Mieten attraktiv gestalten.",
         },
         {
           title: "Wirtschafts-Perspektive ins Rathaus",
-          text: "Als Unternehmer und LCM-Vorsitzender bringt Heiko die Perspektive der Wirtschaft direkt ins Rathaus. Er versteht, was Händler und Gastronomen brauchen.",
+          text: "Heiko wird die Wirtschaftsförderungs-GmbH stärken und Unternehmen, die sich ansiedeln oder expandieren wollen, unbürokratisch unterstützen. Die Rahmenbedingungen müssen ein Wettbewerbsvorteil sein, nicht ein Hindernis.",
         },
         {
           title: "Das \u201EKaufhaus L\u00FCneburg\u201C stärken",
-          text: "Die Innenstadt als Einkaufsstandort attraktiv halten: Kunden aus Lüneburg, dem Umland und sogar Hamburg sollen gerne wiederkommen.",
+          text: "Die Innenstadt attraktiv halten – für Kunden aus Lüneburg, dem Umland und Hamburg. Dazu gehört: Synergien mit der Leuphana schaffen, Start-Ups fördern und junge Menschen, die hier studieren, als Unternehmer in der Stadt halten.",
         },
         {
           title: "Wohnraum über Geschäften",
-          text: "Doppeleffekt: Neuer Wohnraum entsteht und die Innenstadt wird belebter – mehr Bewohner bedeuten mehr Kunden für den Einzelhandel.",
+          text: "Der Strukturwandel im Handel eröffnet Chancen: Leere Ladenflächen werden in Wohnraum, Gastronomie und innovative Konzepte umgewandelt. Mehr Bewohner bedeuten mehr Kunden – ein Doppeleffekt für die Innenstadt.",
         },
       ],
     },
@@ -231,15 +231,15 @@ export const programTopics: ProgramTopic[] = [
         },
         {
           title: "Ganztagsschulen ausbauen",
-          text: "Familien brauchen verlässliche Betreuung. Der Ganztagsausbau muss Priorität haben – mit guter Qualität, nicht nur Verwahrung.",
+          text: "Schulen sind Lern- und Lebensorte. Schulbauten müssen modernisiert werden – qualitativ hochwertiger, attraktiver, freundlicher. Der Ganztagsausbau hat Priorität: gute Qualität, nicht nur Verwahrung.",
         },
         {
           title: "Bildungspakt 2040 umsetzen",
-          text: "Lüneburg braucht moderne Schulen mit guter Ausstattung. Digitale Infrastruktur, sanierte Gebäude, attraktive Lernumgebungen.",
+          text: "Digitale Infrastruktur für alle Schulen – und Geräte-Ausleihe für Familien, die sich Laptops nicht leisten können. Bildungschancen dürfen nicht vom Geldbeutel abhängen. Die IGS als vollwertige Alternative zu Gymnasien stärken.",
         },
         {
           title: "Fachkräfte für Lüneburg",
-          text: "Bildung und Wirtschaft zusammendenken: Ausbildungsplätze fördern, junge Menschen in der Region halten, Fachkräftemangel bekämpfen.",
+          text: "Mehr Angebote für Alleinerziehende und Menschen mit Integrationsbedarf. Hilfe für Jugendliche ohne Schulabschluss. Die Volkshochschule als wohnortnahe Bildung stärken. Ausbildungsplätze fördern, junge Menschen in der Region halten.",
         },
       ],
     },
@@ -267,19 +267,19 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Bezahlbarer Wohnraum als Grundrecht",
-          text: "Wohnen darf kein Luxus sein. Heiko kämpft für mehr bezahlbaren Wohnraum – durch Aktivierung von Leerstand und schnelleren Neubau.",
+          text: "Wohnen darf kein Luxus sein. Heiko kämpft für mehr bezahlbaren Wohnraum – durch Aktivierung von Leerstand und schnelleren Neubau. Die Wohnungsbau GmbH schafft gezielt seniorengerechten Wohnraum.",
         },
         {
-          title: "Sozialarbeit stärken",
-          text: "Aufsuchende Sozialarbeit muss ausgebaut werden. Wer Hilfe braucht, muss Hilfe bekommen – niedrigschwellig und ohne bürokratische Hürden.",
+          title: "Familien besser unterstützen",
+          text: "Kita-Öffnungszeiten werden flexibler an den Arbeitsalltag angepasst, Schließzeiten in den Ferien optimiert. Der Betreuungsschlüssel muss sinken – und es braucht mehr Kita-Plätze, dort wo Familien sie brauchen.",
         },
         {
           title: "Begegnungsräume für alle",
-          text: "Lüneburg braucht Orte, an denen sich Menschen treffen – generationenübergreifend, barrierefrei, in jedem Stadtteil.",
+          text: "Lüneburg braucht Orte, an denen sich Menschen treffen – generationenübergreifend und barrierefrei. Barrierefreiheit im öffentlichen Raum wird vorangetrieben. Die Teilhabe aller Generationen am städtischen Leben muss gewährleistet sein.",
         },
         {
           title: "Chancengleichheit",
-          text: "Jedes Kind in Lüneburg verdient die gleiche Chance – unabhängig vom Geldbeutel der Eltern. Bildung, Sport und Kultur müssen für alle zugänglich sein.",
+          text: "Jedes Kind in Lüneburg verdient die gleiche Chance – unabhängig vom Geldbeutel der Eltern. Kulturelle und internationale Vielfalt sind eine Chance für unsere Stadt. Integration stärkt das Zusammenleben.",
         },
       ],
     },
@@ -307,15 +307,15 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Alle Verkehrsteilnehmer berücksichtigen",
-          text: "Radfahrer, Autofahrer, Fußgänger und ÖPNV in einem Gesamtkonzept zusammendenken. Keine einseitigen Maßnahmen, die die Stadt spalten.",
+          text: "Fuß- und Radverkehr stärken, ÖPNV und Schulbusverkehr bedarfsgerecht ausbauen – und gleichzeitig den Autoverkehr nicht vergessen. Ein ehrlich erarbeitetes Gesamtkonzept statt einseitiger Maßnahmen.",
         },
         {
           title: "Ausreichend Stellplätze",
           text: "Die Innenstadt muss für alle erreichbar bleiben – auch für Kunden aus dem Umland, die zum Einkaufen nach Lüneburg kommen.",
         },
         {
-          title: "Park-and-Ride-System",
-          text: "Parken am Stadtrand, weiter mit ÖPNV in die Innenstadt. Eine moderne Lösung, die Verkehr reduziert und die Innenstadt entlastet.",
+          title: "Vier kostenfreie Park-and-Ride-Plätze",
+          text: "Parken am Stadtrand, weiter mit Bus in die Innenstadt. Vier Standorte an den Stadtgrenzen: B4 Nord (Bardowick), B4 Süd (Melbeck), L216 West (Reppenstedt) und B209 Ost (Dahlenburg). Kostenfrei, mit Anbindung an den innerstädtischen Busverkehr.",
         },
         {
           title: "Bessere Baustellenkoordination",
@@ -323,13 +323,17 @@ export const programTopics: ProgramTopic[] = [
         },
         {
           title: "Zusammenarbeit mit dem Landkreis",
-          text: "Viele Straßen liegen in der Zuständigkeit des Landkreises. Verkehrspolitik geht nur gemeinsam mit dem Landrat.",
+          text: "Viele Straßen liegen in der Zuständigkeit des Landkreises. Verkehrspolitik geht nur gemeinsam mit dem Landrat. Der Lärmschutz beim Bau der A39 wird konsequent eingefordert.",
+        },
+        {
+          title: "Umwelt und Klimaschutz",
+          text: "100 % Ökostrom für städtische Gebäude, LED-Umrüstung aller Straßenlaternen, Pestizidverbot auf kommunalen Flächen. Grundwasserentnahme kontrollieren. Öffentliche Neubauten nach dem Cradle-to-Cradle-Prinzip. Kleingärten als grüne Lunge Lüneburgs schützen.",
         },
       ],
     },
     concreteExample: {
-      headline: "Konkret: Baustellen-Koordinator und Landkreis-Pakt",
-      text: "Heiko schafft die Stelle eines Baustellen-Koordinators in der Verwaltung, der jede geplante Straßensperrung mit dem Landkreis abstimmt – bevor der erste Bagger rollt. Nie wieder Bleckeder Landstraße, Dahlenburger Landstraße und Soltauer Straße gleichzeitig dicht. Zusätzlich verhandelt Heiko einen Verkehrspakt mit dem Landrat: Gemeinsame Planung, gemeinsame Kommunikation an die Bürger, gemeinsame Umleitungskonzepte. Das kostet wenig, bringt aber enorm viel für den Alltag der Lüneburger.",
+      headline: "Konkret: Vier Park-and-Ride-Plätze und ein Baustellen-Koordinator",
+      text: "Heiko plant vier kostenfreie P&R-Parkplätze an den Lüneburger Stadtgrenzen mit Anbindung an den Busverkehr: B4 Nord (Richtung Bardowick), B4 Süd (Richtung Melbeck), L216 West (Richtung Reppenstedt) und B209 Ost (Richtung Dahlenburg). Der von außen einströmende Autoverkehr wird deutlich reduziert, die Innenstadt entlastet. Gleichzeitig schafft Heiko einen Baustellen-Koordinator in der Verwaltung, der jede Sperrung mit dem Landkreis abstimmt – bevor der erste Bagger rollt.",
     },
     cta: "Ein Verkehrskonzept, das funktioniert – für alle.",
   },
@@ -344,14 +348,14 @@ export const programTopics: ProgramTopic[] = [
       "Lüneburgs Kultur ist einzigartig. Sie verdient Wertschätzung – und Unterstützung.",
     problem: {
       headline: "Kultur braucht Raum und Förderung",
-      text: "Lüneburg hat eine lebendige Kulturszene – von der Musikschule über das Theater bis zu freien Künstlern. Doch steigende Kosten und fehlende Räume setzen der Szene zu. Kultur ist kein Luxus – sie macht unsere Stadt lebenswert und zieht Menschen an.",
+      text: "Lüneburg glänzt mit einem vielfältigen Kulturangebot: Das Stadttheater als Leuchtturm, die KulturBäckerei, der Kultursommer, das Heinrich-Heine-Haus, die neue Musikschule und Initiativen wie Let's Rock. Doch steigende Kosten und fehlende Räume setzen der Szene zu. Kultur ist kein Luxus – sie macht unsere Stadt lebenswert.",
     },
     positions: {
       headline: "Heikos Kulturprogramm",
       items: [
         {
           title: "Kulturräume sichern und schaffen",
-          text: "Künstler und Kulturschaffende brauchen bezahlbare Räume. Leerstehende Geschäfte können als Zwischennutzung für Kultur geöffnet werden.",
+          text: "Künstler und Kulturschaffende brauchen bezahlbare Räume. Leerstehende Geschäfte werden für Kultur geöffnet. Heiko setzt sich für die finanzielle und organisatorische Förderung des gesamten Kulturbetriebs ein und unterstützt innovative Konzepte.",
         },
         {
           title: "Veranstaltungen fördern",
@@ -363,7 +367,7 @@ export const programTopics: ProgramTopic[] = [
         },
         {
           title: "Lüneburgs Geschichte lebendig halten",
-          text: "Die historische Salz- und Hansestadt hat eine einzigartige Geschichte. Dieses Erbe zu pflegen und sichtbar zu machen, stärkt die Identität unserer Stadt.",
+          text: "Stadtführungen, Fassadenrekonstruktionen und unsere Museen vermitteln die Stadtgeschichte. Heiko will das historische Erbe noch sichtbarer machen – durch Verknüpfung mit anderen Aktivitäten der Stadtgesellschaft.",
         },
       ],
     },
@@ -391,19 +395,19 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Sportstätten sanieren und ausbauen",
-          text: "Lüneburgs Sporthallen und -plätze müssen in Schuss gebracht werden. Sanierungsstau abbauen, moderne Anlagen für Vereine und Schulen.",
+          text: "Sanierungsstau abbauen, moderne Anlagen schaffen. Das LSK-Stadion soll sowohl Schul- als auch Vereinssport berücksichtigen. Schulen und Vereine kooperieren bei der Nutzung von Sportanlagen und Geräten.",
         },
         {
           title: "Vereine stärken",
-          text: "Sportvereine sind das Rückgrat des gesellschaftlichen Lebens. Weniger Bürokratie, mehr Förderung, bessere Hallenzeiten.",
+          text: "Sportvereine sind das Rückgrat des gesellschaftlichen Lebens. Die Sportförderrichtlinien werden weiterentwickelt – auch jenseits der Fußballvereine. Weniger Bürokratie, mehr Förderung, bessere Hallenzeiten.",
         },
         {
-          title: "Breitensport fördern",
-          text: "Sport muss für alle bezahlbar und zugänglich sein. Besonders Kinder und Jugendliche sollen die Möglichkeit haben, sich in Vereinen zu engagieren.",
+          title: "Schwimmen lernen und Breitensport",
+          text: "Alle Kinder sollen bis zum Ende der Grundschulzeit schwimmen können. Hallenbad und Freibad werden als kommunale Sportstätten erhalten. Sport muss für alle bezahlbar und zugänglich sein.",
         },
         {
           title: "Bewegung im öffentlichen Raum",
-          text: "Parks, Laufstrecken und Fitness-Bereiche im Freien machen Sport niedrigschwellig verfügbar – für alle Altersgruppen.",
+          text: "Mehrgenerationenspielgeräte in Parks und Grünflächen ausbauen – Orte der Begegnung und Bewegung für alle Altersgruppen. Sport ist Gesundheitsprävention und stärkt die Integration.",
         },
       ],
     },
