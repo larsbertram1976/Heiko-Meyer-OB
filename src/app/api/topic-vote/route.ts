@@ -39,7 +39,7 @@ const SUBTOPICS: Record<string, string[]> = {
   wirtschaft: [
     "Leerstand aktiv bekämpfen",
     "Wirtschafts-Perspektive ins Rathaus",
-    "Das \"Kaufhaus Lüneburg\" stärken",
+    'Das "Kaufhaus Lüneburg" stärken',
     "Wohnraum über Geschäften",
   ],
   bildung: [
@@ -76,6 +76,15 @@ const SUBTOPICS: Record<string, string[]> = {
   ],
 };
 
+// Build a lookup: "topicSlug:subSlug" -> { topicSlug, subLabel }
+const SUBTOPIC_LOOKUP: Record<string, { topicSlug: string; subLabel: string }> = {};
+for (const [topicSlug, subs] of Object.entries(SUBTOPICS)) {
+  for (const subLabel of subs) {
+    const subSlug = slugifySubtopic(subLabel);
+    SUBTOPIC_LOOKUP[`${topicSlug}:${subSlug}`] = { topicSlug, subLabel };
+  }
+}
+
 function topicKey(slug: string) {
   return `heiko-topic:${slug}`;
 }
@@ -101,7 +110,8 @@ async function fetchSubResults(): Promise<Record<string, Record<string, number>>
     subResults[topicSlug] = {};
     for (const sub of subs) {
       const key = slugifySubtopic(sub);
-      subResults[topicSlug][key] = (await kv.get<number>(subtopicKey(topicSlug, sub))) ?? 0;
+      subResults[topicSlug][key] =
+        (await kv.get<number>(subtopicKey(topicSlug, sub))) ?? 0;
     }
   }
   return subResults;
@@ -128,7 +138,44 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Handle sub-topic votes (standalone, no main votes required)
+    // ── New top10 payload: { top10: string[] } where each string is "topicSlug:subSlug" ──
+    if (body.top10 && Array.isArray(body.top10)) {
+      const top10 = body.top10 as string[];
+
+      if (top10.length < 1 || top10.length > 10) {
+        return NextResponse.json(
+          { error: "top10 must contain 1–10 items" },
+          { status: 400 }
+        );
+      }
+
+      // Count how many sub-topics belong to each topic (for aggregated topic score)
+      const topicIncrements: Record<string, number> = {};
+
+      for (const id of top10) {
+        const entry = SUBTOPIC_LOOKUP[id];
+        if (!entry) continue; // unknown id → skip silently
+
+        const { topicSlug, subLabel } = entry;
+        await kv.incrby(subtopicKey(topicSlug, subLabel), 1);
+        topicIncrements[topicSlug] = (topicIncrements[topicSlug] ?? 0) + 1;
+      }
+
+      // Increment aggregated topic keys
+      for (const [slug, count] of Object.entries(topicIncrements)) {
+        await kv.incrby(topicKey(slug), count);
+      }
+
+      const subResults = await fetchSubResults();
+      const results: Record<string, number> = {};
+      for (const slug of TOPICS) {
+        results[slug] = (await kv.get<number>(topicKey(slug))) ?? 0;
+      }
+
+      return NextResponse.json({ results, subResults, success: true });
+    }
+
+    // ── Legacy: sub-topic votes without main votes ──
     if (body.subVotes && !body.votes) {
       const subVotes = body.subVotes as Record<string, string[]>;
 
@@ -145,7 +192,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ subResults, success: true });
     }
 
-    // Handle main topic votes
+    // ── Legacy: main topic votes ──
     const votes = body.votes as Record<string, number>;
 
     if (!votes || typeof votes !== "object") {
@@ -156,7 +203,10 @@ export async function POST(request: NextRequest) {
     let total = 0;
     for (const [slug, count] of Object.entries(votes)) {
       if (!TOPICS.includes(slug)) {
-        return NextResponse.json({ error: `Invalid topic: ${slug}` }, { status: 400 });
+        return NextResponse.json(
+          { error: `Invalid topic: ${slug}` },
+          { status: 400 }
+        );
       }
       if (typeof count !== "number" || count < 0 || count > 9) {
         return NextResponse.json({ error: "Invalid vote count" }, { status: 400 });
@@ -168,7 +218,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Must use 1-9 votes" }, { status: 400 });
     }
 
-    // Record main votes
     const results: Record<string, number> = {};
     for (const slug of TOPICS) {
       const addVotes = votes[slug] ?? 0;

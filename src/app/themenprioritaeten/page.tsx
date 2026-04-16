@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 
-const TOTAL_VOTES = 9;
+const MAX_SELECTIONS = 10;
 
 const TOPICS = [
   {
@@ -49,7 +49,7 @@ const TOPICS = [
     sub: [
       "Leerstand aktiv bekämpfen",
       "Wirtschafts-Perspektive ins Rathaus",
-      "Das \"Kaufhaus Lüneburg\" stärken",
+      'Das "Kaufhaus Lüneburg" stärken',
       "Wohnraum über Geschäften",
     ],
   },
@@ -112,6 +112,17 @@ const TOPICS = [
   },
 ];
 
+// Flat list of all sub-topics with their parent topic info
+const ALL_SUBTOPICS = TOPICS.flatMap((topic) =>
+  topic.sub.map((label) => ({
+    id: `${topic.slug}:${slugifySubtopic(label)}`,
+    label,
+    topicSlug: topic.slug,
+    topicLabel: topic.label,
+    topicNumber: topic.number,
+  }))
+);
+
 function slugifySubtopic(label: string): string {
   return label
     .toLowerCase()
@@ -123,133 +134,127 @@ function slugifySubtopic(label: string): string {
     .replace(/^-|-$/g, "");
 }
 
+// Topic color palette (one per topic)
+const TOPIC_COLORS: Record<string, string> = {
+  miteinander: "#1a3eaf",
+  sicherheit: "#2244c4",
+  wohnraum: "#0e5fa8",
+  wirtschaft: "#1955b5",
+  bildung: "#1060c0",
+  soziales: "#2a4ab8",
+  verkehr: "#1648a0",
+  kultur: "#1e52c2",
+  sport: "#0f4d9e",
+};
+
 export default function ThemenprioritaetenPage() {
-  const [votes, setVotes] = useState<Record<string, number>>({});
-  const [results, setResults] = useState<Record<string, number>>({});
-  const [subResults, setSubResults] = useState<Record<string, Record<string, number>>>({});
+  // selected: Set of sub-topic IDs (topicSlug:subSlug)
+  const [selected, setSelected] = useState<Set<string>>(new Set());
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  // Track which sub-topics have been clicked (from localStorage)
-  const [clickedSubtopics, setClickedSubtopics] = useState<Record<string, string[]>>({});
-  // Track which topic accordions are open
-  const [openAccordions, setOpenAccordions] = useState<Record<string, boolean>>({});
+  const [showAllResults, setShowAllResults] = useState(false);
 
-  const usedVotes = Object.values(votes).reduce((a, b) => a + b, 0);
-  const remainingVotes = TOTAL_VOTES - usedVotes;
-  const totalResults = Object.values(results).reduce((a, b) => a + b, 0);
+  // Results from API
+  const [subResults, setSubResults] = useState<Record<string, Record<string, number>>>({});
+
+  const usedCount = selected.size;
+  const remaining = MAX_SELECTIONS - usedCount;
+  const maxReached = usedCount >= MAX_SELECTIONS;
 
   useEffect(() => {
+    // Fetch current results
     fetch("/api/topic-vote")
       .then((res) => res.json())
       .then((data) => {
-        setResults(data.results ?? {});
         setSubResults(data.subResults ?? {});
       })
       .catch(() => {});
 
-    const lastVote = localStorage.getItem("heiko-topic-vote-time");
+    // Check cooldown
+    const lastVote = localStorage.getItem("heiko-top10-time");
     if (lastVote) {
       const diff = Date.now() - parseInt(lastVote);
       if (diff < 24 * 60 * 60 * 1000) setSubmitted(true);
     }
-
-    try {
-      const stored = localStorage.getItem("heiko-subtopic-votes");
-      if (stored) setClickedSubtopics(JSON.parse(stored));
-    } catch {
-      // ignore
-    }
   }, []);
 
-  const addVote = useCallback(
-    (slug: string) => {
-      if (remainingVotes <= 0) return;
-      setVotes((prev) => ({ ...prev, [slug]: (prev[slug] ?? 0) + 1 }));
+  const toggleSubtopic = useCallback(
+    (id: string) => {
+      setSelected((prev) => {
+        if (prev.has(id)) {
+          const next = new Set(prev);
+          next.delete(id);
+          return next;
+        }
+        if (prev.size >= MAX_SELECTIONS) return prev;
+        const next = new Set(prev);
+        next.add(id);
+        return next;
+      });
     },
-    [remainingVotes]
+    []
   );
 
-  const removeVote = useCallback((slug: string) => {
-    setVotes((prev) => {
-      const current = prev[slug] ?? 0;
-      if (current <= 0) return prev;
-      return { ...prev, [slug]: current - 1 };
-    });
-  }, []);
-
-  const toggleAccordion = useCallback((slug: string) => {
-    setOpenAccordions((prev) => ({ ...prev, [slug]: !prev[slug] }));
-  }, []);
-
-  const clickSubtopic = useCallback((topicSlug: string, subLabel: string) => {
-    setClickedSubtopics((prev) => {
-      const existing = prev[topicSlug] ?? [];
-      if (existing.includes(subLabel)) return prev; // already clicked
-      const updated = { ...prev, [topicSlug]: [...existing, subLabel] };
-      try {
-        localStorage.setItem("heiko-subtopic-votes", JSON.stringify(updated));
-      } catch {
-        // ignore
-      }
-      return updated;
-    });
-
-    // Optimistically update subResults display
-    setSubResults((prev) => {
-      const topicSubs = prev[topicSlug] ?? {};
-      const key = slugifySubtopic(subLabel);
-      return {
-        ...prev,
-        [topicSlug]: { ...topicSubs, [key]: (topicSubs[key] ?? 0) + 1 },
-      };
-    });
-
-    // Send to API
-    fetch("/api/topic-vote", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subVotes: { [topicSlug]: [subLabel] } }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.subResults) setSubResults(data.subResults);
-      })
-      .catch(() => {});
-  }, []);
-
   const submitVotes = useCallback(async () => {
-    if (usedVotes < 1 || loading) return;
+    if (selected.size < 1 || loading) return;
     setLoading(true);
     try {
+      const top10 = Array.from(selected);
       const res = await fetch("/api/topic-vote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ votes }),
+        body: JSON.stringify({ top10 }),
       });
       const data = await res.json();
-      if (data.results) setResults(data.results);
       if (data.subResults) setSubResults(data.subResults);
       setSubmitted(true);
-      localStorage.setItem("heiko-topic-vote-time", Date.now().toString());
+      localStorage.setItem("heiko-top10-votes", JSON.stringify(top10));
+      localStorage.setItem("heiko-top10-time", Date.now().toString());
     } catch {
       setSubmitted(true);
     } finally {
       setLoading(false);
     }
-  }, [votes, usedVotes, loading]);
+  }, [selected, loading]);
 
   const newRound = useCallback(() => {
-    setVotes({});
+    setSelected(new Set());
     setSubmitted(false);
-    localStorage.removeItem("heiko-topic-vote-time");
+    localStorage.removeItem("heiko-top10-votes");
+    localStorage.removeItem("heiko-top10-time");
   }, []);
 
-  const maxResult = Math.max(...Object.values(results), 1);
+  // Compute flat ranked sub-topics from subResults
+  const rankedSubtopics = ALL_SUBTOPICS.map((st) => {
+    const topicSubs = subResults[st.topicSlug] ?? {};
+    const subSlug = slugifySubtopic(st.label);
+    return { ...st, count: topicSubs[subSlug] ?? 0 };
+  }).sort((a, b) => b.count - a.count);
 
-  const sortedResults = TOPICS.map((t) => ({
-    ...t,
-    count: results[t.slug] ?? 0,
-  })).sort((a, b) => b.count - a.count);
+  const maxSubCount = Math.max(...rankedSubtopics.map((s) => s.count), 1);
+
+  // Compute aggregated topic scores from subResults
+  const topicScores = TOPICS.map((topic) => {
+    const topicSubs = subResults[topic.slug] ?? {};
+    const total = topic.sub.reduce((sum, label) => {
+      const key = slugifySubtopic(label);
+      return sum + (topicSubs[key] ?? 0);
+    }, 0);
+    // Top 3 sub-topics for this topic
+    const topSubs = topic.sub
+      .map((label) => ({
+        label,
+        count: topicSubs[slugifySubtopic(label)] ?? 0,
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3);
+    return { ...topic, total, topSubs };
+  }).sort((a, b) => b.total - a.total);
+
+  const maxTopicScore = Math.max(...topicScores.map((t) => t.total), 1);
+  const totalTopicVotes = topicScores.reduce((s, t) => s + t.total, 0);
+
+  const displayedRanked = showAllResults ? rankedSubtopics : rankedSubtopics.slice(0, 15);
 
   return (
     <article>
@@ -268,16 +273,18 @@ export default function ThemenprioritaetenPage() {
         <div className="relative mx-auto max-w-4xl px-4 text-center md:px-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
-            Live-Stimmungsbild
+            Bürgerbeteiligung von Anfang an
           </div>
           <h1 className="text-3xl font-black uppercase text-white md:text-5xl">
-            Themenpuls Lüneburg
+            Was soll Heiko zuerst anpacken?
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/60">
-            Was bewegt Sie? Verteilen Sie{" "}
-            <span className="font-bold text-[#58b046]">{TOTAL_VOTES} Stimmen</span> auf
-            die Themen, die Ihnen am wichtigsten sind – und sehen Sie live, was
-            ganz Lüneburg bewegt.
+          <p className="mx-auto mt-4 max-w-2xl text-base text-white/70">
+            Heiko Meyer hat{" "}
+            <span className="font-bold text-[#58b046]">45 konkrete Vorhaben</span>{" "}
+            für die nächsten 8 Jahre als Oberbürgermeister. Helfen Sie ihm zu
+            priorisieren: Wählen Sie Ihre{" "}
+            <span className="font-bold text-white">Top 10</span> – was soll
+            Heiko zuerst anpacken?
           </p>
         </div>
       </section>
@@ -286,222 +293,135 @@ export default function ThemenprioritaetenPage() {
         {/* ===== VOTING UI ===== */}
         {!submitted && (
           <>
-            {/* Token Counter */}
-            <div className="mb-6 flex items-center justify-between rounded-sm border-l-4 border-[#58b046] bg-white p-5 shadow-sm">
-              <div>
-                <p className="text-sm font-bold text-[#1a1a2e]">
-                  Noch <span className="text-[#1a3eaf]">{remainingVotes}</span> von {TOTAL_VOTES} Stimmen übrig
-                </p>
-                <p className="mt-0.5 text-xs text-[#6b6b7b]">
-                  Verteilen Sie frei – alle für ein Thema oder auf mehrere
-                </p>
-              </div>
-              <div className="flex gap-1.5">
-                {Array.from({ length: TOTAL_VOTES }).map((_, i) => (
-                  <div
-                    key={i}
-                    className={`h-4 w-4 rounded-full border-2 transition-all duration-200 ${
-                      i < usedVotes
-                        ? "border-[#58b046] bg-[#58b046] scale-110"
-                        : "border-[#1a3eaf]/20 bg-transparent"
-                    }`}
-                  />
-                ))}
+            {/* Budget Bar */}
+            <div className="mb-8 rounded-sm border-l-4 border-[#58b046] bg-white p-5 shadow-sm">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-bold text-[#1a1a2e]">
+                    Noch{" "}
+                    <span className="text-[#1a3eaf]">{remaining}</span> von{" "}
+                    {MAX_SELECTIONS} Stimmen übrig
+                  </p>
+                  <p className="mt-0.5 text-xs text-[#6b6b7b]">
+                    {maxReached
+                      ? "Limit erreicht – Auswahl aufheben, um andere zu wählen"
+                      : "Klicken Sie auf die Vorhaben, die Ihnen am wichtigsten sind"}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {Array.from({ length: MAX_SELECTIONS }).map((_, i) => (
+                    <div
+                      key={i}
+                      className={`h-4 w-4 rounded-full border-2 transition-all duration-200 ${
+                        i < usedCount
+                          ? "scale-110 border-[#58b046] bg-[#58b046]"
+                          : "border-[#1a3eaf]/20 bg-transparent"
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Topic Cards */}
-            <div className="mb-8 grid gap-4 md:grid-cols-2">
+            {/* Topic Groups */}
+            <div className="mb-8 space-y-6">
               {TOPICS.map((topic) => {
-                const count = votes[topic.slug] ?? 0;
-                const isActive = count > 0;
-                const isOpen = openAccordions[topic.slug] ?? false;
-                const clickedSubs = clickedSubtopics[topic.slug] ?? [];
+                const color = TOPIC_COLORS[topic.slug] ?? "#1a3eaf";
+                const selectedInGroup = topic.sub.filter((label) =>
+                  selected.has(`${topic.slug}:${slugifySubtopic(label)}`)
+                ).length;
 
                 return (
-                  <div
-                    key={topic.slug}
-                    className={`group relative overflow-hidden rounded-sm border-2 bg-white transition-all ${
-                      isActive
-                        ? "border-[#1a3eaf] shadow-md"
-                        : "border-transparent shadow-sm hover:shadow-md"
-                    }`}
-                  >
-                    <div className="p-5">
-                      {/* Vote count badge */}
-                      {isActive && (
-                        <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#1a3eaf] text-sm font-black text-white">
-                          {count}
-                        </div>
-                      )}
-
-                      {/* Header */}
-                      <div className="flex items-start gap-3">
-                        <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center bg-[#1a3eaf] text-sm font-black italic text-white">
-                          {topic.number}
+                  <div key={topic.slug} className="overflow-hidden rounded-sm shadow-sm">
+                    {/* Group Header */}
+                    <div
+                      className="flex items-center gap-3 px-4 py-3"
+                      style={{ backgroundColor: color }}
+                    >
+                      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center bg-white/10 text-sm font-black italic text-white">
+                        {topic.number}
+                      </span>
+                      <h2 className="flex-1 text-sm font-black uppercase tracking-wide text-white">
+                        {topic.label}
+                      </h2>
+                      {selectedInGroup > 0 && (
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#58b046] text-xs font-black text-white">
+                          {selectedInGroup}
                         </span>
-                        <div className="flex-1 pr-8">
-                          <h3 className="text-sm font-bold text-[#1a1a2e]">
-                            {topic.label}
-                          </h3>
-                          {/* Sub-topics summary list */}
-                          <ul className="mt-2 space-y-1">
-                            {topic.sub.slice(0, 3).map((s) => (
-                              <li
-                                key={s}
-                                className="flex items-center gap-1.5 text-xs text-[#6b6b7b]"
-                              >
+                      )}
+                    </div>
+
+                    {/* Sub-topic cards */}
+                    <div className="grid gap-2 bg-[#f4f6ff] p-3 sm:grid-cols-2">
+                      {topic.sub.map((label) => {
+                        const id = `${topic.slug}:${slugifySubtopic(label)}`;
+                        const isSelected = selected.has(id);
+                        const isDisabled = !isSelected && maxReached;
+
+                        return (
+                          <button
+                            key={id}
+                            onClick={() => !isDisabled && toggleSubtopic(id)}
+                            disabled={isDisabled}
+                            className={`flex items-center gap-2.5 rounded-sm border px-3 py-2.5 text-left text-sm font-medium transition-all ${
+                              isSelected
+                                ? "border-[#58b046] bg-[#58b046]/10 text-[#1a1a2e] shadow-sm"
+                                : isDisabled
+                                  ? "cursor-not-allowed border-black/5 bg-white/50 text-[#6b6b7b]/40"
+                                  : "border-black/8 bg-white text-[#1a1a2e] shadow-sm hover:border-[#1a3eaf]/30 hover:shadow-md"
+                            }`}
+                          >
+                            <span
+                              className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-all ${
+                                isSelected
+                                  ? "border-[#58b046] bg-[#58b046]"
+                                  : isDisabled
+                                    ? "border-black/10"
+                                    : "border-[#1a3eaf]/30"
+                              }`}
+                            >
+                              {isSelected && (
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   viewBox="0 0 24 24"
                                   fill="none"
-                                  stroke="currentColor"
+                                  stroke="white"
                                   strokeWidth="3"
                                   strokeLinecap="round"
                                   strokeLinejoin="round"
-                                  className="h-2.5 w-2.5 flex-shrink-0 text-[#58b046]"
+                                  className="h-3 w-3"
                                 >
                                   <path d="M5 12l5 5L20 7" />
                                 </svg>
-                                {s}
-                              </li>
-                            ))}
-                            {topic.sub.length > 3 && (
-                              <li className="text-xs text-[#6b6b7b]/60">
-                                +{topic.sub.length - 3} weitere Unterthemen
-                              </li>
-                            )}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Controls */}
-                      <div className="mt-4 flex items-center gap-2 border-t border-black/[0.06] pt-3">
-                        <button
-                          onClick={() => removeVote(topic.slug)}
-                          disabled={count <= 0}
-                          className="flex h-9 w-9 items-center justify-center rounded-sm bg-black/5 text-base font-bold text-[#6b6b7b] transition-colors hover:bg-black/10 disabled:opacity-20"
-                        >
-                          −
-                        </button>
-                        <button
-                          onClick={() => addVote(topic.slug)}
-                          disabled={remainingVotes <= 0}
-                          className="flex flex-1 items-center justify-center gap-1.5 rounded-sm bg-[#1a3eaf]/10 py-2 text-xs font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf]/20 disabled:opacity-30"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="h-3.5 w-3.5"
-                          >
-                            <path d="M12 5v14" />
-                            <path d="M5 12h14" />
-                          </svg>
-                          Stimme geben
-                        </button>
-                      </div>
-
-                      {/* Accordion trigger */}
-                      <button
-                        onClick={() => toggleAccordion(topic.slug)}
-                        className="mt-2 flex w-full items-center gap-1 text-[0.65rem] font-medium text-[#1a3eaf]/60 transition-colors hover:text-[#1a3eaf]"
-                      >
-                        <span
-                          className={`inline-block transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                        >
-                          ▼
-                        </span>
-                        Unterthemen bewerten
-                        {clickedSubs.length > 0 && (
-                          <span className="ml-1 rounded-full bg-[#58b046]/20 px-1.5 py-0.5 text-[0.6rem] font-bold text-[#58b046]">
-                            {clickedSubs.length}
-                          </span>
-                        )}
-                      </button>
+                              )}
+                            </span>
+                            <span className="leading-snug">{label}</span>
+                          </button>
+                        );
+                      })}
                     </div>
-
-                    {/* Accordion content */}
-                    {isOpen && (
-                      <div className="border-t border-black/[0.06] bg-[#f8f9ff] px-5 pb-4 pt-3">
-                        <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-wider text-[#6b6b7b]">
-                          Was ist Ihnen dabei am wichtigsten?
-                        </p>
-                        <div className="flex flex-col gap-2">
-                          {topic.sub.map((s) => {
-                            const isClicked = clickedSubs.includes(s);
-                            return (
-                              <button
-                                key={s}
-                                onClick={() => !isClicked && clickSubtopic(topic.slug, s)}
-                                disabled={isClicked}
-                                className={`flex items-center gap-2 rounded-sm px-3 py-2 text-left text-xs font-medium transition-all ${
-                                  isClicked
-                                    ? "bg-[#58b046]/15 text-[#58b046] cursor-default"
-                                    : "bg-white text-[#1a1a2e] shadow-sm hover:bg-[#1a3eaf]/5 hover:shadow-md"
-                                }`}
-                              >
-                                {isClicked ? (
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="h-3 w-3 flex-shrink-0"
-                                  >
-                                    <path d="M5 12l5 5L20 7" />
-                                  </svg>
-                                ) : (
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="h-3 w-3 flex-shrink-0 text-[#1a3eaf]/40"
-                                  >
-                                    <path d="M12 5v14" />
-                                    <path d="M5 12h14" />
-                                  </svg>
-                                )}
-                                {s}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 );
               })}
             </div>
 
-            {/* Submit */}
-            <div className="mb-12 flex items-center justify-center gap-3">
+            {/* Submit row */}
+            <div className="mb-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <button
-                onClick={() => setVotes({})}
-                disabled={usedVotes === 0}
+                onClick={() => setSelected(new Set())}
+                disabled={usedCount === 0}
                 className="rounded-sm border-2 border-black/10 px-6 py-3 text-sm font-semibold text-[#6b6b7b] transition-colors hover:bg-black/5 disabled:opacity-30"
               >
                 Zurücksetzen
               </button>
               <button
                 onClick={submitVotes}
-                disabled={usedVotes < 1 || loading}
+                disabled={usedCount < 1 || loading}
                 className="rounded-sm bg-[#58b046] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-[#58b046]/25 transition-all hover:-translate-y-0.5 hover:shadow-xl disabled:translate-y-0 disabled:opacity-50 disabled:shadow-none"
               >
                 {loading
                   ? "Wird gespeichert..."
-                  : `${usedVotes} Stimme${usedVotes !== 1 ? "n" : ""} abgeben`}
+                  : `${usedCount} Vorhaben${usedCount !== 1 ? "" : ""} absenden`}
               </button>
             </div>
           </>
@@ -511,8 +431,17 @@ export default function ThemenprioritaetenPage() {
         {submitted && (
           <div className="mb-8 flex items-center justify-between rounded-sm border-l-4 border-[#58b046] bg-white p-5 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#58b046]/10">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-[#58b046]">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#58b046]/10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5 text-[#58b046]"
+                >
                   <path d="M5 12l5 5L20 7" />
                 </svg>
               </div>
@@ -521,7 +450,7 @@ export default function ThemenprioritaetenPage() {
                   Danke für Ihre Einschätzung!
                 </p>
                 <p className="text-xs text-[#6b6b7b]">
-                  So sieht der Themenpuls der Lüneburger aus:
+                  So sehen die Prioritäten der Lüneburger aus:
                 </p>
               </div>
             </div>
@@ -529,20 +458,22 @@ export default function ThemenprioritaetenPage() {
               onClick={newRound}
               className="rounded-sm border border-[#1a3eaf]/20 px-4 py-2 text-xs font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf]/5"
             >
-              Neu abstimmen
+              Neue Abstimmung
             </button>
           </div>
         )}
 
         {/* ===== RESULTS ===== */}
-        <div className="rounded-sm border-l-4 border-[#1a3eaf] bg-white p-6 shadow-sm">
+
+        {/* Section 1: Top Sub-topics */}
+        <div className="mb-8 rounded-sm border-l-4 border-[#58b046] bg-white p-6 shadow-sm">
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-black uppercase text-[#1a3eaf]">
-                Live-Ergebnis
+              <h2 className="text-lg font-black uppercase text-[#1a1a2e]">
+                Top 10 der Lüneburger
               </h2>
               <p className="mt-0.5 text-xs text-[#6b6b7b]">
-                {totalResults.toLocaleString("de-DE")} Stimmen aus ganz Lüneburg
+                Die meistgewählten Vorhaben aller Themen
               </p>
             </div>
             <div className="flex items-center gap-1.5 rounded-full bg-[#58b046]/10 px-3 py-1 text-xs font-medium text-[#58b046]">
@@ -551,93 +482,156 @@ export default function ThemenprioritaetenPage() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            {sortedResults.map((topic, i) => {
-              const pct =
-                totalResults > 0
-                  ? (topic.count / totalResults) * 100
-                  : 0;
-              const barWidth =
-                maxResult > 0
-                  ? (topic.count / maxResult) * 100
-                  : 0;
+          <div className="space-y-3">
+            {displayedRanked.map((st, i) => {
+              const pct = maxSubCount > 0 ? (st.count / maxSubCount) * 100 : 0;
+              const color = TOPIC_COLORS[st.topicSlug] ?? "#1a3eaf";
+              return (
+                <div key={st.id} className="flex items-center gap-3">
+                  {/* Rank */}
+                  <span
+                    className={`flex h-7 w-7 flex-shrink-0 items-center justify-center text-xs font-black ${
+                      i === 0
+                        ? "rounded-sm bg-[#58b046] text-white"
+                        : i < 3
+                          ? "rounded-sm bg-[#1a3eaf]/10 text-[#1a3eaf]"
+                          : "text-[#6b6b7b]/50"
+                    }`}
+                  >
+                    #{i + 1}
+                  </span>
 
-              // Sub-topics for this topic with counts, sorted descending
-              const topicSubResults = subResults[topic.slug] ?? {};
-              const subEntries = topic.sub
-                .map((subLabel) => ({
-                  label: subLabel,
-                  key: slugifySubtopic(subLabel),
-                  count: topicSubResults[slugifySubtopic(subLabel)] ?? 0,
-                }))
-                .sort((a, b) => b.count - a.count);
-              const hasSubVotes = subEntries.some((e) => e.count > 0);
-              const maxSubCount = Math.max(...subEntries.map((e) => e.count), 1);
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1 flex flex-wrap items-center gap-1.5">
+                      <span className="text-sm font-semibold text-[#1a1a2e]">
+                        {st.label}
+                      </span>
+                      <span
+                        className="rounded-sm px-1.5 py-0.5 text-[0.6rem] font-bold text-white"
+                        style={{ backgroundColor: color }}
+                      >
+                        {st.topicNumber} {st.topicLabel}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 flex-1 overflow-hidden rounded-sm bg-[#1a3eaf]/[0.06]">
+                        <div
+                          className="h-full rounded-sm bg-gradient-to-r from-[#1a3eaf] to-[#2551c7] transition-all duration-700 ease-out"
+                          style={{
+                            width: `${Math.max(pct, st.count > 0 ? 2 : 0)}%`,
+                          }}
+                        />
+                      </div>
+                      <span className="w-8 flex-shrink-0 text-right text-xs tabular-nums text-[#6b6b7b]">
+                        {st.count}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {rankedSubtopics.length > 15 && (
+            <button
+              onClick={() => setShowAllResults((v) => !v)}
+              className="mt-4 w-full rounded-sm border border-[#1a3eaf]/10 py-2 text-xs font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf]/5"
+            >
+              {showAllResults
+                ? "Weniger anzeigen"
+                : `Alle ${rankedSubtopics.length} Vorhaben anzeigen`}
+            </button>
+          )}
+        </div>
+
+        {/* Section 2: Themen-Ranking */}
+        <div className="rounded-sm border-l-4 border-[#1a3eaf] bg-white p-6 shadow-sm">
+          <div className="mb-6">
+            <h2 className="text-lg font-black uppercase text-[#1a1a2e]">
+              Themen-Ranking
+            </h2>
+            <p className="mt-0.5 text-xs text-[#6b6b7b]">
+              Aggregierte Stimmen pro Themenbereich ·{" "}
+              {totalTopicVotes.toLocaleString("de-DE")} Stimmen gesamt
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {topicScores.map((topic, i) => {
+              const barWidth =
+                maxTopicScore > 0 ? (topic.total / maxTopicScore) * 100 : 0;
+              const pct =
+                totalTopicVotes > 0
+                  ? ((topic.total / totalTopicVotes) * 100).toFixed(1)
+                  : "0";
+              const color = TOPIC_COLORS[topic.slug] ?? "#1a3eaf";
+              const maxTopSub = Math.max(...topic.topSubs.map((s) => s.count), 1);
 
               return (
                 <div key={topic.slug}>
-                  <Link href={`/wahlprogramm/${topic.slug}`} className="group block">
-                    <div className="mb-2 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-7 w-7 items-center justify-center bg-[#1a3eaf] text-[0.65rem] font-black italic text-white">
-                          {topic.number}
-                        </span>
-                        {i === 0 && totalResults > 0 && (
-                          <span className="rounded-sm bg-[#58b046] px-1.5 py-0.5 text-[0.6rem] font-bold text-white">
-                            TOP
-                          </span>
-                        )}
-                        <span className="text-sm font-semibold text-[#1a1a2e] group-hover:text-[#1a3eaf]">
-                          {topic.label}
-                        </span>
-                      </div>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-lg font-black tabular-nums text-[#1a3eaf]">
-                          {pct > 0 ? pct.toFixed(1) : "0"}%
-                        </span>
-                        <span className="text-xs tabular-nums text-[#6b6b7b]">
-                          ({topic.count.toLocaleString("de-DE")})
-                        </span>
-                      </div>
+                  <div className="mb-1.5 flex items-center gap-2">
+                    <span
+                      className="flex h-7 w-7 flex-shrink-0 items-center justify-center text-[0.65rem] font-black italic text-white"
+                      style={{ backgroundColor: color }}
+                    >
+                      {topic.number}
+                    </span>
+                    {i === 0 && topic.total > 0 && (
+                      <span className="rounded-sm bg-[#58b046] px-1.5 py-0.5 text-[0.6rem] font-bold text-white">
+                        TOP
+                      </span>
+                    )}
+                    <span className="flex-1 text-sm font-semibold text-[#1a1a2e]">
+                      {topic.label}
+                    </span>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-base font-black tabular-nums text-[#1a3eaf]">
+                        {pct}%
+                      </span>
+                      <span className="text-xs tabular-nums text-[#6b6b7b]">
+                        ({topic.total})
+                      </span>
                     </div>
-                    <div className="h-5 overflow-hidden rounded-sm bg-[#1a3eaf]/[0.06]">
-                      <div
-                        className="flex h-full items-center rounded-sm bg-gradient-to-r from-[#1a3eaf] to-[#2551c7] transition-all duration-700 ease-out"
-                        style={{
-                          width: `${Math.max(barWidth, topic.count > 0 ? 3 : 0)}%`,
-                        }}
-                      />
-                    </div>
-                  </Link>
+                  </div>
 
-                  {/* Sub-topic bars – only if there are votes */}
-                  {hasSubVotes && (
-                    <div className="mt-2 ml-4 space-y-1.5 border-l-2 border-[#1a3eaf]/10 pl-3">
-                      {subEntries
-                        .filter((e) => e.count > 0)
-                        .map((entry, j, arr) => {
+                  <div className="h-5 overflow-hidden rounded-sm bg-[#1a3eaf]/[0.06]">
+                    <div
+                      className="flex h-full items-center rounded-sm transition-all duration-700 ease-out"
+                      style={{
+                        width: `${Math.max(barWidth, topic.total > 0 ? 3 : 0)}%`,
+                        background: `linear-gradient(to right, ${color}, ${color}bb)`,
+                      }}
+                    />
+                  </div>
+
+                  {/* Top 3 sub-topics mini-bars */}
+                  {topic.topSubs.some((s) => s.count > 0) && (
+                    <div className="mt-2 ml-4 space-y-1 border-l-2 border-[#1a3eaf]/10 pl-3">
+                      {topic.topSubs
+                        .filter((s) => s.count > 0)
+                        .map((sub, j, arr) => {
                           const isLast = j === arr.length - 1;
-                          const subBarWidth =
-                            maxSubCount > 0 ? (entry.count / maxSubCount) * 100 : 0;
+                          const subBarPct =
+                            maxTopSub > 0 ? (sub.count / maxTopSub) * 100 : 0;
                           return (
-                            <div key={entry.key} className="flex items-center gap-2">
-                              <span className="shrink-0 text-[0.6rem] text-[#6b6b7b]/50 font-mono leading-none">
+                            <div key={sub.label} className="flex items-center gap-2">
+                              <span className="flex-shrink-0 font-mono text-[0.6rem] leading-none text-[#6b6b7b]/50">
                                 {isLast ? "└" : "├"}
                               </span>
-                              <div className="flex-1 min-w-0">
+                              <div className="min-w-0 flex-1">
                                 <div className="mb-0.5 flex items-center justify-between gap-2">
                                   <span className="truncate text-[0.65rem] text-[#6b6b7b]">
-                                    {entry.label}
+                                    {sub.label}
                                   </span>
-                                  <span className="shrink-0 text-[0.6rem] tabular-nums text-[#6b6b7b]/60">
-                                    {entry.count}
+                                  <span className="flex-shrink-0 text-[0.6rem] tabular-nums text-[#6b6b7b]/60">
+                                    {sub.count}
                                   </span>
                                 </div>
                                 <div className="h-1.5 overflow-hidden rounded-sm bg-[#1a3eaf]/[0.06]">
                                   <div
                                     className="h-full rounded-sm bg-gradient-to-r from-[#4a7fd4] to-[#6a9be0] transition-all duration-700 ease-out"
                                     style={{
-                                      width: `${Math.max(subBarWidth, entry.count > 0 ? 5 : 0)}%`,
+                                      width: `${Math.max(subBarPct, sub.count > 0 ? 5 : 0)}%`,
                                     }}
                                   />
                                 </div>
