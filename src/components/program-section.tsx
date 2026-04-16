@@ -39,7 +39,7 @@ export function ProgramSection() {
                 {/* Hover overlay with highlights */}
                 <div className="absolute inset-0 flex flex-col justify-end bg-[#1a3eaf]/90 p-5 opacity-0 transition-all duration-300 group-hover:opacity-100">
                   <div className="translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
-                    <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#58b046]">
+                    <p className="mb-3 text-xs font-bold uppercase tracking-wider" style={{ color: item.color }}>
                       Schwerpunkte
                     </p>
                     <ul className="space-y-2">
@@ -86,7 +86,7 @@ export function ProgramSection() {
               </div>
 
               {/* Title Bar */}
-              <div className="flex items-center justify-between bg-[#58b046] px-4 py-3 transition-colors duration-300 group-hover:bg-[#4e9e3f]">
+              <div className="flex items-center justify-between px-4 py-3 transition-colors duration-300" style={{ backgroundColor: item.color }}>
                 <h3 className="text-sm font-bold uppercase text-white md:text-base">
                   {item.title}
                 </h3>

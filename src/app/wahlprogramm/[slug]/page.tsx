@@ -94,7 +94,7 @@ export default async function ProgramTopicPage({
           </Link>
 
           <div className="flex items-center gap-4">
-            <span className="flex h-14 w-14 items-center justify-center border-2 border-white/30 bg-white/10 text-2xl font-black italic text-white">
+            <span className="flex h-14 w-14 items-center justify-center border-2 text-2xl font-black italic text-white" style={{ borderColor: topic.color, backgroundColor: topic.color + "33" }}>
               {topic.number}
             </span>
             <div>
@@ -120,8 +120,8 @@ export default async function ProgramTopicPage({
       {/* Problem Section */}
       <section className="bg-white py-12 md:py-20">
         <div className="mx-auto max-w-5xl px-4 md:px-8">
-          <div className="border-l-4 border-[#1a3eaf] pl-4">
-            <p className="text-sm font-semibold uppercase tracking-wider text-[#1a3eaf]">
+          <div className="border-l-4 pl-4" style={{ borderColor: topic.color }}>
+            <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: topic.color }}>
               Die Herausforderung
             </p>
             <h2 className="mt-1 text-2xl font-black text-[#1a1a2e] md:text-3xl">
@@ -167,9 +167,10 @@ export default async function ProgramTopicPage({
             {topic.positions.items.map((item, i) => (
               <div
                 key={item.title}
-                className="flex gap-4 rounded-sm border-l-4 border-[#1a3eaf] bg-white p-6 shadow-sm"
+                className="flex gap-4 rounded-sm border-l-4 bg-white p-6 shadow-sm"
+                style={{ borderColor: topic.color }}
               >
-                <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center bg-[#1a3eaf] text-sm font-bold text-white">
+                <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center text-sm font-bold text-white" style={{ backgroundColor: topic.color }}>
                   {i + 1}
                 </span>
                 <div>

@@ -72,14 +72,14 @@ export default function WahlprogrammPage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent md:bg-gradient-to-r" />
-                  <span className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center border-2 border-white bg-white/90 text-lg font-black italic text-[#1a3eaf] md:bottom-auto md:left-auto md:right-3 md:top-3">
+                  <span className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center border-2 border-white bg-white/90 text-lg font-black italic md:bottom-auto md:left-auto md:right-3 md:top-3" style={{ color: topic.color }}>
                     {topic.number}
                   </span>
                 </div>
 
                 {/* Content */}
                 <div className="flex flex-1 flex-col justify-center p-5 md:p-8">
-                  <h2 className="text-lg font-black uppercase text-[#1a3eaf] group-hover:text-[#15349a] md:text-xl">
+                  <h2 className="text-lg font-black uppercase md:text-xl" style={{ color: topic.color }}>
                     {topic.title}
                   </h2>
                   <p className="mt-1 text-sm text-[#6b6b7b]">
@@ -91,7 +91,8 @@ export default function WahlprogrammPage() {
                     {topic.highlights.map((h) => (
                       <span
                         key={h}
-                        className="inline-flex items-center gap-1 rounded-full bg-[#1a3eaf]/5 px-3 py-1 text-xs font-medium text-[#1a3eaf]"
+                        className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium"
+                        style={{ backgroundColor: topic.color + "14", color: topic.color }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
