@@ -297,4 +297,46 @@ export const districtContent: Record<string, DistrictContent> = {
     quote:
       "Neu Hagen wächst – und die Infrastruktur muss mitwachsen. Nicht hinterher, sondern voraus.",
   },
+  oedeme: {
+    slug: "oedeme",
+    name: "Oedeme",
+    inhabitants: "~5.500",
+    character:
+      "Großer Stadtteil im Südwesten mit dörflichem Charakter. Viele Einfamilienhäuser, gewachsene Gemeinschaft.",
+    problems: [
+      "Verkehrsanbindung zur Innenstadt verbesserungsfähig",
+      "Fehlende Nahversorgung in Teilbereichen",
+      "Wachstumsdruck: neue Baugebiete ohne Infrastruktur-Ausbau",
+      "ÖPNV-Taktung nicht ausreichend",
+    ],
+    solutions: [
+      "ÖPNV-Verbindungen zur Innenstadt und zum Bahnhof stärken",
+      "Nahversorgung vor Ort sichern – Leerstand-Offensive auch hier",
+      "Infrastruktur VOR dem Neubau planen, nicht hinterher",
+      "Begegnungsräume für die Dorfgemeinschaft erhalten",
+    ],
+    quote:
+      "Oedeme ist gewachsen und wächst weiter. Das darf nicht auf Kosten der Lebensqualität gehen.",
+  },
+  ochtmissen: {
+    slug: "ochtmissen",
+    name: "Ochtmissen",
+    inhabitants: "~3.800",
+    character:
+      "Stadtteil im Nordwesten, geprägt von der Nähe zur B4 und Gewerbegebieten. Mischung aus Wohnen und Arbeit.",
+    problems: [
+      "Verkehrsbelastung durch B4-Durchgangsverkehr",
+      "Lärmbelastung für Anwohner",
+      "Wenige Begegnungsorte und Grünflächen",
+      "Fehlende Trennung zwischen Gewerbe und Wohnen",
+    ],
+    solutions: [
+      "Lärmschutzmaßnahmen konsequent umsetzen",
+      "Park-and-Ride am Standort B4 Nord entlastet den Stadtteil",
+      "Grünflächen und Begegnungsräume schaffen",
+      "Gewerbe und Wohnen besser trennen – Stadtplanung anpassen",
+    ],
+    quote:
+      "Ochtmissen trägt viel Verkehr für ganz Lüneburg. Das muss sich in besserer Infrastruktur widerspiegeln.",
+  },
 };
