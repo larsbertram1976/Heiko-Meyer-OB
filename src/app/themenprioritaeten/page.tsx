@@ -137,14 +137,14 @@ function slugifySubtopic(label: string): string {
 // Topic color palette (one per topic)
 const TOPIC_COLORS: Record<string, string> = {
   miteinander: "#1a3eaf",
-  sicherheit: "#2244c4",
-  wohnraum: "#0e5fa8",
-  wirtschaft: "#1955b5",
-  bildung: "#1060c0",
-  soziales: "#2a4ab8",
-  verkehr: "#1648a0",
-  kultur: "#1e52c2",
-  sport: "#0f4d9e",
+  sicherheit: "#2c3e80",
+  wohnraum: "#3366b8",
+  wirtschaft: "#1a7a8a",
+  bildung: "#4a8fd4",
+  soziales: "#58b046",
+  verkehr: "#2a8a6a",
+  kultur: "#5a5aaf",
+  sport: "#3a9a5a",
 };
 
 export default function ThemenprioritaetenPage() {
