@@ -154,6 +154,31 @@ export function StadtteilCheck() {
                 </p>
               </div>
             )}
+
+            {/* Clickable district chips below map */}
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {districts
+                .filter((d) => !!findContent(d.slug))
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((d) => {
+                  const isActive = selected === d.slug;
+                  return (
+                    <button
+                      key={`chip-${d.slug}`}
+                      onClick={() => setSelected(d.slug)}
+                      onMouseEnter={() => setHovered(d.slug)}
+                      onMouseLeave={() => setHovered(null)}
+                      className={`rounded-sm px-2.5 py-1 text-[0.7rem] font-semibold transition-all ${
+                        isActive
+                          ? "bg-[#58b046] text-white"
+                          : "bg-[#f0f0f5] text-[#6b6b7b] hover:bg-[#1a3eaf] hover:text-white"
+                      }`}
+                    >
+                      {d.name}
+                    </button>
+                  );
+                })}
+            </div>
           </div>
 
           {/* ===== DETAIL PANEL ===== */}
