@@ -72,6 +72,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Verkehrsberuhigung in Wohnstraßen",
       "Kleine Nahversorger gezielt ansiedeln – Leerstand-Offensive",
     ],
+    quote:
+      "Die Weststadt darf nicht im Baustellenchaos untergehen. Wer hier lebt, verdient funktionierende Straßen und kurze Wege.",
   },
   rotes_feld: {
     slug: "rotes-feld",
@@ -89,6 +91,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Sozial verträglicher Milieuschutz prüfen",
       "Verkehrskonzept, das Rad und Auto versöhnt",
     ],
+    quote:
+      "Das Rote Feld ist eines der beliebtesten Viertel Lüneburgs. Es muss auch für junge Familien bezahlbar bleiben.",
   },
   mittelfeld: {
     slug: "mittelfeld",
@@ -106,6 +110,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "ÖPNV-Taktung prüfen, Bürgerbusse als Ergänzung",
       "Bürgercafé als Treffpunkt – auch im Alter nicht allein",
     ],
+    quote:
+      "Unsere älteren Mitbürger im Mittelfeld haben ein Recht darauf, gut versorgt zu sein – ärztlich und menschlich.",
   },
   kreideberg: {
     slug: "kreideberg",
@@ -123,6 +129,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Kita-Plätze schneller schaffen, Bürokratie abbauen",
       "Jugendtreffs und Sportangebote stärken",
     ],
+    quote:
+      "Am Kreideberg wachsen Familien auf. Schulen und Kitas müssen mitwachsen – nicht hinterherhinken.",
   },
   bockelsberg: {
     slug: "bockelsberg",
@@ -140,6 +148,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Dorfgemeinschaftshaus oder Bürgercafé als Treffpunkt",
       "Pflege von Wegen und Grünflächen konsequenter angehen",
     ],
+    quote:
+      "Bockelsberg ist Lüneburg, auch wenn es sich manchmal nicht so anfühlt. Das ändern wir.",
   },
   haecklingen: {
     slug: "haecklingen",
@@ -157,6 +167,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Mobilen Nahversorger und Wochenmarkt stärken",
       "Vereinsstrukturen vor Ort mit Rathaus direkter vernetzen",
     ],
+    quote:
+      "Häcklingen lebt vom Vereinsleben. Dieses Engagement verdient einen direkten Draht ins Rathaus.",
   },
   rettmer: {
     slug: "rettmer",
@@ -173,6 +185,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Ortsteil-Identität stärken, Feste und Vereine fördern",
       "Regelmäßige OB-Sprechstunden auch in kleinen Stadtteilen",
     ],
+    quote:
+      "Auch die kleinsten Stadtteile haben große Themen. Rettmer verdient einen OB, der zuhört.",
   },
   wilschenbruch: {
     slug: "wilschenbruch",
@@ -189,6 +203,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Kita- und Schulkapazitäten prüfen und ausbauen",
       "Familien-Infrastruktur (Spielplätze, Sport) stärken",
     ],
+    quote:
+      "Wilschenbruch ist grün und familienfreundlich. Das muss so bleiben – mit Kitas und Schulen, die Schritt halten.",
   },
   goseburg_zeltberg: {
     slug: "goseburg-zeltberg",
@@ -205,6 +221,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Nahversorgung stärken, Leerstand für Dienstleister öffnen",
       "Fahrradinfrastruktur ausbauen",
     ],
+    quote:
+      "Goseburg-Zeltberg braucht Lärmschutz und eine bessere Nahversorgung. Beides ist machbar.",
   },
   ebensberg: {
     slug: "ebensberg",
@@ -221,6 +239,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Ärztezentren gezielt anbahnen",
       "Kultur-Pop-ups und mobile Angebote fördern",
     ],
+    quote:
+      "Ebensberg liegt ruhig, aber die Anbindung und Versorgung müssen besser werden. Das ist keine Bitte, das ist eine Aufgabe.",
   },
   luene_moorfeld: {
     slug: "luene-moorfeld",
@@ -237,6 +257,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Denkmalpflege und Tourismus stärker zusammen denken",
       "Jugendtreffs und Sportvereine fördern",
     ],
+    quote:
+      "Lüne-Moorfeld vereint Geschichte und Gegenwart. Das Kloster Lüne ist ein Schatz – der Stadtteil drumherum verdient die gleiche Aufmerksamkeit.",
   },
   schuetzenplatz: {
     slug: "schuetzenplatz",
@@ -254,6 +276,8 @@ export const districtContent: Record<string, DistrictContent> = {
       "Parkleitsystem bei Events",
       "Mehrfachnutzung von Hallen durch Online-Belegungssystem",
     ],
+    quote:
+      "Am Schützenplatz wird gefeiert und Sport gemacht. Beides braucht Infrastruktur, die funktioniert – nicht bröckelt.",
   },
   neu_hagen: {
     slug: "neu-hagen",
@@ -270,5 +294,7 @@ export const districtContent: Record<string, DistrictContent> = {
       "Rad- und ÖPNV-Verbindungen priorisieren",
       "Kita- und Schulplätze schneller schaffen",
     ],
+    quote:
+      "Neu Hagen wächst – und die Infrastruktur muss mitwachsen. Nicht hinterher, sondern voraus.",
   },
 };
