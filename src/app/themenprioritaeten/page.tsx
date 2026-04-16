@@ -152,6 +152,8 @@ export default function ThemenprioritaetenPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [activeTab, setActiveTab] = useState<"top10" | "themen">("top10");
   const [showAllResults, setShowAllResults] = useState(false);
 
   // Results from API
@@ -210,8 +212,10 @@ export default function ThemenprioritaetenPage() {
       setSubmitted(true);
       localStorage.setItem("heiko-top10-votes", JSON.stringify(top10));
       localStorage.setItem("heiko-top10-time", Date.now().toString());
+      window.scrollTo({ top: 0 });
     } catch {
       setSubmitted(true);
+      window.scrollTo({ top: 0 });
     } finally {
       setLoading(false);
     }
@@ -254,7 +258,7 @@ export default function ThemenprioritaetenPage() {
   const maxTopicScore = Math.max(...topicScores.map((t) => t.total), 1);
   const totalTopicVotes = topicScores.reduce((s, t) => s + t.total, 0);
 
-  const displayedRanked = showAllResults ? rankedSubtopics : rankedSubtopics.slice(0, 15);
+  const displayedRanked = showAllResults ? rankedSubtopics : rankedSubtopics.slice(0, 10);
 
   return (
     <article>
@@ -463,9 +467,45 @@ export default function ThemenprioritaetenPage() {
           </div>
         )}
 
-        {/* ===== RESULTS ===== */}
+        {/* ===== RESULTS TOGGLE ===== */}
+        {!showResults ? (
+          <button
+            onClick={() => setShowResults(true)}
+            className="mb-8 flex w-full items-center justify-center gap-2 rounded-sm bg-[#1a3eaf] py-4 text-sm font-bold text-white transition-colors hover:bg-[#15349a]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+              <path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" />
+            </svg>
+            Zu den bisherigen Ergebnissen
+          </button>
+        ) : (
+          <>
+            {/* Tab Switcher */}
+            <div className="mb-6 flex overflow-hidden rounded-sm border border-[#1a3eaf]/20">
+              <button
+                onClick={() => setActiveTab("top10")}
+                className={`flex-1 py-3 text-sm font-bold transition-colors ${
+                  activeTab === "top10"
+                    ? "bg-[#1a3eaf] text-white"
+                    : "bg-white text-[#1a3eaf] hover:bg-[#1a3eaf]/5"
+                }`}
+              >
+                Top 10 Einzelthemen
+              </button>
+              <button
+                onClick={() => setActiveTab("themen")}
+                className={`flex-1 py-3 text-sm font-bold transition-colors ${
+                  activeTab === "themen"
+                    ? "bg-[#1a3eaf] text-white"
+                    : "bg-white text-[#1a3eaf] hover:bg-[#1a3eaf]/5"
+                }`}
+              >
+                Nach Themenblock
+              </button>
+            </div>
 
         {/* Section 1: Top Sub-topics */}
+        {activeTab === "top10" && (
         <div className="mb-8 rounded-sm border-l-4 border-[#58b046] bg-white p-6 shadow-sm">
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -532,19 +572,21 @@ export default function ThemenprioritaetenPage() {
             })}
           </div>
 
-          {rankedSubtopics.length > 15 && (
+          {rankedSubtopics.length > 10 && (
             <button
               onClick={() => setShowAllResults((v) => !v)}
               className="mt-4 w-full rounded-sm border border-[#1a3eaf]/10 py-2 text-xs font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf]/5"
             >
               {showAllResults
-                ? "Weniger anzeigen"
+                ? "Top 10 anzeigen"
                 : `Alle ${rankedSubtopics.length} Vorhaben anzeigen`}
             </button>
           )}
         </div>
+        )}
 
         {/* Section 2: Themen-Ranking */}
+        {activeTab === "themen" && (
         <div className="rounded-sm border-l-4 border-[#1a3eaf] bg-white p-6 shadow-sm">
           <div className="mb-6">
             <h2 className="text-lg font-black uppercase text-[#1a1a2e]">
@@ -646,6 +688,17 @@ export default function ThemenprioritaetenPage() {
             })}
           </div>
         </div>
+        )}
+
+          {/* Ergebnisse zuklappen */}
+          <button
+            onClick={() => setShowResults(false)}
+            className="mb-4 w-full rounded-sm border border-black/10 py-2 text-xs font-semibold text-[#6b6b7b] transition-colors hover:bg-black/5"
+          >
+            Ergebnisse zuklappen
+          </button>
+        </>
+        )}
 
         {/* Disclaimer */}
         <p className="mt-8 text-center text-[0.68rem] text-[#6b6b7b]/40">
