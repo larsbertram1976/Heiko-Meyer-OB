@@ -98,7 +98,7 @@ export function NewsletterBanner() {
         <div className="mt-4 flex items-center justify-center gap-4 text-xs text-white/50">
           {count !== null && count > 0 && (
             <span>
-              {count} {count === 1 ? "Lüneburger ist" : "Lüneburger sind"} bereits dabei
+              {count} {count === 1 ? "Person ist" : "Lüneburger:innen sind"} bereits dabei
             </span>
           )}
           <span>Kein Spam &ndash; jederzeit abmeldbar.</span>

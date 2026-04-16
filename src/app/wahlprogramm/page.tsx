@@ -41,7 +41,7 @@ export default function WahlprogrammPage() {
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/70">
             9 Punkte für ein besseres Lüneburg. Konkret, pragmatisch und
-            unabhängig – für alle Lüneburgerinnen und Lüneburger.
+            unabhängig – für alle Lüneburger:innen.
           </p>
           <blockquote className="mx-auto mt-8 max-w-xl border-l-4 border-[#58b046] pl-4 text-left text-base italic text-white/80">
             &bdquo;Lüneburg nicht nur verwalten, sondern aktiv gestalten. Dafür

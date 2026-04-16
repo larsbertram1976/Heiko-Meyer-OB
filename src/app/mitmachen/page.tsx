@@ -223,7 +223,7 @@ export default function MitmachenPage() {
               </h2>
               <p className="flex-1 text-sm leading-relaxed text-[#6b6b7b]">
                 Helfen Sie beim Flyer verteilen oder Infostand betreuen.
-                Gemeinsam erreichen wir mehr Lüneburgerinnen und Lüneburger.
+                Gemeinsam erreichen wir mehr Lüneburger:innen.
               </p>
               <Link
                 href="/termine"
@@ -401,7 +401,7 @@ export default function MitmachenPage() {
               {count !== null && count > 0 && (
                 <p className="text-center text-sm text-[#6b6b7b]">
                   <span className="font-semibold text-[#1a3eaf]">{count}</span>{" "}
-                  {count === 1 ? "Lüneburger ist" : "Lüneburger sind"} schon dabei
+                  {count === 1 ? "Person ist" : "Lüneburger:innen sind"} schon dabei
                 </p>
               )}
             </form>
@@ -422,7 +422,7 @@ export default function MitmachenPage() {
           </div>
           <p className="mt-4 text-left text-sm leading-relaxed text-[#6b6b7b] md:text-base">
             Jeder geteilte Link hilft. Empfehlen Sie Heiko Meyer in Ihrem
-            Netzwerk und machen Sie andere Lüneburgerinnen und Lüneburger auf
+            Netzwerk und machen Sie andere Lüneburger:innen auf
             seinen Wahlkampf aufmerksam.
           </p>
 

@@ -139,7 +139,7 @@ export function HeroSection() {
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 {count !== null && count > 0 && (
                   <span className="font-medium text-[#1a3eaf]">
-                    {count} {count === 1 ? "Lüneburger ist" : "Lüneburger sind"} schon dabei
+                    {count} {count === 1 ? "Person ist" : "Lüneburger:innen sind"} schon dabei
                   </span>
                 )}
                 <span>Kein Spam, jederzeit abmeldbar.</span>

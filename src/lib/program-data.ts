@@ -35,8 +35,8 @@ export const programTopics: ProgramTopic[] = [
     heroQuote:
       "Es geht mir um das Miteinander innerhalb der Gesellschaft und nicht um Dinge, die die Gesellschaft spalten.",
     problem: {
-      headline: "Warum sich viele Lüneburger nicht gehört fühlen",
-      text: "Entscheidungen fallen hinter verschlossenen Türen. Bürger erfahren erst von Projekten, wenn alles beschlossen ist. Die Verwaltung arbeitet mit veralteten Methoden und ist für viele schwer erreichbar. Gleichzeitig wächst der Frust: Steuergeld wird für fragwürdige Projekte wie die ARENA ausgegeben, ohne dass Bürger mitentscheiden können.",
+      headline: "Warum sich viele Lüneburger:innen nicht gehört fühlen",
+      text: "Entscheidungen fallen hinter verschlossenen Türen. Bürger:innen erfahren erst von Projekten, wenn alles beschlossen ist. Die Verwaltung arbeitet mit veralteten Methoden und ist für viele schwer erreichbar. Gleichzeitig wächst der Frust: Steuergeld wird für fragwürdige Projekte wie die ARENA ausgegeben, ohne dass Bürger:innen mitentscheiden können.",
       facts: [
         { value: "78.000", label: "Einwohner verdienen eine Stimme" },
         { value: "20+", label: "Jahre Erfahrung mit der Verwaltung" },
@@ -48,7 +48,7 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Bürgerbeteiligung fördern",
-          text: "Lüneburger werden in Projekte und Kompetenzteams eingebunden. Mehr reden, mehr zuhören, schneller lösen. Stadtplanung richtet sich nach den Bedürfnissen aller: Jüngere, Ältere und Menschen mit Handicap. Heiko will für jeden Bürger ansprechbar sein.",
+          text: "Lüneburger:innen werden in Projekte und Kompetenzteams eingebunden. Mehr reden, mehr zuhören, schneller lösen. Stadtplanung richtet sich nach den Bedürfnissen aller: Jüngere, Ältere und Menschen mit Handicap. Heiko will für alle Bürger:innen ansprechbar sein.",
         },
         {
           title: "Verwaltung neuorganisieren",
@@ -56,11 +56,11 @@ export const programTopics: ProgramTopic[] = [
         },
         {
           title: "Steuerverschwendung beenden",
-          text: "Sorgsamer Umgang mit dem Geld der Bürger. Keine fragwürdigen Großprojekte ohne transparente Kosten-Nutzen-Analyse.",
+          text: "Sorgsamer Umgang mit dem Geld der Bürger:innen. Keine fragwürdigen Großprojekte ohne transparente Kosten-Nutzen-Analyse.",
         },
         {
           title: "Transparenz stärken",
-          text: "Entscheidungen, Abläufe und Finanzmittel werden offen, nachvollziehbar und leicht zugänglich kommuniziert. Bürger sollen wissen, was beschlossen wird, warum – und was es kostet.",
+          text: "Entscheidungen, Abläufe und Finanzmittel werden offen, nachvollziehbar und leicht zugänglich kommuniziert. Bürger:innen sollen wissen, was beschlossen wird, warum – und was es kostet.",
         },
         {
           title: "Begegnungsräume schaffen",
@@ -68,13 +68,13 @@ export const programTopics: ProgramTopic[] = [
         },
         {
           title: "Digitalisierung der Verwaltung",
-          text: "Nutzerfreundliche, sichere digitale Angebote ersetzen klassische Behördengänge – damit Bürger ihre Freiräume für die Dinge nutzen können, die wirklich zählen. Digitale Infrastruktur über die Verwaltung hinaus ausbauen.",
+          text: "Nutzerfreundliche, sichere digitale Angebote ersetzen klassische Behördengänge – damit Bürger:innen ihre Freiräume für die Dinge nutzen können, die wirklich zählen. Digitale Infrastruktur über die Verwaltung hinaus ausbauen.",
         },
       ],
     },
     concreteExample: {
       headline: "Konkret: Bürger-Kompetenzteams für jedes Großprojekt",
-      text: "Bevor die Stadt ein Projekt wie den Umbau des Marktplatzes oder eine neue Verkehrsführung beschließt, wird ein Bürger-Kompetenzteam aus Anwohnern, Gewerbetreibenden und Fachleuten gebildet. Das Team wird frühzeitig eingebunden – nicht erst, wenn alles beschlossen ist. So wäre es beim ARENA-Projekt nie so weit gekommen: Bürger hätten früh die Kosten hinterfragt. Heiko hat dieses Modell 20 Jahre lang im LCM praktiziert – 250 Mitglieder, die gemeinsam Entscheidungen treffen.",
+      text: "Bevor die Stadt ein Projekt wie den Umbau des Marktplatzes oder eine neue Verkehrsführung beschließt, wird ein Bürger-Kompetenzteam aus Anwohnern, Gewerbetreibenden und Fachleuten gebildet. Das Team wird frühzeitig eingebunden – nicht erst, wenn alles beschlossen ist. So wäre es beim ARENA-Projekt nie so weit gekommen: Bürger:innen hätten früh die Kosten hinterfragt. Heiko hat dieses Modell 20 Jahre lang im LCM praktiziert – 250 Mitglieder, die gemeinsam Entscheidungen treffen.",
     },
     cta: "Gestalten statt verwalten – mit Heiko Meyer.",
   },
@@ -233,7 +233,7 @@ export const programTopics: ProgramTopic[] = [
       items: [
         {
           title: "Zusammenarbeit mit der Leuphana stärken",
-          text: "Die Brücke zwischen Stadt und Universität ausbauen. Studierende sind Lüneburger – sie sollen hier bleiben und gründen wollen.",
+          text: "Die Brücke zwischen Stadt und Universität ausbauen. Studierende sind Lüneburger:innen – sie sollen hier bleiben und gründen wollen.",
         },
         {
           title: "Ganztagsschulen ausbauen",
@@ -264,7 +264,7 @@ export const programTopics: ProgramTopic[] = [
     image: "/programmpunkt_6.webp",
     highlights: ["Bürgercafés in jedem Stadtteil", "Kita-Zeiten an Arbeitsalltag anpassen", "Chancengleichheit für alle Kinder"],
     heroQuote:
-      "Ich bin für alle Lüneburger da. Und das kann nur einer, der keiner Partei angehört.",
+      "Ich bin für alle Lüneburger:innen da. Und das kann nur einer, der keiner Partei angehört.",
     problem: {
       headline: "Zusammenhalt braucht konkrete Taten",
       text: "In einer wachsenden Stadt darf niemand zurückbleiben. Steigende Mieten, Armut im Alter, fehlende Begegnungsräume – der soziale Zusammenhalt in Lüneburg steht unter Druck. Es reicht nicht, gute Absätze zu schreiben. Es braucht jemanden, der anpackt.",

@@ -509,7 +509,7 @@ export default function ThemenprioritaetenPage() {
           <div className="mb-6 flex items-center justify-between">
             <div>
               <h2 className="text-lg font-black uppercase text-[#1a1a2e]">
-                Top 10 der Lüneburger
+                Top 10 der Lüneburger:innen
               </h2>
               <p className="mt-0.5 text-xs text-[#6b6b7b]">
                 Die meistgewählten Vorhaben aller Themen
@@ -704,7 +704,7 @@ export default function ThemenprioritaetenPage() {
         {/* Disclaimer */}
         <p className="mt-8 text-center text-[0.68rem] text-[#6b6b7b]/40">
           Unverbindliche Themen-Umfrage · Keine offizielle Wahl · Ergebnisse
-          zeigen Tendenzen, was den Lüneburgern am wichtigsten ist
+          zeigen Tendenzen, was den Lüneburger:innen am wichtigsten ist
         </p>
 
         <div className="mt-6 text-center">

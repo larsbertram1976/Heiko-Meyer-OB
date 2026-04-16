@@ -4,7 +4,7 @@ const milestones = [
   { years: "20+", label: "Jahre LCM-Vorsitzender", detail: "250+ Mitglieder aufgebaut" },
   { years: "20+", label: "Jahre im Bauausschuss", detail: "Lüneburg mitgestaltet" },
   { years: "16", label: "Jahre im Aufsichtsrat LMG", detail: "Stadtmarketing begleitet" },
-  { years: "5", label: "Jahre im Stadtrat", detail: "Parteilos für alle Bürger" },
+  { years: "5", label: "Jahre im Stadtrat", detail: "Parteilos für alle Bürger:innen" },
 ];
 
 const priorities = [
@@ -83,7 +83,7 @@ export function AboutSection() {
 
             {/* Anrede */}
             <p className="text-lg leading-relaxed text-[#2c2c3a]">
-              Liebe Lüneburgerinnen und Lüneburger,
+              Liebe Lüneburger:innen,
             </p>
             <p className="text-base leading-relaxed text-[#6b6b7b]">
               ich lebe mit meiner Familie seit Jahrzehnten in unserer

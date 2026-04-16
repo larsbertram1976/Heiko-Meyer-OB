@@ -68,7 +68,7 @@ const competenceMatches = [
 
 const quotes = [
   {
-    text: "Ich bin für alle Lüneburger da. Und das kann nur einer, der keiner Partei angehört.",
+    text: "Ich bin für alle Lüneburger:innen da. Und das kann nur einer, der keiner Partei angehört.",
     context: "Über seine Parteilosigkeit",
   },
   {
@@ -146,7 +146,7 @@ export default function WarumHeikoPage() {
           <p className="text-lg leading-relaxed text-[#2c2c3a]">
             Heiko Meyer bringt etwas mit, das kein anderer Kandidat hat:{" "}
             <span className="font-bold text-[#1a3eaf]">
-              20 Jahre Erfahrung an der Schnittstelle zwischen Bürgern,
+              20 Jahre Erfahrung an der Schnittstelle zwischen Bürger:innen,
               Wirtschaft und Verwaltung
             </span>{" "}
             – ohne Parteibrille. Als LCM-Vorsitzender hat er das
@@ -158,7 +158,7 @@ export default function WarumHeikoPage() {
 
           <div className="mt-8 rounded-sm border-2 border-[#58b046]/30 bg-[#58b046]/5 p-6">
             <p className="text-base font-semibold text-[#1a1a2e]">
-              2021 haben 45% der Lüneburger in der Stichwahl für Heiko
+              2021 haben 45% der Lüneburger:innen in der Stichwahl für Heiko
               gestimmt – mehr als für die Kandidaten von SPD und CDU. Dieses Mal
               will er es über die Ziellinie schaffen.
             </p>
@@ -266,7 +266,7 @@ export default function WarumHeikoPage() {
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/60">
             Heiko Meyer ist bewusst parteilos. Sein einziger Auftrag kommt von
-            den Bürgerinnen und Bürgern. Keine Fraktion bestimmt seine Agenda,
+            den Bürger:innen. Keine Fraktion bestimmt seine Agenda,
             kein Parteitag seine Meinung. Was zählt, ist das, was gut für
             Lüneburg ist – nicht, was eine Partei will.
           </p>

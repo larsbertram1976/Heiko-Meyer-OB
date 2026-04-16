@@ -118,7 +118,7 @@ export function PrevoteFloat() {
                   {formattedCount}
                 </p>
                 <p className="mt-1 text-xs text-white/50">
-                  Lüneburger unterstützen Heiko
+                  Lüneburger:innen unterstützen Heiko
                 </p>
                 <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#58b046]/20 px-3 py-1 text-xs font-semibold text-[#58b046]">
                   <svg

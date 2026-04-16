@@ -44,7 +44,7 @@ export const termine: Termin[] = [
     location: "Marktplatz Lüneburg",
     address: "Am Markt, 21335 Lüneburg",
     description:
-      "Persönlich, direkt, parteilos – Heiko Meyer im Gespräch mit den Lüneburgern.",
+      "Persönlich, direkt, parteilos – Heiko Meyer im Gespräch mit den Lüneburger:innen.",
     type: "dialog",
   },
   {
