@@ -8,7 +8,6 @@ import { Menu } from "lucide-react";
 
 const navLinks = [
   { label: "Start", href: "/#start" },
-  { label: "Über mich", href: "/#ueber-mich" },
   { label: "Warum Heiko", href: "/warum-heiko" },
   { label: "Wahlprogramm", href: "/wahlprogramm" },
   { label: "Stadtteile", href: "/stadtteile" },
