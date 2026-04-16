@@ -297,29 +297,32 @@ export default function ThemenprioritaetenPage() {
         {/* ===== VOTING UI ===== */}
         {!submitted && (
           <>
-            {/* Budget Bar */}
-            <div className="mb-8 rounded-sm border-l-4 border-[#58b046] bg-white p-5 shadow-sm">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-sm font-bold text-[#1a1a2e]">
-                    Noch{" "}
-                    <span className="text-[#1a3eaf]">{remaining}</span> von{" "}
-                    {MAX_SELECTIONS} Stimmen übrig
-                  </p>
-                  <p className="mt-0.5 text-xs text-[#6b6b7b]">
-                    {maxReached
-                      ? "Limit erreicht – Auswahl aufheben, um andere zu wählen"
-                      : "Klicken Sie auf die Vorhaben, die Ihnen am wichtigsten sind"}
-                  </p>
+            {/* Budget Bar – sticky so it stays visible while scrolling */}
+            <div className="sticky top-16 z-40 -mx-4 mb-8 border-b border-black/[0.06] bg-white/95 px-4 py-3 shadow-sm backdrop-blur md:-mx-8 md:px-8">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1a3eaf] text-sm font-black text-white">
+                    {remaining}
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-[#1a1a2e]">
+                      {maxReached ? "Limit erreicht" : `Noch ${remaining} von ${MAX_SELECTIONS}`}
+                    </p>
+                    <p className="hidden text-xs text-[#6b6b7b] sm:block">
+                      {maxReached
+                        ? "Auswahl aufheben, um andere zu wählen"
+                        : "Klicken Sie auf die Vorhaben, die Ihnen am wichtigsten sind"}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex gap-1">
                   {Array.from({ length: MAX_SELECTIONS }).map((_, i) => (
                     <div
                       key={i}
-                      className={`h-4 w-4 rounded-full border-2 transition-all duration-200 ${
+                      className={`h-3 w-3 rounded-full transition-all duration-200 ${
                         i < usedCount
-                          ? "scale-110 border-[#58b046] bg-[#58b046]"
-                          : "border-[#1a3eaf]/20 bg-transparent"
+                          ? "bg-[#58b046]"
+                          : "bg-[#1a3eaf]/15"
                       }`}
                     />
                   ))}
