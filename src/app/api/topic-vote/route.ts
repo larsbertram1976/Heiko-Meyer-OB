@@ -138,15 +138,39 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    // ── IP-based duplicate protection (24h) ──
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      request.headers.get("x-real-ip") ??
+      "unknown";
+
     // ── New top10 payload: { top10: string[] } where each string is "topicSlug:subSlug" ──
     if (body.top10 && Array.isArray(body.top10)) {
       const top10 = body.top10 as string[];
 
       if (top10.length < 1 || top10.length > 10) {
         return NextResponse.json(
-          { error: "top10 must contain 1–10 items" },
+          { error: "top10 must contain 1\u201310 items" },
           { status: 400 }
         );
+      }
+
+      // Check IP cooldown (24h)
+      const ipKey = `heiko-top10-ip:${ip}`;
+      const hasVoted = await kv.get<boolean>(ipKey);
+
+      if (hasVoted) {
+        // Already voted from this IP – return current results without counting
+        const subResults = await fetchSubResults();
+        const results: Record<string, number> = {};
+        for (const slug of TOPICS) {
+          results[slug] = (await kv.get<number>(topicKey(slug))) ?? 0;
+        }
+        return NextResponse.json({
+          results,
+          subResults,
+          alreadyVoted: true,
+        });
       }
 
       // Count how many sub-topics belong to each topic (for aggregated topic score)
@@ -165,6 +189,9 @@ export async function POST(request: NextRequest) {
       for (const [slug, count] of Object.entries(topicIncrements)) {
         await kv.incrby(topicKey(slug), count);
       }
+
+      // Mark IP as voted (expires after 24h)
+      await kv.set(ipKey, true, { ex: 60 * 60 * 24 });
 
       const subResults = await fetchSubResults();
       const results: Record<string, number> = {};

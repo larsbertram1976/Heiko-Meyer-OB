@@ -208,7 +208,14 @@ export default function ThemenprioritaetenPage() {
         body: JSON.stringify({ top10 }),
       });
       const data = await res.json();
+      if (data.results) setResults(data.results);
       if (data.subResults) setSubResults(data.subResults);
+      if (data.alreadyVoted) {
+        // Server says IP already voted – show results, don't re-count
+        setSubmitted(true);
+        window.scrollTo({ top: 0 });
+        return;
+      }
       setSubmitted(true);
       localStorage.setItem("heiko-top10-votes", JSON.stringify(top10));
       localStorage.setItem("heiko-top10-time", Date.now().toString());
