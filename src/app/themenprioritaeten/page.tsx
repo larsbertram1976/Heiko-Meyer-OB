@@ -558,11 +558,12 @@ export default function ThemenprioritaetenPage() {
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="h-2 flex-1 overflow-hidden rounded-sm bg-[#1a3eaf]/[0.06]">
+                      <div className="h-2 flex-1 overflow-hidden rounded-sm bg-black/[0.06]">
                         <div
-                          className="h-full rounded-sm bg-gradient-to-r from-[#1a3eaf] to-[#2551c7] transition-all duration-700 ease-out"
+                          className="h-full rounded-sm transition-all duration-700 ease-out"
                           style={{
                             width: `${Math.max(barPct, st.count > 0 ? 2 : 0)}%`,
+                            background: `linear-gradient(to right, ${color}, ${color}bb)`,
                           }}
                         />
                       </div>
