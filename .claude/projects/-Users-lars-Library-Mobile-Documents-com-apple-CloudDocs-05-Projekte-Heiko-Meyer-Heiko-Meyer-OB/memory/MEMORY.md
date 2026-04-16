@@ -1,1 +1,0 @@
-- [Email Setup offen](project_email_setup.md) — Resend/Newsletter für Heiko muss noch geklärt werden

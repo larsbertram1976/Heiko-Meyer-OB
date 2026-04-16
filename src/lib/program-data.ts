@@ -130,7 +130,7 @@ export const programTopics: ProgramTopic[] = [
     title: "Für mehr bezahlbaren Wohnraum",
     subtitle: "Pragmatische Lösungen statt leerer Versprechen",
     image: "/programmpunkt_3.webp",
-    highlights: ["Leerstand über Geschäften aktivieren", "Neubau-Genehmigungen beschleunigen", "Bürokratie beim Bauen abbauen"],
+    highlights: ["Leerstand über Geschäften aktivieren", "Digitales Bauamt einführen", "Konzeptvergabe für günstiges Bauen"],
     heroQuote:
       "Wir brauchen bezahlbare Wohnungen für die Menschen in Lüneburg. Für die Menschen, die hier bereits wohnen.",
     problem: {
@@ -215,7 +215,7 @@ export const programTopics: ProgramTopic[] = [
     title: "Für eine attraktive Bildungs- und Universitätsstadt",
     subtitle: "Bildung als Fundament für Lüneburgs Zukunft",
     image: "/programmpunkt_5.webp",
-    highlights: ["Gründer-Stipendium mit der Leuphana", "Ganztagsschulen ausbauen", "Fachkräfte in der Region halten"],
+    highlights: ["Gründer-Stipendium mit der Leuphana", "Ganztagsschulen ausbauen", "Geräte-Ausleihe für alle Schüler"],
     heroQuote:
       "Die Leuphana ist ein Gewinn für Lüneburg – als Wirtschaftsfaktor, Innovationstreiber und für das Stadtleben.",
     problem: {
@@ -255,7 +255,7 @@ export const programTopics: ProgramTopic[] = [
     title: "Für ein soziales Lüneburg",
     subtitle: "Eine Stadt, in der jeder die gleichen Chancen hat",
     image: "/programmpunkt_6.webp",
-    highlights: ["Bürgercafés in jedem Stadtteil", "Sozialarbeit ausbauen", "Chancengleichheit für alle Kinder"],
+    highlights: ["Bürgercafés in jedem Stadtteil", "Kita-Zeiten an Arbeitsalltag anpassen", "Chancengleichheit für alle Kinder"],
     heroQuote:
       "Ich bin für alle Lüneburger da. Und das kann nur einer, der keiner Partei angehört.",
     problem: {
@@ -295,7 +295,7 @@ export const programTopics: ProgramTopic[] = [
     title: "Für ein zukunftsfähiges Umwelt- und Verkehrskonzept",
     subtitle: "Alle Verkehrsteilnehmer miteinander versöhnen",
     image: "/programmpunkt_7.webp",
-    highlights: ["Baustellen-Koordinator einsetzen", "Park-and-Ride-System aufbauen", "Verkehrspakt mit dem Landkreis"],
+    highlights: ["4 kostenfreie P&R-Plätze", "Baustellen-Koordinator einsetzen", "100% Ökostrom für die Verwaltung"],
     heroQuote:
       "Nicht gegeneinander, sondern miteinander. Pragmatisch, nicht ideologisch.",
     problem: {
@@ -343,7 +343,7 @@ export const programTopics: ProgramTopic[] = [
     title: "Für ein kulturell reiches Lüneburg",
     subtitle: "Kultur ist der Kitt, der unsere Stadt zusammenhält",
     image: "/programmpunkt_8.webp",
-    highlights: ["Pop-up-Galerien in leeren Läden", "Veranstaltungen unbürokratischer", "Stadtgeschichte lebendig halten"],
+    highlights: ["Stadttheater als Leuchtturm", "Pop-up-Galerien in leeren Läden", "Stadtgeschichte lebendig halten"],
     heroQuote:
       "Lüneburgs Kultur ist einzigartig. Sie verdient Wertschätzung – und Unterstützung.",
     problem: {
@@ -383,7 +383,7 @@ export const programTopics: ProgramTopic[] = [
     title: "Für ein sportliches Lüneburg",
     subtitle: "Sport verbindet – in jedem Alter, in jedem Stadtteil",
     image: "/programmpunkt_9.webp",
-    highlights: ["Sportstätten-Sanierungsplan", "Vereins-Sprechstunde im Rathaus", "Online-Hallenbelegung einführen"],
+    highlights: ["Schwimmen für alle Grundschulkinder", "Sportstätten-Sanierungsplan", "Vereins-Sprechstunde im Rathaus"],
     heroQuote:
       "Sport ist mehr als Bewegung – er bringt Menschen zusammen.",
     problem: {
