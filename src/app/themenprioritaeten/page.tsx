@@ -527,7 +527,8 @@ export default function ThemenprioritaetenPage() {
 
           <div className="space-y-3">
             {displayedRanked.map((st, i) => {
-              const pct = maxSubCount > 0 ? (st.count / maxSubCount) * 100 : 0;
+              const barPct = maxSubCount > 0 ? (st.count / maxSubCount) * 100 : 0;
+              const displayPct = totalTopicVotes > 0 ? ((st.count / totalTopicVotes) * 100).toFixed(1) : "0";
               const color = TOPIC_COLORS[st.topicSlug] ?? "#1a3eaf";
               return (
                 <div key={st.id} className="flex items-center gap-3">
@@ -561,12 +562,12 @@ export default function ThemenprioritaetenPage() {
                         <div
                           className="h-full rounded-sm bg-gradient-to-r from-[#1a3eaf] to-[#2551c7] transition-all duration-700 ease-out"
                           style={{
-                            width: `${Math.max(pct, st.count > 0 ? 2 : 0)}%`,
+                            width: `${Math.max(barPct, st.count > 0 ? 2 : 0)}%`,
                           }}
                         />
                       </div>
-                      <span className="w-8 flex-shrink-0 text-right text-xs tabular-nums text-[#6b6b7b]">
-                        {st.count}
+                      <span className="w-16 flex-shrink-0 text-right text-xs tabular-nums text-[#6b6b7b]">
+                        {displayPct}% ({st.count})
                       </span>
                     </div>
                   </div>
