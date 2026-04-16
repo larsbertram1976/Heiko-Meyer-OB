@@ -227,12 +227,8 @@ export default function ThemenprioritaetenPage() {
     }
   }, [selected, loading]);
 
-  const newRound = useCallback(() => {
-    setSelected(new Set());
-    setSubmitted(false);
-    localStorage.removeItem("heiko-top10-votes");
-    localStorage.removeItem("heiko-top10-time");
-  }, []);
+  // No public "new round" button - prevents gaming.
+  // For campaign events: clear localStorage manually or use incognito.
 
   // Compute flat ranked sub-topics from subResults
   const rankedSubtopics = ALL_SUBTOPICS.map((st) => {
@@ -442,7 +438,7 @@ export default function ThemenprioritaetenPage() {
 
         {/* ===== SUBMITTED STATE ===== */}
         {submitted && (
-          <div className="mb-8 flex items-center justify-between rounded-sm border-l-4 border-[#58b046] bg-white p-5 shadow-sm">
+          <div className="mb-8 rounded-sm border-l-4 border-[#58b046] bg-white p-5 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#58b046]/10">
                 <svg
@@ -463,16 +459,10 @@ export default function ThemenprioritaetenPage() {
                   Danke für Ihre Einschätzung!
                 </p>
                 <p className="text-xs text-[#6b6b7b]">
-                  So sehen die Prioritäten der Lüneburger aus:
+                  Ihre Stimme wurde gezählt. Schauen Sie sich die bisherigen Ergebnisse an:
                 </p>
               </div>
             </div>
-            <button
-              onClick={newRound}
-              className="rounded-sm border border-[#1a3eaf]/20 px-4 py-2 text-xs font-semibold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf]/5"
-            >
-              Neue Abstimmung
-            </button>
           </div>
         )}
 
