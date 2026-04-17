@@ -289,6 +289,52 @@ export default function MitmachenPage() {
               </Link>
             </div>
           </div>
+
+          {/* Spenden-Banner */}
+          <div className="mt-8 flex flex-col items-center gap-4 rounded-sm bg-[#1a3eaf] p-6 sm:flex-row sm:justify-between md:p-8">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white/10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-6 w-6 text-white"
+                >
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-base font-bold text-white">
+                  Wahlkampf mit einer Spende unterstützen
+                </p>
+                <p className="mt-0.5 text-xs text-white/60">
+                  Jeder Betrag hilft – für Plakate, Veranstaltungen und Materialien
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/spenden"
+              className="inline-flex flex-shrink-0 items-center gap-2 rounded-sm bg-[#58b046] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#4e9e3f]"
+            >
+              Jetzt spenden
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 
