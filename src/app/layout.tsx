@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -235,6 +238,36 @@ const jsonLd = [
         name: "Termine",
         item: `${BASE_URL}/termine`,
       },
+      {
+        "@type": "ListItem",
+        position: 5,
+        name: "Stadtteile",
+        item: `${BASE_URL}/stadtteile`,
+      },
+      {
+        "@type": "ListItem",
+        position: 6,
+        name: "Mitmachen",
+        item: `${BASE_URL}/mitmachen`,
+      },
+      {
+        "@type": "ListItem",
+        position: 7,
+        name: "Spenden",
+        item: `${BASE_URL}/spenden`,
+      },
+      {
+        "@type": "ListItem",
+        position: 8,
+        name: "Themenpuls",
+        item: `${BASE_URL}/themenprioritaeten`,
+      },
+      {
+        "@type": "ListItem",
+        position: 9,
+        name: "Sprachagent",
+        item: `${BASE_URL}/sprachagent`,
+      },
     ],
   },
 ];
@@ -252,7 +285,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased">
+      <body className={`${inter.className} antialiased`}>
         <SmoothScroll />
         <Header />
         <main>{children}</main>

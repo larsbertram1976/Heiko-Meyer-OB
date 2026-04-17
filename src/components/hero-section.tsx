@@ -120,8 +120,10 @@ export function HeroSection() {
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-2">
               <div className="flex gap-2">
+                <label htmlFor="hero-email" className="sr-only">E-Mail-Adresse</label>
                 <input
                   type="email"
+                  id="hero-email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Ihre E-Mail-Adresse"
@@ -155,6 +157,7 @@ export function HeroSection() {
             alt="Unabhängig für ein Miteinander"
             width={280}
             height={180}
+            priority
             className="absolute -left-8 -top-4 z-10 w-48 md:-left-12 md:-top-8 md:w-64 lg:w-72"
           />
           <div className="relative overflow-hidden rounded-sm border-4 border-[#1a3eaf] shadow-lg">
