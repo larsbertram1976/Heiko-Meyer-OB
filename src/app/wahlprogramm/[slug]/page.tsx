@@ -204,6 +204,59 @@ export default async function ProgramTopicPage({
         </div>
       </section>
 
+      {/* Themenpuls CTA – prominent, contextual */}
+      <section className="bg-[#58b046] py-10 md:py-14">
+        <div className="mx-auto max-w-5xl px-4 md:px-8">
+          <div className="flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
+            <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-white/20">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-8 w-8 text-white"
+              >
+                <path d="M3 3v18h18" />
+                <path d="m19 9-5 5-4-4-3 3" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-bold uppercase tracking-wider text-white/60">
+                Ihre Meinung zu diesem Thema
+              </p>
+              <p className="mt-1 text-xl font-black text-white md:text-2xl">
+                Was davon ist Ihnen am wichtigsten?
+              </p>
+              <p className="mt-2 text-sm text-white/70">
+                Sie haben gerade &uuml;ber {topic.title} gelesen. 45 Vorhaben,
+                8 Jahre &ndash; helfen Sie Heiko, die richtigen Schwerpunkte zu setzen.
+              </p>
+            </div>
+            <Link
+              href="/themenprioritaeten"
+              className="inline-flex flex-shrink-0 items-center gap-2 rounded-sm bg-white px-8 py-4 font-bold text-[#58b046] shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl"
+            >
+              Jetzt Ihre Top 10 w&auml;hlen
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+              >
+                <path d="m12 19 7-7-7-7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-[#1a3eaf] py-12 md:py-16">
         <div className="mx-auto max-w-5xl px-4 text-center md:px-8">
@@ -236,15 +289,6 @@ export default async function ProgramTopicPage({
               className="inline-flex items-center gap-2 rounded-sm border-2 border-white/30 px-8 py-4 font-semibold text-white transition-colors hover:bg-white/10"
             >
               Alle 9 Punkte ansehen
-            </Link>
-            <Link
-              href="/themenprioritaeten"
-              className="inline-flex items-center gap-2 rounded-sm border-2 border-white/30 px-8 py-4 font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                <path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" />
-              </svg>
-              Themenpuls: Was ist Ihnen wichtig?
             </Link>
           </div>
         </div>
