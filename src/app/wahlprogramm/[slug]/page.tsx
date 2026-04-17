@@ -118,10 +118,7 @@ export default async function ProgramTopicPage({
 
           {/* Share Buttons */}
           <div className="mt-6">
-            <ShareButtons
-              url={`https://meyer-lueneburg.de/wahlprogramm/${topic.slug}`}
-              title={topic.title}
-            />
+            <ShareButtons title={topic.title} />
           </div>
         </div>
       </section>

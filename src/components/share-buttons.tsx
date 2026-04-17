@@ -1,27 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ShareButtonsProps {
-  url: string;
   title: string;
 }
 
-export function ShareButtons({ url, title }: ShareButtonsProps) {
+export function ShareButtons({ title }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState("");
 
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(title + " " + url)}`;
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  useEffect(() => {
+    setCurrentUrl(window.location.href);
+  }, []);
+
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(title + " " + currentUrl)}`;
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(currentUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // Fallback for browsers without clipboard API
       const el = document.createElement("textarea");
-      el.value = url;
+      el.value = currentUrl;
       document.body.appendChild(el);
       el.select();
       document.execCommand("copy");
