@@ -22,7 +22,7 @@ export const districtContent: Record<string, DistrictContent> = {
       "Sicherheit Am Sande und Am Berge: Drogenkonsum, Kleinkriminalität",
       "Leerstand in Seitenstraßen nimmt zu",
       "Konflikte zwischen Anwohnern, Gastronomen und Besuchern",
-      "+70 % Ladendiebstähle 2022–2023",
+      "+70% Ladendiebstähle 2022–2023",
     ],
     solutions: [
       "Sicherheits-Partnerschaft Am Sande: Polizei, KOD, Streetwork und LCM an einen Tisch",

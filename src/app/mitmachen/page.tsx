@@ -274,7 +274,7 @@ export default function MitmachenPage() {
                 Themen priorisieren
               </h2>
               <p className="flex-1 text-sm leading-relaxed text-[#6b6b7b]">
-                45 Vorhaben f&uuml;r 8 Jahre &ndash; w&auml;hlen Sie Ihre Top 10 und
+                41 Vorhaben f&uuml;r 8 Jahre &ndash; w&auml;hlen Sie Ihre Top 10 und
                 helfen Sie Heiko, die richtigen Schwerpunkte zu setzen.
               </p>
               <Link

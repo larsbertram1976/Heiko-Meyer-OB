@@ -286,7 +286,7 @@ export default function ThemenprioritaetenPage() {
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base text-white/70">
             Heiko Meyer hat{" "}
-            <span className="font-bold text-[#58b046]">45 konkrete Vorhaben</span>{" "}
+            <span className="font-bold text-[#58b046]">41 konkrete Vorhaben</span>{" "}
             für die nächsten 8 Jahre als Oberbürgermeister. Helfen Sie ihm zu
             priorisieren: Wählen Sie Ihre{" "}
             <span className="font-bold text-white">Top 10</span> – was soll

@@ -52,7 +52,7 @@ export function StadtteilTeaser() {
                 >
                   <path d="M5 12l5 5L20 7" />
                 </svg>
-                <span>15 L&uuml;neburger Stadtteile auf einer interaktiven Karte</span>
+                <span>17 L&uuml;neburger Stadtteile auf einer interaktiven Karte</span>
               </li>
               <li className="flex items-start gap-2">
                 <svg
@@ -144,7 +144,7 @@ export function StadtteilTeaser() {
 
             {/* Overlay badge */}
             <div className="absolute right-6 top-6 rounded-sm bg-[#58b046] px-3 py-1.5 text-xs font-bold uppercase text-white shadow-lg">
-              15 Stadtteile
+              17 Stadtteile
             </div>
 
             {/* Hover hint */}

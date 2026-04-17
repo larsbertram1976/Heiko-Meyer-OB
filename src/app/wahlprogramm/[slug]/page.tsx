@@ -231,7 +231,7 @@ export default async function ProgramTopicPage({
                 Was davon ist Ihnen am wichtigsten?
               </p>
               <p className="mt-2 text-sm text-white/70">
-                Sie haben gerade &uuml;ber {topic.title} gelesen. 45 Vorhaben,
+                Sie haben gerade &uuml;ber {topic.title} gelesen. 41 Vorhaben,
                 8 Jahre &ndash; helfen Sie Heiko, die richtigen Schwerpunkte zu setzen.
               </p>
             </div>
