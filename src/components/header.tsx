@@ -10,11 +10,24 @@ const navLinks = [
   { label: "Start", href: "/#start" },
   { label: "Warum Heiko", href: "/warum-heiko" },
   { label: "Wahlprogramm", href: "/wahlprogramm" },
-  { label: "Stadtteile", href: "/stadtteile" },
+  { label: "Stadtteilcheck", href: "/stadtteile" },
   { label: "Termine", href: "/termine" },
-  { label: "Themenpuls", href: "/themenprioritaeten" },
   { label: "Mitmachen", href: "/mitmachen" },
-  { label: "Frag Heiko", href: "/sprachagent" },
+];
+
+const ctaLinks = [
+  {
+    label: "Themenpuls",
+    href: "/themenprioritaeten",
+    className:
+      "rounded-sm bg-[#58b046] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#4e9e3f]",
+  },
+  {
+    label: "Frag Heiko",
+    href: "/sprachagent",
+    className:
+      "rounded-sm bg-[#1a3eaf] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#15349a]",
+  },
 ];
 
 export function Header() {
@@ -43,7 +56,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex md:gap-8">
+        <nav className="hidden items-center gap-6 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -53,11 +66,18 @@ export function Header() {
               {link.label}
             </a>
           ))}
+          <div className="ml-1 flex items-center gap-2">
+            {ctaLinks.map((link) => (
+              <a key={link.href} href={link.href} className={link.className}>
+                {link.label}
+              </a>
+            ))}
+          </div>
         </nav>
 
         {/* Mobile Hamburger */}
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild className="md:hidden">
+          <SheetTrigger asChild className="lg:hidden">
             <button
               aria-label="Menü öffnen"
               className="rounded-md p-2 text-foreground hover:bg-secondary"
@@ -77,6 +97,18 @@ export function Header() {
                   {link.label}
                 </a>
               ))}
+              <div className="mt-2 flex flex-col gap-3 border-t border-black/[0.06] pt-4">
+                {ctaLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={`${link.className} text-center !text-sm !px-4 !py-3`}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
             </nav>
           </SheetContent>
         </Sheet>
