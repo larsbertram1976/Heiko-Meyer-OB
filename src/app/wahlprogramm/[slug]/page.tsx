@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { programTopics } from "@/lib/program-data";
 import { NewsletterBanner } from "@/components/newsletter-banner";
+import { ShareButtons } from "@/components/share-buttons";
 
 export function generateStaticParams() {
   return programTopics.map((topic) => ({ slug: topic.slug }));
@@ -114,6 +115,14 @@ export default async function ProgramTopicPage({
               &mdash; Heiko Meyer
             </footer>
           </blockquote>
+
+          {/* Share Buttons */}
+          <div className="mt-6">
+            <ShareButtons
+              url={`https://meyer-lueneburg.de/wahlprogramm/${topic.slug}`}
+              title={topic.title}
+            />
+          </div>
         </div>
       </section>
 
