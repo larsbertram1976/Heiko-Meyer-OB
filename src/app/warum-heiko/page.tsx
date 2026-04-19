@@ -6,7 +6,7 @@ import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 export const metadata: Metadata = {
   title: "Warum Heiko Meyer? | OB-Kandidat Lüneburg 2026",
   description:
-    "Warum Heiko Meyer der richtige Oberbürgermeister-Kandidat für Lüneburg ist: 20+ Jahre Erfahrung, parteilos und unabhängig, 45% in der Stichwahl 2021. OB-Wahl 14. September 2026 in der Hansestadt Lüneburg.",
+    "Warum Heiko Meyer der richtige Oberbürgermeister-Kandidat für Lüneburg ist: 20+ Jahre Erfahrung, parteilos und unabhängig, 45% in der Stichwahl 2021. OB-Wahl 13. September 2026 in der Hansestadt Lüneburg.",
   keywords: [
     "Heiko Meyer Lüneburg",
     "Warum Heiko Meyer",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Warum Heiko Meyer? | OB-Kandidat Lüneburg 2026",
     description:
-      "20+ Jahre Erfahrung, parteilos und unabhängig. Heiko Meyer ist der richtige OB-Kandidat für Lüneburg. OB-Wahl 14. September 2026.",
+      "20+ Jahre Erfahrung, parteilos und unabhängig. Heiko Meyer ist der richtige OB-Kandidat für Lüneburg. OB-Wahl 13. September 2026.",
     url: "https://meyer-lueneburg.de/warum-heiko",
   },
 };
@@ -92,7 +92,7 @@ export default function WarumHeikoPage() {
           <div className="flex flex-1 flex-col justify-center px-6 py-12 md:px-12 md:py-20">
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
-              OB-Wahl · 14. September 2026
+              OB-Wahl · 13. September 2026
             </div>
             <h1 className="text-3xl font-black uppercase leading-tight text-white md:text-5xl">
               Der richtige Mann

@@ -19,7 +19,7 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
     const url = `${BASE_URL}/wahlprogramm/${topic.slug}`;
     return {
       title: `${topic.title} | Heiko Meyer Lüneburg`,
-      description: `${topic.subtitle} – Wahlprogramm Punkt ${topic.number} von Heiko Meyer, parteiloser OB-Kandidat für Lüneburg. OB-Wahl 14. September 2026.`,
+      description: `${topic.subtitle} – Wahlprogramm Punkt ${topic.number} von Heiko Meyer, parteiloser OB-Kandidat für Lüneburg. OB-Wahl 13. September 2026.`,
       keywords: [
         topic.title,
         "Lüneburg",

@@ -7,7 +7,7 @@ import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 export const metadata: Metadata = {
   title: "Wahlprogramm Lüneburg 2026 | Heiko Meyer",
   description:
-    "Das Wahlprogramm von Heiko Meyer: 9 konkrete Punkte für ein besseres Lüneburg. Parteiloser OB-Kandidat für die OB-Wahl am 14. September 2026 in der Hansestadt Lüneburg.",
+    "Das Wahlprogramm von Heiko Meyer: 9 konkrete Punkte für ein besseres Lüneburg. Parteiloser OB-Kandidat für die OB-Wahl am 13. September 2026 in der Hansestadt Lüneburg.",
   keywords: [
     "Wahlprogramm Lüneburg",
     "Heiko Meyer Wahlprogramm",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Wahlprogramm Lüneburg 2026 | Heiko Meyer",
     description:
-      "9 konkrete Punkte für ein besseres Lüneburg – parteiloser OB-Kandidat Heiko Meyer, OB-Wahl 14. September 2026.",
+      "9 konkrete Punkte für ein besseres Lüneburg – parteiloser OB-Kandidat Heiko Meyer, OB-Wahl 13. September 2026.",
     url: "https://meyer-lueneburg.de/wahlprogramm",
   },
 };
@@ -35,7 +35,7 @@ export default function WahlprogrammPage() {
         <div className="mx-auto max-w-5xl px-4 text-center md:px-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5 text-xs uppercase tracking-wider text-white/50">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
-            OB-Wahl · 14. September 2026
+            OB-Wahl · 13. September 2026
           </div>
           <h1 className="text-4xl font-black uppercase text-white md:text-6xl">
             Mein Wahlprogramm

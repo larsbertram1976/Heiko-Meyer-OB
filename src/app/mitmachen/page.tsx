@@ -87,7 +87,7 @@ export default function MitmachenPage() {
         />
         <div className="relative mx-auto max-w-5xl px-4 py-16 text-center md:px-8 md:py-24">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white/80">
-            OB-Wahl 14. September 2026
+            OB-Wahl 13. September 2026
           </div>
           <h1 className="mt-4 text-3xl font-black uppercase text-white md:text-5xl">
             Gemeinsam für Lüneburg
@@ -123,7 +123,7 @@ export default function MitmachenPage() {
                 Stimme abgeben
               </h2>
               <p className="flex-1 text-sm leading-relaxed text-[#6b6b7b]">
-                Am 14. September 2026 zur Wahl gehen und Heiko Meyer als
+                Am 13. September 2026 zur Wahl gehen und Heiko Meyer als
                 unabhängigen Oberbürgermeister für Lüneburg wählen.
               </p>
               <Link

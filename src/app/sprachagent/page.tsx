@@ -218,7 +218,7 @@ export default function SprachagentPage() {
             }`}
           >
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
-            OB-Wahl &middot; 14. September 2026
+            OB-Wahl &middot; 13. September 2026
           </div>
 
           <h1

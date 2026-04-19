@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Spenden | Heiko Meyer für Lüneburg",
   description:
-    "Unterstützen Sie Heiko Meyers Wahlkampf mit einer Spende. Parteiloser OB-Kandidat für Lüneburg, OB-Wahl 14. September 2026.",
+    "Unterstützen Sie Heiko Meyers Wahlkampf mit einer Spende. Parteiloser OB-Kandidat für Lüneburg, OB-Wahl 13. September 2026.",
   alternates: {
     canonical: "https://meyer-lueneburg.de/spenden",
   },

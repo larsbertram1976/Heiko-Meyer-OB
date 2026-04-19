@@ -4,7 +4,7 @@ import { StadtteilCheck } from "@/components/stadtteil-check";
 export const metadata: Metadata = {
   title: "Stadtteil-Check Lüneburg | Heiko Meyer",
   description:
-    "Interaktive Karte der Lüneburger Stadtteile: Welche Probleme bewegen Ihren Stadtteil und wie will Heiko Meyer sie lösen? OB-Wahl Lüneburg 14. September 2026.",
+    "Interaktive Karte der Lüneburger Stadtteile: Welche Probleme bewegen Ihren Stadtteil und wie will Heiko Meyer sie lösen? OB-Wahl Lüneburg 13. September 2026.",
   keywords: [
     "Stadtteile Lüneburg",
     "Kaltenmoor",

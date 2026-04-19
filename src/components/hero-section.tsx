@@ -65,7 +65,7 @@ export function HeroSection() {
           {/* Countdown */}
           <div className="inline-flex flex-col gap-1 rounded-sm bg-[#1a3eaf] px-5 py-3 w-fit">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-white/50">
-              Noch bis zur OB-Wahl am 14. September 2026
+              Noch bis zur OB-Wahl am 13. September 2026
             </span>
             <Countdown />
           </div>

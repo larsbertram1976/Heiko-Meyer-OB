@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Heiko Meyer für Lüneburg",
   },
   description:
-    "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 14. September 2026. Parteilos, bürgernah, erfahren. Zukunft gestalten, Wirtschaft stärken und unsere Heimat lebenswert erhalten.",
+    "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 13. September 2026. Parteilos, bürgernah, erfahren. Zukunft gestalten, Wirtschaft stärken und unsere Heimat lebenswert erhalten.",
   keywords: [
     "Oberbürgermeister Lüneburg",
     "OB-Wahl Lüneburg 2026",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     siteName: "Heiko Meyer für Lüneburg",
     title: "Heiko Meyer für Lüneburg | Unabhängig für ein Miteinander",
     description:
-      "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 14. September 2026. Parteilos, bürgernah, erfahren.",
+      "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 13. September 2026. Parteilos, bürgernah, erfahren.",
     images: [
       {
         url: "/og-image.jpg",
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Heiko Meyer für Lüneburg | Unabhängig für ein Miteinander",
     description:
-      "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 14. September 2026.",
+      "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 13. September 2026.",
     images: ["/og-image.jpg"],
   },
 };
@@ -103,7 +103,7 @@ const jsonLd = [
     givenName: "Heiko",
     familyName: "Meyer",
     description:
-      "Parteiloser Oberbürgermeister-Kandidat für Lüneburg, OB-Wahl 14. September 2026",
+      "Parteiloser Oberbürgermeister-Kandidat für Lüneburg, OB-Wahl 13. September 2026",
     jobTitle: "OB-Kandidat",
     url: BASE_URL,
     image: `${BASE_URL}/portrait.webp`,
