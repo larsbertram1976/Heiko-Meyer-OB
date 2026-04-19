@@ -130,7 +130,7 @@ export const programTopics: ProgramTopic[] = [
     subtitle: "Pragmatische Lösungen statt leerer Versprechen",
     color: "#3366b8",
     image: "/programmpunkt_3.webp",
-    highlights: ["Leerstand über Geschäften aktivieren", "Digitales Bauamt einführen", "Konzeptvergabe für günstiges Bauen"],
+    highlights: ["Mehr Bauen ermöglichen", "Leerstand über Geschäften aktivieren", "Digitales Bauamt einführen"],
     heroQuote:
       "Wir brauchen bezahlbare Wohnungen für die Menschen in Lüneburg. Für die Menschen, die hier bereits wohnen.",
     problem: {
@@ -141,20 +141,20 @@ export const programTopics: ProgramTopic[] = [
       headline: "Heikos Wohnraum-Offensive",
       items: [
         {
+          title: "Mehr Bauen ermöglichen",
+          text: "Lüneburg braucht zusätzlichen Wohnraum. Heiko prüft, wo neue Bauflächen sinnvoll entstehen können – ohne Zersiedelung. Über Konzeptvergabe gehen Grundstücke günstiger an Bauherren, die bezahlbare Mieten garantieren. Die städtische Lüneburger Wohnungsbau GmbH wird aktiver geführt und baut gezielt mit – auch seniorengerecht. Neuer Wohnraum geht bevorzugt an Lüneburger Wohnungssuchende.",
+        },
+        {
           title: "Wohnraum über Geschäften aktivieren",
           text: "Über vielen Geschäften in der Innenstadt liegt ungenutzter Wohnraum. Heiko geht direkt auf Hauseigentümer zu. Dazu kommen Dachgeschossausbau, Dachaufstockungen und Nachverdichtung im Bestand – neuer Wohnraum ohne neue Bauflächen.",
         },
         {
           title: "Digitales Bauamt: Neubau beschleunigen",
-          text: "Baugenehmigungsverfahren werden durch ein digitales Bauamt beschleunigt. Zusätzlich setzt Heiko auf Konzeptvergabe: Grundstücke werden günstiger an Investoren vergeben, die Auflagen bei Mietpreisen, Ökologie oder Architektur erfüllen.",
+          text: "Baugenehmigungsverfahren werden durch ein digitales Bauamt beschleunigt. Antragsteller erhalten transparente Status-Updates, klare Fristen und kürzere Wege zwischen Bauamt und Bauherren.",
         },
         {
           title: "Bürokratie beim Bauen abbauen",
           text: "Zu viele Vorschriften, zu lange Genehmigungsverfahren. Fördermöglichkeiten werden ausgeschöpft und flächeneffiziente Wohnformate gezielt gefördert – damit Bauen in Lüneburg wieder schneller geht.",
-        },
-        {
-          title: "Sozial und fair",
-          text: "Die städtische Lüneburger Wohnungsbau GmbH wird aktiver geführt – die Stadt ist größter Teilhaber. Neuer bezahlbarer Wohnraum geht bevorzugt an Lüneburger Wohnungssuchende.",
         },
       ],
     },
@@ -258,7 +258,7 @@ export const programTopics: ProgramTopic[] = [
     subtitle: "Eine Stadt, in der jeder die gleichen Chancen hat",
     color: "#58b046",
     image: "/programmpunkt_6.webp",
-    highlights: ["Bürgercafés in jedem Stadtteil", "Kita-Zeiten an Arbeitsalltag anpassen", "Chancengleichheit für alle Kinder"],
+    highlights: ["Älter werden in Lüneburg", "Kita-Zeiten an Arbeitsalltag anpassen", "Bürgercafés in jedem Stadtteil"],
     heroQuote:
       "Ich bin für alle Lüneburger:innen da. Und das kann nur einer, der keiner Partei angehört.",
     problem: {
@@ -269,20 +269,28 @@ export const programTopics: ProgramTopic[] = [
       headline: "Heikos sozialer Kompass",
       items: [
         {
-          title: "Bezahlbarer Wohnraum als Grundrecht",
-          text: "Wohnen darf kein Luxus sein. Heiko kämpft für mehr bezahlbaren Wohnraum – durch Aktivierung von Leerstand und schnelleren Neubau. Die Wohnungsbau GmbH schafft gezielt seniorengerechten Wohnraum.",
-        },
-        {
           title: "Familien besser unterstützen",
           text: "Kita-Öffnungszeiten werden flexibler an den Arbeitsalltag angepasst, Schließzeiten in den Ferien optimiert. Der Betreuungsschlüssel muss sinken – und es braucht mehr Kita-Plätze, dort wo Familien sie brauchen.",
+        },
+        {
+          title: "Älter werden in Lüneburg",
+          text: "Lüneburg wird älter. Heiko sorgt für seniorengerechte Wohnformen, niedrigschwellige Beratung im Alltag, gute Mobilität und echte Treffpunkte. Wer ein Leben lang hier gelebt hat, soll auch im Alter würdig hier leben können.",
+        },
+        {
+          title: "Armut bekämpfen, wo sie ankommt",
+          text: "Auch in einer wohlhabenden Stadt wie Lüneburg gibt es Armut. Heiko stärkt städtische Beratung, sichert Mittagessen in Kitas und Schulen und entlastet Familien mit kleinem Budget gezielt – schnell und unbürokratisch.",
+        },
+        {
+          title: "Chancengleichheit",
+          text: "Jedes Kind in Lüneburg verdient die gleiche Chance – unabhängig vom Geldbeutel der Eltern. Kulturelle und internationale Vielfalt sind eine Chance für unsere Stadt. Integration stärkt das Zusammenleben.",
         },
         {
           title: "Begegnungsräume für alle",
           text: "Lüneburg braucht Orte, an denen sich Menschen treffen – generationenübergreifend und barrierefrei. Barrierefreiheit im öffentlichen Raum wird vorangetrieben. Die Teilhabe aller Generationen am städtischen Leben muss gewährleistet sein.",
         },
         {
-          title: "Chancengleichheit",
-          text: "Jedes Kind in Lüneburg verdient die gleiche Chance – unabhängig vom Geldbeutel der Eltern. Kulturelle und internationale Vielfalt sind eine Chance für unsere Stadt. Integration stärkt das Zusammenleben.",
+          title: "Soziale Träger und Ehrenamt stärken",
+          text: "Wohlfahrtsverbände, Vereine und Ehrenamtliche tragen das soziale Lüneburg. Heiko sorgt für verlässliche Förderung, weniger Bürokratie und mehr Räume – damit aus Engagement Wirkung wird.",
         },
       ],
     },

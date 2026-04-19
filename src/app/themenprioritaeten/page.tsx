@@ -35,10 +35,10 @@ const TOPICS = [
     number: "03",
     label: "Bezahlbarer Wohnraum",
     sub: [
+      "Mehr Bauen ermöglichen",
       "Wohnraum über Geschäften aktivieren",
       "Digitales Bauamt: Neubau beschleunigen",
       "Bürokratie beim Bauen abbauen",
-      "Sozial und fair",
     ],
   },
   {
@@ -68,10 +68,12 @@ const TOPICS = [
     number: "06",
     label: "Soziales Lüneburg",
     sub: [
-      "Bezahlbarer Wohnraum als Grundrecht",
       "Familien besser unterstützen",
-      "Begegnungsräume für alle",
+      "Älter werden in Lüneburg",
+      "Armut bekämpfen, wo sie ankommt",
       "Chancengleichheit",
+      "Begegnungsräume für alle",
+      "Soziale Träger und Ehrenamt stärken",
     ],
   },
   {

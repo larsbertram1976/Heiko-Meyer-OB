@@ -53,7 +53,7 @@ const competenceMatches = [
   {
     theme: "Wohnraum & Soziales",
     competence: "Unternehmer mit Praxisblick",
-    fact: "Als Geschäftsführer von HM Objekteinrichtungen weiß Heiko, was Bürokratie für kleine Betriebe bedeutet. Sein Wohnraum-Ansatz: Leerstand über Geschäften aktivieren – schneller als jeder Neubau, ohne einen Quadratmeter neue Fläche.",
+    fact: "Als Geschäftsführer von HM Objekteinrichtungen weiß Heiko, was Bürokratie bedeutet. Sein Wohnraum-Ansatz: zusätzliche Bauflächen ausweisen, die städtische Wohnungsbau GmbH stärker einsetzen UND Leerstand über Geschäften aktivieren – mehr Wohnraum auf allen Wegen, ohne Zersiedelung.",
     emotion:
       "Wohnen ist ein Grundbedürfnis. Heiko kämpft dafür, dass Lüneburg eine Stadt für alle bleibt – für die junge Familie genauso wie für die Rentnerin, die seit 40 Jahren hier lebt.",
   },

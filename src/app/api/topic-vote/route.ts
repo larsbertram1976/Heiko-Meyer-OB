@@ -30,10 +30,10 @@ const SUBTOPICS: Record<string, string[]> = {
     "Zusammenarbeit aller Akteure",
   ],
   wohnraum: [
+    "Mehr Bauen ermöglichen",
     "Wohnraum über Geschäften aktivieren",
     "Digitales Bauamt: Neubau beschleunigen",
     "Bürokratie beim Bauen abbauen",
-    "Sozial und fair",
   ],
   wirtschaft: [
     "Leerstand aktiv bekämpfen",
@@ -48,10 +48,12 @@ const SUBTOPICS: Record<string, string[]> = {
     "Fachkräfte für Lüneburg",
   ],
   soziales: [
-    "Bezahlbarer Wohnraum als Grundrecht",
     "Familien besser unterstützen",
-    "Begegnungsräume für alle",
+    "Älter werden in Lüneburg",
+    "Armut bekämpfen, wo sie ankommt",
     "Chancengleichheit",
+    "Begegnungsräume für alle",
+    "Soziale Träger und Ehrenamt stärken",
   ],
   verkehr: [
     "Alle Verkehrsteilnehmer berücksichtigen",
