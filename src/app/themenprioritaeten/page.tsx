@@ -12,7 +12,6 @@ const TOPICS = [
     label: "Miteinander & Bürgerbeteiligung",
     sub: [
       "Bürgerbeteiligung fördern",
-      "Verwaltung neuorganisieren",
       "Steuerverschwendung beenden",
       "Transparenz stärken",
       "Begegnungsräume schaffen",

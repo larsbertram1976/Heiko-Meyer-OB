@@ -38,8 +38,8 @@ const competenceMatches = [
   },
   {
     theme: "Wirtschaft & Innenstadt",
-    competence: "250+ Mitglieder im LCM aufgebaut",
-    fact: "Von 80 auf über 250 Mitglieder in 20 Jahren: Heiko hat das Lüneburger City Management zur stärksten Stimme der Innenstadt gemacht. Er kennt jeden Eigentümer, jeden Laden, jede Herausforderung persönlich.",
+    competence: "170 Mitglieder im LCM aufgebaut",
+    fact: "Von 80 auf 170 Mitglieder in 20 Jahren: Heiko hat das Lüneburger City Management zur stärksten Stimme der Innenstadt gemacht. Er kennt jeden Eigentümer, jeden Laden, jede Herausforderung persönlich.",
     emotion:
       "Wenn ein Laden schließt, ist das für ihn nicht nur eine Statistik – es sind Menschen, deren Lebenswerk auf dem Spiel steht. Jeder leere Laden ist ein Stück Lüneburg, das verloren geht.",
   },
@@ -150,7 +150,7 @@ export default function WarumHeikoPage() {
               Wirtschaft und Verwaltung
             </span>{" "}
             – ohne Parteibrille. Als LCM-Vorsitzender hat er das
-            &bdquo;Kaufhaus Lüneburg&ldquo; von 80 auf über 250 Mitglieder
+            &bdquo;Kaufhaus Lüneburg&ldquo; von 80 auf 170 Mitglieder
             aufgebaut. Als Stadtrat und Bauausschuss-Mitglied kennt er die
             Verwaltung von innen. Als Unternehmer weiß er, was es heißt,
             Ergebnisse zu liefern.

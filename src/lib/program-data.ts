@@ -33,14 +33,14 @@ export const programTopics: ProgramTopic[] = [
     image: "/programmpunkt_1.webp",
     highlights: ["Bürger-Kompetenzteams einführen", "Verwaltung digitalisieren", "Steuerverschwendung beenden"],
     heroQuote:
-      "Es geht mir um das Miteinander innerhalb der Gesellschaft und nicht um Dinge, die die Gesellschaft spalten.",
+      "Es geht mir um das Miteinander in Lüneburg und nicht um Dinge, die unsere Stadt spalten.",
     problem: {
       headline: "Warum sich viele Lüneburger:innen nicht gehört fühlen",
       text: "Entscheidungen fallen hinter verschlossenen Türen. Bürger:innen erfahren erst von Projekten, wenn alles beschlossen ist. Die Verwaltung arbeitet mit veralteten Methoden und ist für viele schwer erreichbar. Gleichzeitig wächst der Frust: Steuergeld wird für fragwürdige Projekte wie die ARENA ausgegeben, ohne dass Bürger:innen mitentscheiden können.",
       facts: [
         { value: "78.000", label: "Einwohner verdienen eine Stimme" },
         { value: "20+", label: "Jahre Erfahrung mit der Verwaltung" },
-        { value: "250+", label: "LCM-Mitglieder vertrauen Heiko" },
+        { value: "170", label: "LCM-Mitglieder vertrauen Heiko" },
       ],
     },
     positions: {
@@ -49,10 +49,6 @@ export const programTopics: ProgramTopic[] = [
         {
           title: "Bürgerbeteiligung fördern",
           text: "Lüneburger:innen werden in Projekte und Kompetenzteams eingebunden. Mehr reden, mehr zuhören, schneller lösen. Stadtplanung richtet sich nach den Bedürfnissen aller: Jüngere, Ältere und Menschen mit Handicap. Heiko will für alle Bürger:innen ansprechbar sein.",
-        },
-        {
-          title: "Verwaltung neuorganisieren",
-          text: "Schluss mit althergebrachten Verwaltungsmethoden. Agile Steuerung, schnellere Entscheidungsprozesse, ein Rathaus das funktioniert – nicht blockiert.",
         },
         {
           title: "Steuerverschwendung beenden",
@@ -74,7 +70,7 @@ export const programTopics: ProgramTopic[] = [
     },
     concreteExample: {
       headline: "Konkret: Bürger-Kompetenzteams für jedes Großprojekt",
-      text: "Bevor die Stadt ein Projekt wie den Umbau des Marktplatzes oder eine neue Verkehrsführung beschließt, wird ein Bürger-Kompetenzteam aus Anwohnern, Gewerbetreibenden und Fachleuten gebildet. Das Team wird frühzeitig eingebunden – nicht erst, wenn alles beschlossen ist. So wäre es beim ARENA-Projekt nie so weit gekommen: Bürger:innen hätten früh die Kosten hinterfragt. Heiko hat dieses Modell 20 Jahre lang im LCM praktiziert – 250 Mitglieder, die gemeinsam Entscheidungen treffen.",
+      text: "Bevor die Stadt ein Projekt wie den Umbau des Marktplatzes oder eine neue Verkehrsführung beschließt, wird ein Bürger-Kompetenzteam aus Anwohnern, Gewerbetreibenden und Fachleuten gebildet. Das Team wird frühzeitig eingebunden – nicht erst, wenn alles beschlossen ist. So wäre es beim ARENA-Projekt nie so weit gekommen: Bürger:innen hätten früh die Kosten hinterfragt. Heiko hat dieses Modell 20 Jahre lang im LCM praktiziert – 170 Mitglieder, die gemeinsam Entscheidungen treffen.",
     },
     cta: "Gestalten statt verwalten – mit Heiko Meyer.",
   },
@@ -175,14 +171,14 @@ export const programTopics: ProgramTopic[] = [
     subtitle: "20 Jahre Erfahrung für das \u201EKaufhaus L\u00FCneburg\u201C",
     color: "#1a7a8a",
     image: "/programmpunkt_4.webp",
-    highlights: ["Leerstand-Lotse im Rathaus", "250+ LCM-Mitglieder als Netzwerk", "Innenstadt als Einkaufserlebnis"],
+    highlights: ["Leerstand-Lotse im Rathaus", "170 LCM-Mitglieder als Netzwerk", "Innenstadt als Einkaufserlebnis"],
     heroQuote:
       "Ich kenne die Herausforderungen der Händler und Gastronomen – von steigenden Kosten bis zum Online-Handel.",
     problem: {
       headline: "Die Innenstadt kämpft",
       text: "Leerstand, steigende Kosten, Konkurrenz durch den Online-Handel und bürokratische Hürden – die Lüneburger Innenstadt steht unter Druck. Lüneburgs historische Altstadt mit ihrem einzigartigen Branchenmix aus inhabergeführtem Handel und attraktiven Filialisten ist ein Schatz, den es zu schützen gilt.",
       facts: [
-        { value: "250+", label: "LCM-Mitglieder" },
+        { value: "170", label: "LCM-Mitglieder" },
         { value: "20", label: "Jahre LCM-Vorsitz" },
         { value: "50+", label: "Jahre LCM-Geschichte" },
       ],
@@ -210,7 +206,7 @@ export const programTopics: ProgramTopic[] = [
     },
     concreteExample: {
       headline: "Konkret: Leerstand-Lotse im Rathaus",
-      text: "Heiko wird eine Leerstand-Lotsen-Stelle in der Verwaltung schaffen – eine zentrale Ansprechperson, die leerstehende Gewerbeflächen erfasst, aktiv auf Eigentümer zugeht und potenzielle Mieter vermittelt. Kein Warten, bis sich jemand meldet – sondern aktive Vermarktung. Der LCM hat mit über 250 Mitgliedern bereits ein Netzwerk aus Händlern, Gastronomen und Dienstleistern. Diese Kontakte werden genutzt, um jede leere Fläche möglichst schnell wieder zu füllen.",
+      text: "Heiko wird eine Leerstand-Lotsen-Stelle in der Verwaltung schaffen – eine zentrale Ansprechperson, die leerstehende Gewerbeflächen erfasst, aktiv auf Eigentümer zugeht und potenzielle Mieter vermittelt. Kein Warten, bis sich jemand meldet – sondern aktive Vermarktung. Der LCM hat mit 170 Mitgliedern bereits ein Netzwerk aus Händlern, Gastronomen und Dienstleistern. Diese Kontakte werden genutzt, um jede leere Fläche möglichst schnell wieder zu füllen.",
     },
     cta: "Wer die Wirtschaft versteht, kann die Stadt gestalten.",
   },

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 const milestones = [
-  { years: "20+", label: "Jahre LCM-Vorsitzender", detail: "250+ Mitglieder aufgebaut" },
+  { years: "20+", label: "Jahre LCM-Vorsitzender", detail: "170 Mitglieder aufgebaut" },
   { years: "20+", label: "Jahre im Bauausschuss", detail: "Lüneburg mitgestaltet" },
   { years: "16", label: "Jahre im Aufsichtsrat LMG", detail: "Stadtmarketing begleitet" },
   { years: "5", label: "Jahre im Stadtrat", detail: "Parteilos für alle Bürger:innen" },
@@ -62,7 +62,7 @@ export function AboutSection() {
                   <p className="text-xs text-[#6b6b7b]">Ausbildungen absolviert</p>
                 </div>
                 <div className="bg-[#f8f8fa] p-4">
-                  <p className="text-2xl font-black text-[#58b046]">250+</p>
+                  <p className="text-2xl font-black text-[#58b046]">170</p>
                   <p className="text-xs text-[#6b6b7b]">LCM-Mitglieder</p>
                 </div>
                 <div className="bg-[#f8f8fa] p-4">

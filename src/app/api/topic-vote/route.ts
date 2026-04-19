@@ -17,7 +17,6 @@ const TOPICS = [
 const SUBTOPICS: Record<string, string[]> = {
   miteinander: [
     "Bürgerbeteiligung fördern",
-    "Verwaltung neuorganisieren",
     "Steuerverschwendung beenden",
     "Transparenz stärken",
     "Begegnungsräume schaffen",
