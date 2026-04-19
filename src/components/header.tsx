@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 const navLinks = [
   { label: "Start", href: "/#start" },
@@ -22,12 +23,16 @@ const ctaLinks = [
     className:
       "rounded-sm bg-[#58b046] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#4e9e3f]",
   },
-  {
-    label: "Frag Heiko",
-    href: "/sprachagent",
-    className:
-      "rounded-sm bg-[#1a3eaf] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#15349a]",
-  },
+  ...(SPRACHAGENT_ENABLED
+    ? [
+        {
+          label: "Frag Heiko",
+          href: "/sprachagent",
+          className:
+            "rounded-sm bg-[#1a3eaf] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#15349a]",
+        },
+      ]
+    : []),
 ];
 
 export function Header() {

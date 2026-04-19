@@ -6,6 +6,7 @@ import { ProgramSection } from "@/components/program-section";
 import { StadtteilTeaser } from "@/components/stadtteil-teaser";
 import { TermineTeaser } from "@/components/termine-teaser";
 import { VoiceAgentTeaser } from "@/components/voice-agent-section";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 export const metadata: Metadata = {
   title: "Heiko Meyer für Lüneburg | Unabhängig für ein Miteinander",
@@ -31,7 +32,7 @@ export default function Home() {
       <ProgramSection />
       <StadtteilTeaser />
       <TermineTeaser />
-      <VoiceAgentTeaser />
+      {SPRACHAGENT_ENABLED && <VoiceAgentTeaser />}
     </>
   );
 }

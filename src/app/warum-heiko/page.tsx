@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 export const metadata: Metadata = {
   title: "Warum Heiko Meyer? | OB-Kandidat Lüneburg 2026",
@@ -281,23 +282,35 @@ export default function WarumHeikoPage() {
       <section className="bg-white py-12 md:py-16">
         <div className="mx-auto max-w-3xl px-4 text-center md:px-8">
           <p className="text-2xl font-black text-[#1a3eaf] md:text-3xl">
-            Überzeugt? Sprechen Sie mit Heiko.
+            {SPRACHAGENT_ENABLED
+              ? "Überzeugt? Sprechen Sie mit Heiko."
+              : "Überzeugt? Lernen Sie Heiko kennen."}
           </p>
           <p className="mt-2 text-base text-[#6b6b7b]">
-            Stellen Sie ihm Ihre Fragen – per Sprache oder Text, rund um die
-            Uhr.
+            {SPRACHAGENT_ENABLED
+              ? "Stellen Sie ihm Ihre Fragen – per Sprache oder Text, rund um die Uhr."
+              : "Treffen Sie Heiko persönlich auf Veranstaltungen in Lüneburg."}
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link
-              href="/sprachagent"
-              className="inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-bold text-white transition-colors hover:bg-[#4e9e3f]"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" x2="12" y1="19" y2="22" />
-              </svg>
-              Mit Heiko sprechen
-            </Link>
+            {SPRACHAGENT_ENABLED ? (
+              <Link
+                href="/sprachagent"
+                className="inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-bold text-white transition-colors hover:bg-[#4e9e3f]"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" x2="12" y1="19" y2="22" />
+                </svg>
+                Mit Heiko sprechen
+              </Link>
+            ) : (
+              <Link
+                href="/termine"
+                className="inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-bold text-white transition-colors hover:bg-[#4e9e3f]"
+              >
+                Termine ansehen
+              </Link>
+            )}
             <Link
               href="/wahlprogramm"
               className="inline-flex items-center gap-2 rounded-sm border-2 border-[#1a3eaf] px-8 py-4 font-bold text-[#1a3eaf] transition-colors hover:bg-[#1a3eaf] hover:text-white"

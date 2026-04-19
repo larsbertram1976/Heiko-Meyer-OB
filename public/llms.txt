@@ -9,7 +9,6 @@
 - Stadtteilcheck (17 Stadtteile): https://meyer-lueneburg.de/stadtteile
 - Termine & Bürgerdialoge: https://meyer-lueneburg.de/termine
 - Themenpuls (Bürgerbeteiligung): https://meyer-lueneburg.de/themenprioritaeten
-- KI-Sprachassistent: https://meyer-lueneburg.de/sprachagent
 - Mitmachen: https://meyer-lueneburg.de/mitmachen
 - Spenden: https://meyer-lueneburg.de/spenden
 

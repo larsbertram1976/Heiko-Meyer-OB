@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { programTopics } from "@/lib/program-data";
 import { NewsletterBanner } from "@/components/newsletter-banner";
 import { ShareButtons } from "@/components/share-buttons";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 export function generateStaticParams() {
   return programTopics.map((topic) => ({ slug: topic.slug }));
@@ -237,7 +238,7 @@ export default async function ProgramTopicPage({
                 Was davon ist Ihnen am wichtigsten?
               </p>
               <p className="mt-2 text-sm text-white/70">
-                Sie haben gerade &uuml;ber {topic.title} gelesen. 41 Vorhaben,
+                Sie haben gerade &uuml;ber {topic.title} gelesen. 42 Vorhaben,
                 8 Jahre &ndash; helfen Sie Heiko, die richtigen Schwerpunkte zu setzen.
               </p>
             </div>
@@ -270,26 +271,28 @@ export default async function ProgramTopicPage({
             {topic.cta}
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/sprachagent"
-              className="inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-semibold text-white transition-colors hover:bg-[#4e9e3f]"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
+            {SPRACHAGENT_ENABLED && (
+              <Link
+                href="/sprachagent"
+                className="inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-semibold text-white transition-colors hover:bg-[#4e9e3f]"
               >
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                <line x1="12" x2="12" y1="19" y2="22" />
-              </svg>
-              Fragen? Sprich mit Heiko
-            </Link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                >
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                  <line x1="12" x2="12" y1="19" y2="22" />
+                </svg>
+                Fragen? Sprich mit Heiko
+              </Link>
+            )}
             <Link
               href="/wahlprogramm"
               className="inline-flex items-center gap-2 rounded-sm border-2 border-white/30 px-8 py-4 font-semibold text-white transition-colors hover:bg-white/10"

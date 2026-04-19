@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { programTopics } from "@/lib/program-data";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 export const metadata: Metadata = {
   title: "Wahlprogramm Lüneburg 2026 | Heiko Meyer",
@@ -140,29 +141,45 @@ export default function WahlprogrammPage() {
           <p className="text-2xl font-black text-white md:text-3xl">
             Gestalten statt verwalten.
           </p>
-          <p className="mt-2 text-base text-white/60">
-            Haben Sie Fragen zu meinem Programm? Sprechen Sie direkt mit mir.
-          </p>
-          <Link
-            href="/sprachagent"
-            className="mt-6 inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-semibold text-white transition-colors hover:bg-[#4e9e3f]"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-5 w-5"
-            >
-              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-              <line x1="12" x2="12" y1="19" y2="22" />
-            </svg>
-            Mit Heiko sprechen
-          </Link>
+          {SPRACHAGENT_ENABLED ? (
+            <>
+              <p className="mt-2 text-base text-white/60">
+                Haben Sie Fragen zu meinem Programm? Sprechen Sie direkt mit mir.
+              </p>
+              <Link
+                href="/sprachagent"
+                className="mt-6 inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-semibold text-white transition-colors hover:bg-[#4e9e3f]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                >
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                  <line x1="12" x2="12" y1="19" y2="22" />
+                </svg>
+                Mit Heiko sprechen
+              </Link>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 text-base text-white/60">
+                Treffen Sie Heiko persönlich – auf Veranstaltungen in Ihrem Stadtteil.
+              </p>
+              <Link
+                href="/termine"
+                className="mt-6 inline-flex items-center gap-2 rounded-sm bg-[#58b046] px-8 py-4 font-semibold text-white transition-colors hover:bg-[#4e9e3f]"
+              >
+                Termine ansehen
+              </Link>
+            </>
+          )}
         </div>
       </section>
     </article>

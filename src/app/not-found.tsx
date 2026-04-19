@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { BackButton } from "@/components/back-button";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 export const metadata: Metadata = {
   title: "Seite nicht gefunden | Heiko Meyer für Lüneburg",
@@ -45,6 +46,7 @@ export default function NotFound() {
         >
           Wahlprogramm
         </Link>
+        {SPRACHAGENT_ENABLED && (
         <Link
           href="/sprachagent"
           className="inline-flex items-center gap-2 rounded-sm border-2 border-[#58b046] px-6 py-3 font-semibold text-[#58b046] transition-colors hover:bg-[#58b046]/5"
@@ -65,6 +67,7 @@ export default function NotFound() {
           </svg>
           Mit Heiko sprechen
         </Link>
+        )}
       </div>
 
       <BackButton />

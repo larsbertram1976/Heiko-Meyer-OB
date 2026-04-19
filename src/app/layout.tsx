@@ -15,6 +15,7 @@ import { Footer } from "@/components/footer";
 import { PrevoteFloat } from "@/components/prevote-section";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { CookieConsent } from "@/components/cookie-consent";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 const BASE_URL = "https://meyer-lueneburg.de";
 
@@ -262,12 +263,16 @@ const jsonLd = [
         name: "Themenpuls",
         item: `${BASE_URL}/themenprioritaeten`,
       },
-      {
-        "@type": "ListItem",
-        position: 9,
-        name: "Sprachagent",
-        item: `${BASE_URL}/sprachagent`,
-      },
+      ...(SPRACHAGENT_ENABLED
+        ? [
+            {
+              "@type": "ListItem",
+              position: 9,
+              name: "Sprachagent",
+              item: `${BASE_URL}/sprachagent`,
+            },
+          ]
+        : []),
     ],
   },
 ];

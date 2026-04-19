@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SPRACHAGENT_ENABLED } from "@/lib/feature-flags";
 
 const BASE_URL = "https://meyer-lueneburg.de";
 
@@ -36,12 +37,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.85,
     },
-    {
-      url: `${BASE_URL}/sprachagent`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
+    ...(SPRACHAGENT_ENABLED
+      ? [
+          {
+            url: `${BASE_URL}/sprachagent`,
+            lastModified: now,
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+          },
+        ]
+      : []),
     {
       url: `${BASE_URL}/termine`,
       lastModified: now,
