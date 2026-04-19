@@ -195,7 +195,7 @@ export function PrevoteFloat() {
       {/* Floating Button */}
       <button
         onClick={() => setOpen(!open)}
-        className={`group flex items-center gap-2 rounded-full px-5 py-3 font-semibold shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl ${
+        className={`group flex items-center gap-2.5 rounded-full px-6 py-4 font-semibold shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl ${
           hasVoted
             ? "bg-[#58b046] text-white shadow-[#58b046]/25 hover:shadow-[#58b046]/35"
             : "bg-[#1a3eaf] text-white shadow-[#1a3eaf]/25 hover:shadow-[#1a3eaf]/35"
@@ -211,19 +211,19 @@ export function PrevoteFloat() {
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-5 w-5"
+              className="h-6 w-6"
             >
               <path d="M5 12l5 5L20 7" />
             </svg>
-            <span className="text-sm tabular-nums">{formattedCount}</span>
+            <span className="text-base font-bold tabular-nums">{formattedCount}</span>
           </>
         ) : (
           <>
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-3 w-3">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#58b046] opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#58b046]" />
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-[#58b046]" />
             </span>
-            <span className="text-sm">Stimme abgeben</span>
+            <span className="text-base">Stimme abgeben</span>
           </>
         )}
       </button>
