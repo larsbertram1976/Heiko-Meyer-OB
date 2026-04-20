@@ -118,6 +118,8 @@ async function fetchSubResults(): Promise<Record<string, Record<string, number>>
   return subResults;
 }
 
+const PARTICIPANTS_KEY = "heiko-top10-participants";
+
 export async function GET() {
   try {
     const results: Record<string, number> = {};
@@ -125,13 +127,14 @@ export async function GET() {
       results[slug] = (await kv.get<number>(topicKey(slug))) ?? 0;
     }
     const subResults = await fetchSubResults();
-    return NextResponse.json({ results, subResults });
+    const participants = (await kv.get<number>(PARTICIPANTS_KEY)) ?? 0;
+    return NextResponse.json({ results, subResults, participants });
   } catch {
     const results: Record<string, number> = {};
     for (const slug of TOPICS) {
       results[slug] = 0;
     }
-    return NextResponse.json({ results, subResults: {} });
+    return NextResponse.json({ results, subResults: {}, participants: 0 });
   }
 }
 
@@ -167,9 +170,11 @@ export async function POST(request: NextRequest) {
         for (const slug of TOPICS) {
           results[slug] = (await kv.get<number>(topicKey(slug))) ?? 0;
         }
+        const participants = (await kv.get<number>(PARTICIPANTS_KEY)) ?? 0;
         return NextResponse.json({
           results,
           subResults,
+          participants,
           alreadyVoted: true,
         });
       }
@@ -194,13 +199,21 @@ export async function POST(request: NextRequest) {
       // Mark IP as voted (expires after 24h)
       await kv.set(ipKey, true, { ex: 60 * 60 * 24 });
 
+      // Increment total participants counter (one per unique top10 vote)
+      const participants = await kv.incr(PARTICIPANTS_KEY);
+
       const subResults = await fetchSubResults();
       const results: Record<string, number> = {};
       for (const slug of TOPICS) {
         results[slug] = (await kv.get<number>(topicKey(slug))) ?? 0;
       }
 
-      return NextResponse.json({ results, subResults, success: true });
+      return NextResponse.json({
+        results,
+        subResults,
+        participants,
+        success: true,
+      });
     }
 
     // ── Legacy: sub-topic votes without main votes ──

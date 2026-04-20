@@ -159,6 +159,7 @@ export default function ThemenprioritaetenPage() {
 
   // Results from API
   const [subResults, setSubResults] = useState<Record<string, Record<string, number>>>({});
+  const [participants, setParticipants] = useState<number | null>(null);
 
   const usedCount = selected.size;
   const remaining = MAX_SELECTIONS - usedCount;
@@ -170,6 +171,9 @@ export default function ThemenprioritaetenPage() {
       .then((res) => res.json())
       .then((data) => {
         setSubResults(data.subResults ?? {});
+        if (typeof data.participants === "number") {
+          setParticipants(data.participants);
+        }
       })
       .catch(() => {});
 
@@ -210,6 +214,9 @@ export default function ThemenprioritaetenPage() {
       });
       const data = await res.json();
       if (data.subResults) setSubResults(data.subResults);
+      if (typeof data.participants === "number") {
+        setParticipants(data.participants);
+      }
       if (data.alreadyVoted) {
         // Server says IP already voted – show results, don't re-count
         setSubmitted(true);
@@ -293,6 +300,33 @@ export default function ThemenprioritaetenPage() {
             <span className="font-bold text-white">Top 10</span> – was soll
             Heiko zuerst anpacken?
           </p>
+
+          {participants !== null && participants > 0 && (
+            <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-[#58b046]/30 bg-[#58b046]/10 px-4 py-2 text-sm text-white/90">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 text-[#58b046]"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              <span>
+                <span className="font-bold tabular-nums text-[#58b046]">
+                  {participants.toLocaleString("de-DE")}
+                </span>{" "}
+                {participants === 1 ? "Person hat" : "Lüneburger:innen haben"}{" "}
+                bereits abgestimmt
+              </span>
+            </div>
+          )}
         </div>
       </section>
 
@@ -455,7 +489,7 @@ export default function ThemenprioritaetenPage() {
                   <path d="M5 12l5 5L20 7" />
                 </svg>
               </div>
-              <div>
+              <div className="flex-1">
                 <p className="text-sm font-bold text-[#1a1a2e]">
                   Danke für Ihre Einschätzung!
                 </p>
@@ -463,6 +497,16 @@ export default function ThemenprioritaetenPage() {
                   Ihre Stimme wurde gezählt. Schauen Sie sich die bisherigen Ergebnisse an:
                 </p>
               </div>
+              {participants !== null && participants > 0 && (
+                <div className="hidden flex-shrink-0 text-right sm:block">
+                  <p className="text-2xl font-black tabular-nums text-[#58b046]">
+                    {participants.toLocaleString("de-DE")}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-wider text-[#6b6b7b]">
+                    {participants === 1 ? "Person hat" : "haben"} mitgemacht
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
