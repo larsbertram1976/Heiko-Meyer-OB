@@ -23,6 +23,12 @@ const ctaLinks = [
     className:
       "rounded-sm bg-[#58b046] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#4e9e3f]",
   },
+  {
+    label: "Heiko-Quiz",
+    href: "/quiz",
+    className:
+      "rounded-sm bg-[#1a3eaf] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#15349a]",
+  },
   ...(SPRACHAGENT_ENABLED
     ? [
         {
