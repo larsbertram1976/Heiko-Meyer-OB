@@ -68,6 +68,9 @@ export const metadata: Metadata = {
       "de-DE": BASE_URL,
     },
   },
+  verification: {
+    google: "BFNIr1ZD86zmZbLvP8F9rmtE7vpVNQh5_0pTxolEuXY",
+  },
   openGraph: {
     type: "website",
     locale: "de_DE",
