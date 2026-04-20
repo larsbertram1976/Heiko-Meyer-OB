@@ -240,7 +240,7 @@ export default function TerminePage() {
             </a>{" "}
             und{" "}
             <a
-              href="https://www.facebook.com/heikomeyerlg"
+              href="https://www.facebook.com/heiko.meyer.9022"
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold text-[#1a3eaf] hover:underline"

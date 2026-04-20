@@ -183,7 +183,7 @@ export default function MitmachenPage() {
                   WhatsApp
                 </a>
                 <a
-                  href="https://www.facebook.com/heikomeyerlg"
+                  href="https://www.facebook.com/heiko.meyer.9022"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-sm bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
@@ -499,7 +499,7 @@ export default function MitmachenPage() {
             </a>
 
             <a
-              href="https://www.facebook.com/heikomeyerlg"
+              href="https://www.facebook.com/heiko.meyer.9022"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-sm bg-[#1877f2] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"

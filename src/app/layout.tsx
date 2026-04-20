@@ -112,7 +112,7 @@ const jsonLd = [
     image: `${BASE_URL}/portrait.webp`,
     sameAs: [
       "https://www.instagram.com/heikomeyerlg",
-      "https://www.facebook.com/heikomeyerlg",
+      "https://www.facebook.com/heiko.meyer.9022",
     ],
     address: {
       "@type": "PostalAddress",
@@ -184,7 +184,7 @@ const jsonLd = [
     },
     sameAs: [
       "https://www.instagram.com/heikomeyerlg",
-      "https://www.facebook.com/heikomeyerlg",
+      "https://www.facebook.com/heiko.meyer.9022",
     ],
   },
   {

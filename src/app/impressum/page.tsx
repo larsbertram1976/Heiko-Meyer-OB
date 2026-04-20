@@ -71,7 +71,7 @@ export default function ImpressumPage() {
         </p>
         <ul>
           <li>
-            Facebook &bdquo;heikomeyerlg&ldquo;
+            Facebook &bdquo;heiko.meyer.9022&ldquo;
           </li>
           <li>
             Instagram &bdquo;heikomeyerlg&ldquo;
