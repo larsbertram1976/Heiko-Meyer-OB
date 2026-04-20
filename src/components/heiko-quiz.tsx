@@ -2,40 +2,100 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { quizQuestions } from "@/lib/quiz-data";
+import type { QuizQuestion } from "@/lib/quiz-data";
 
 type Phase = "intro" | "question" | "result";
+type Variant = "heiko" | "wahlprogramm";
 
-const TOTAL = quizQuestions.length;
-
-function getRating(score: number, total: number) {
-  const percent = (score / total) * 100;
-  if (percent >= 90)
-    return {
-      emoji: "🏆",
-      title: "Heiko-Kenner!",
-      text: "Wahnsinn – Sie wissen mehr über Heiko als manche Lokalreporter:innen. Vielleicht treffen Sie ihn ja persönlich auf einer Veranstaltung?",
-    };
-  if (percent >= 60)
-    return {
-      emoji: "🎯",
-      title: "Solide Basis!",
-      text: "Sie kennen Heiko ganz gut – aber im Wahlprogramm gibt es noch einiges zu entdecken.",
-    };
-  if (percent >= 30)
-    return {
-      emoji: "📚",
-      title: "Da geht noch was!",
-      text: "Sie sind auf dem richtigen Weg. Werfen Sie einen Blick ins Wahlprogramm – dann klappt es beim nächsten Mal sicher besser.",
-    };
-  return {
-    emoji: "👋",
-    title: "Erstmal hallo!",
-    text: "Sie haben Heiko gerade kennengelernt – schön, dass Sie da sind. Schauen Sie sich um, das Wahlprogramm wartet auf Sie.",
-  };
+interface HeikoQuizProps {
+  questions: QuizQuestion[];
+  variant: Variant;
 }
 
-export function HeikoQuiz() {
+const VARIANT_CONFIG = {
+  heiko: {
+    introTitle1: "Wie gut kennen",
+    introTitle2: "Sie Heiko?",
+    introText:
+      "Fragen rund um den Menschen Heiko Meyer. Drei Antwortmöglichkeiten je Frage. Eine ist richtig.",
+    introBadge: "Heiko persönlich",
+    otherQuiz: {
+      href: "/quiz/wahlprogramm",
+      label: "Wahlprogramm-Quiz starten",
+      teaser: "Lust zu testen, wie gut Sie Heikos Wahlprogramm kennen?",
+    },
+    ratings: {
+      top: {
+        emoji: "🏆",
+        title: "Heiko-Kenner!",
+        text: "Wahnsinn – Sie wissen mehr über Heiko als manche Lokalreporter:innen. Vielleicht treffen Sie ihn ja persönlich auf einer Veranstaltung?",
+      },
+      good: {
+        emoji: "🎯",
+        title: "Solide Basis!",
+        text: "Sie kennen Heiko ganz gut – aber im Wahlprogramm gibt es noch einiges zu entdecken.",
+      },
+      ok: {
+        emoji: "📚",
+        title: "Da geht noch was!",
+        text: "Sie sind auf dem richtigen Weg. Werfen Sie einen Blick ins Wahlprogramm – dann klappt es beim nächsten Mal sicher besser.",
+      },
+      low: {
+        emoji: "👋",
+        title: "Erstmal hallo!",
+        text: "Sie haben Heiko gerade kennengelernt – schön, dass Sie da sind. Schauen Sie sich um, das Wahlprogramm wartet auf Sie.",
+      },
+    },
+  },
+  wahlprogramm: {
+    introTitle1: "Kennen Sie Heikos",
+    introTitle2: "Wahlprogramm?",
+    introText:
+      "Fragen rund um Heikos konkrete Vorhaben für Lüneburg. Drei Antworten je Frage – eine ist richtig.",
+    introBadge: "Wahlprogramm-Quiz",
+    otherQuiz: {
+      href: "/quiz/heiko",
+      label: "Persönliches Quiz starten",
+      teaser: "Lust zu testen, wie gut Sie Heiko als Mensch kennen?",
+    },
+    ratings: {
+      top: {
+        emoji: "🏆",
+        title: "Programm-Profi!",
+        text: "Sie kennen Heikos Vorhaben nahezu perfekt. Erzählen Sie es weiter – viele Lüneburger:innen wissen noch nicht, was Heiko vorhat.",
+      },
+      good: {
+        emoji: "🎯",
+        title: "Solides Wissen!",
+        text: "Sie kennen die wichtigsten Pläne. Im Wahlprogramm finden Sie noch viele weitere Details.",
+      },
+      ok: {
+        emoji: "📚",
+        title: "Da geht noch was!",
+        text: "Schauen Sie sich Heikos Wahlprogramm an – die 9 Punkte sind kompakt geschrieben und schnell gelesen.",
+      },
+      low: {
+        emoji: "👋",
+        title: "Hallo!",
+        text: "Heikos Wahlprogramm wartet auf Sie – 9 Themen, 42 konkrete Vorhaben. Reinschauen lohnt sich.",
+      },
+    },
+  },
+} as const;
+
+function getRating(score: number, total: number, variant: Variant) {
+  const percent = (score / total) * 100;
+  const r = VARIANT_CONFIG[variant].ratings;
+  if (percent >= 90) return r.top;
+  if (percent >= 60) return r.good;
+  if (percent >= 30) return r.ok;
+  return r.low;
+}
+
+export function HeikoQuiz({ questions, variant }: HeikoQuizProps) {
+  const config = VARIANT_CONFIG[variant];
+  const TOTAL = questions.length;
+
   const [phase, setPhase] = useState<Phase>("intro");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -47,7 +107,7 @@ export function HeikoQuiz() {
     setShareUrl(window.location.href);
   }, []);
 
-  const currentQuestion = quizQuestions[currentIndex];
+  const currentQuestion = questions[currentIndex];
   const isAnswered = selectedIndex !== null;
   const isCorrect =
     isAnswered && selectedIndex === currentQuestion?.correctIndex;
@@ -81,7 +141,7 @@ export function HeikoQuiz() {
   }
 
   async function handleShare() {
-    const text = `Ich kenne Heiko zu ${score}/${TOTAL}! Wie gut kennt ihr ihn? ${shareUrl}`;
+    const text = `Mein Score beim ${variant === "heiko" ? "Heiko" : "Wahlprogramm"}-Quiz: ${score}/${TOTAL}! Wie viele schafft ihr? ${shareUrl}`;
     try {
       await navigator.clipboard.writeText(text);
       setShareCopied(true);
@@ -91,9 +151,9 @@ export function HeikoQuiz() {
     }
   }
 
-  const rating = getRating(score, TOTAL);
+  const rating = getRating(score, TOTAL, variant);
   const whatsappText = encodeURIComponent(
-    `Ich kenne Heiko zu ${score}/${TOTAL}! Wie gut kennt ihr ihn? ${shareUrl}`
+    `Mein Score beim ${variant === "heiko" ? "Heiko" : "Wahlprogramm"}-Quiz: ${score}/${TOTAL}! Wie viele schafft ihr? ${shareUrl}`
   );
 
   // ── INTRO ────────────────────────────────────────────────
@@ -102,17 +162,15 @@ export function HeikoQuiz() {
       <div className="mx-auto max-w-2xl rounded-sm border-l-4 border-[#58b046] bg-white p-8 shadow-sm md:p-12">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#58b046]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#58b046]">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#58b046]" />
-          Spaß-Faktor inklusive
+          {config.introBadge}
         </div>
         <h2 className="text-3xl font-black uppercase text-[#1a1a2e] md:text-4xl">
-          Wie gut kennen
+          {config.introTitle1}
           <br />
-          <span className="text-[#1a3eaf]">Sie Heiko?</span>
+          <span className="text-[#1a3eaf]">{config.introTitle2}</span>
         </h2>
         <p className="mt-4 text-base leading-relaxed text-[#6b6b7b] md:text-lg">
-          {TOTAL} Fragen. 3 Antwortmöglichkeiten je Frage. Eine ist richtig.
-          Mal sehen, ob Sie Heiko schon so gut kennen wie ein echter
-          Lüneburger.
+          {TOTAL} Fragen. {config.introText}
         </p>
         <button
           onClick={handleStart}
@@ -161,6 +219,31 @@ export function HeikoQuiz() {
           <p className="mt-3 text-base leading-relaxed text-[#6b6b7b]">
             {rating.text}
           </p>
+        </div>
+
+        {/* Cross-Quiz CTA */}
+        <div className="mt-8 rounded-sm border-2 border-[#1a3eaf]/15 bg-[#1a3eaf]/5 p-5 text-center">
+          <p className="text-sm text-[#1a1a2e]">
+            {config.otherQuiz.teaser}
+          </p>
+          <Link
+            href={config.otherQuiz.href}
+            className="mt-3 inline-flex items-center gap-2 rounded-sm bg-[#1a3eaf] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#15349a]"
+          >
+            {config.otherQuiz.label}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4"
+            >
+              <path d="m12 19 7-7-7-7" />
+            </svg>
+          </Link>
         </div>
 
         {/* Share */}

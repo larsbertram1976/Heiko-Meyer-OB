@@ -5,7 +5,8 @@ export type QuizQuestion = {
   explanation: string;
 };
 
-export const quizQuestions: QuizQuestion[] = [
+// ─── Quiz 1: Heiko persönlich ─────────────────────────────────
+export const heikoQuestions: QuizQuestion[] = [
   {
     question: "Wie alt ist Heiko Meyer?",
     answers: ["53", "57", "61"],
@@ -97,5 +98,121 @@ export const quizQuestions: QuizQuestion[] = [
     correctIndex: 1,
     explanation:
       "Sonntag, 13. September 2026. Schon eingetragen im Kalender?",
+  },
+];
+
+// ─── Quiz 2: Wahlprogramm ─────────────────────────────────────
+export const programmQuestions: QuizQuestion[] = [
+  {
+    question:
+      "Wie will Heiko Bürger:innen vor Großprojekten verbindlich einbinden?",
+    answers: [
+      "Mit einer Online-Petition pro Quartal",
+      "Mit Bürger-Kompetenzteams für jedes Großprojekt",
+      "Mit verpflichtenden Volksabstimmungen",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Heiko schlägt Bürger-Kompetenzteams aus Anwohnern, Gewerbetreibenden und Fachleuten vor – frühzeitig eingebunden, bevor Entscheidungen gefallen sind.",
+  },
+  {
+    question: "Welche konkrete Maßnahme will Heiko Am Sande einführen?",
+    answers: [
+      "Flächendeckende Videoüberwachung",
+      "Sicherheits-Partnerschaft: Polizei, Ordnungsdienst, Streetwork und LCM an einen Tisch",
+      "Generelles Alkoholverbot auf dem Platz",
+    ],
+    correctIndex: 1,
+    explanation:
+      "In den ersten 100 Tagen als OB will Heiko eine Sicherheits-Partnerschaft Am Sande gründen – ein fester runder Tisch mit allen Akteuren.",
+  },
+  {
+    question: "Was steht bei Heikos Wohnraum-Strategie an erster Stelle?",
+    answers: [
+      "Mietendeckel für ganz Lüneburg",
+      "Mehr Bauflächen ausweisen + Wohnungsbau GmbH stärken",
+      "Enteignung leerstehender Häuser",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Heiko setzt auf zusätzlichen Wohnraum: neue Bauflächen ohne Zersiedelung, Konzeptvergabe an Bauherren mit bezahlbaren Mietpreisen, plus aktivere Wohnungsbau GmbH.",
+  },
+  {
+    question: "Welche neue Stelle will Heiko im Rathaus schaffen?",
+    answers: [
+      "Eine Leerstand-Lotsen-Stelle",
+      "Einen Tourismus-Manager",
+      "Einen Kultur-Beauftragten",
+    ],
+    correctIndex: 0,
+    explanation:
+      "Eine Leerstand-Lotsen-Stelle erfasst leerstehende Gewerbeflächen, geht aktiv auf Eigentümer zu und vermittelt potenzielle Mieter.",
+  },
+  {
+    question: "Welches Bildungs-Konzept will Heiko in Lüneburg umsetzen?",
+    answers: [
+      "Schulgeld für Privatschulen abschaffen",
+      "Bildungspakt 2040 + Ganztagsschulen ausbauen",
+      "Tabletpflicht ab Klasse 1",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Heiko will den Bildungspakt 2040 umsetzen und Ganztagsschulen flächendeckend ausbauen – Bildung als Fundament für Lüneburgs Zukunft.",
+  },
+  {
+    question: "Welche Stadtteil-Idee hat Heiko fürs soziale Miteinander?",
+    answers: [
+      "Einen Wochenmarkt in jedem Stadtteil",
+      "Ein Bürgercafé in jedem Stadtteil",
+      "Einen Sportplatz pro 1.000 Einwohner",
+    ],
+    correctIndex: 1,
+    explanation:
+      "In jedem Lüneburger Stadtteil soll ein Bürgercafé entstehen – ein offener Treffpunkt für Jung und Alt, mit Beratung, Sprachkursen und Nachhilfe.",
+  },
+  {
+    question: "Was ist Heikos zentrale Verkehrs-Idee für Pendler?",
+    answers: [
+      "Eine Pendler-Maut für die Innenstadt",
+      "Vier kostenfreie Park-and-Ride-Plätze",
+      "Ein Pendler-Bonus über die Steuer",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Heiko will vier kostenfreie Park-and-Ride-Plätze rund um Lüneburg – Pendler:innen parken am Stadtrand und fahren entspannt mit dem ÖPNV in die City.",
+  },
+  {
+    question: "Was ist Heikos Ansatz für die Lüneburger Kultur?",
+    answers: [
+      "Kulturbetriebe weitgehend privatisieren",
+      "Kulturräume sichern, Veranstaltungen fördern, Kultur bezahlbar machen",
+      "Eintritt überall freischalten – Stadt zahlt",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Heiko sieht Kultur als 'Kitt, der unsere Stadt zusammenhält'. Räume sichern, Festivals fördern und Eintritte für Familien bezahlbar halten.",
+  },
+  {
+    question:
+      "Welches konkrete Versprechen macht Heiko für Lüneburger Kinder?",
+    answers: [
+      "Pflicht-Mitgliedschaft in einem Sportverein",
+      "Jedes Kind soll schwimmen lernen können",
+      "Tägliche Sportstunde an allen Schulen",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Schwimmen lernen und Breitensport gehören zu Heikos Sport-Programm – jedes Kind soll diese grundlegende Fähigkeit erwerben.",
+  },
+  {
+    question: "Was steht NICHT in Heikos Wahlprogramm?",
+    answers: [
+      "Bürgerbeteiligung vor Großprojekten",
+      "Sicherheits-Partnerschaft Am Sande",
+      "Verbot von Verbrennungsmotoren in der Innenstadt",
+    ],
+    correctIndex: 2,
+    explanation:
+      "Genau – Heiko stellt nicht Auto gegen Rad. Sein Verkehrskonzept versöhnt alle Verkehrsteilnehmer pragmatisch, ohne Verbote.",
   },
 ];
