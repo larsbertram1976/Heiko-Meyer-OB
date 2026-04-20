@@ -127,7 +127,24 @@ export async function GET() {
       results[slug] = (await kv.get<number>(topicKey(slug))) ?? 0;
     }
     const subResults = await fetchSubResults();
-    const participants = (await kv.get<number>(PARTICIPANTS_KEY)) ?? 0;
+    let participants = (await kv.get<number>(PARTICIPANTS_KEY)) ?? 0;
+
+    // ── Selbstkorrigierende Untergrenze ──
+    // Counter wurde nachträglich eingeführt. Mathematisch gilt: Die Anzahl der
+    // Teilnehmer:innen muss mindestens so groß sein wie der höchste Sub-Topic-
+    // Counter (wenn X Leute Thema Y gewählt haben, gab es mindestens X Teilneh-
+    // mer:innen). Falls der Counter darunter liegt → auf Untergrenze anheben.
+    let maxSubCount = 0;
+    for (const topicSubs of Object.values(subResults)) {
+      for (const count of Object.values(topicSubs)) {
+        if (count > maxSubCount) maxSubCount = count;
+      }
+    }
+    if (maxSubCount > participants) {
+      await kv.set(PARTICIPANTS_KEY, maxSubCount);
+      participants = maxSubCount;
+    }
+
     return NextResponse.json({ results, subResults, participants });
   } catch {
     const results: Record<string, number> = {};
