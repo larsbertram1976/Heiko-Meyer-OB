@@ -79,21 +79,14 @@ export const metadata: Metadata = {
     title: "Heiko Meyer für Lüneburg | Unabhängig für ein Miteinander",
     description:
       "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 13. September 2026. Parteilos, bürgernah, erfahren.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Heiko Meyer – OB-Kandidat für Lüneburg 2026",
-      },
-    ],
+    // images werden von src/app/opengraph-image.tsx automatisch generiert
   },
   twitter: {
     card: "summary_large_image",
     title: "Heiko Meyer für Lüneburg | Unabhängig für ein Miteinander",
     description:
       "Heiko Meyer – Ihr unabhängiger Oberbürgermeister-Kandidat für Lüneburg. OB-Wahl 13. September 2026.",
-    images: ["/og-image.jpg"],
+    // images werden von src/app/twitter-image.tsx automatisch generiert
   },
 };
 
