@@ -71,10 +71,26 @@ export default function ImpressumPage() {
         </p>
         <ul>
           <li>
-            Facebook &bdquo;heiko.meyer.9022&ldquo;
+            Facebook:{" "}
+            <a
+              href="https://www.facebook.com/heiko.meyer.9022"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#1a3eaf] underline underline-offset-2 hover:text-[#15349a]"
+            >
+              facebook.com/heiko.meyer.9022
+            </a>
           </li>
           <li>
-            Instagram &bdquo;heikomeyerlg&ldquo;
+            Instagram:{" "}
+            <a
+              href="https://www.instagram.com/heikomeyerlg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#1a3eaf] underline underline-offset-2 hover:text-[#15349a]"
+            >
+              instagram.com/heikomeyerlg
+            </a>
           </li>
         </ul>
 

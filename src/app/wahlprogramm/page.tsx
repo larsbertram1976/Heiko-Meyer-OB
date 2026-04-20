@@ -54,6 +54,46 @@ export default function WahlprogrammPage() {
         </div>
       </section>
 
+      {/* Quiz-CTA */}
+      <section className="border-b border-black/[0.06] bg-[#f8f8fa] py-8">
+        <div className="mx-auto max-w-5xl px-4 md:px-8">
+          <div className="flex flex-col items-center gap-4 rounded-sm border-l-4 border-[#1a3eaf] bg-white p-5 shadow-sm sm:flex-row sm:gap-6 md:p-6">
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1a3eaf]/10 text-2xl">
+              📋
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#1a3eaf]">
+                Spielerisch lernen
+              </p>
+              <p className="mt-0.5 text-base font-bold text-[#1a1a2e] md:text-lg">
+                Wie gut kennen Sie Heikos Wahlprogramm?
+              </p>
+              <p className="mt-1 text-sm text-[#6b6b7b]">
+                10 Fragen, 3 Antworten je Frage – ca. 3 Minuten.
+              </p>
+            </div>
+            <Link
+              href="/quiz/wahlprogramm"
+              className="inline-flex flex-shrink-0 items-center gap-2 rounded-sm bg-[#1a3eaf] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#15349a]"
+            >
+              Quiz starten
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+              >
+                <path d="m12 19 7-7-7-7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* All 9 Topics */}
       <section className="bg-white py-12 md:py-20">
         <div className="mx-auto max-w-5xl px-4 md:px-8">

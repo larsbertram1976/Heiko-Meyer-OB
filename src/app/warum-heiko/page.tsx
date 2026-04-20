@@ -119,6 +119,46 @@ export default function WarumHeikoPage() {
         </div>
       </section>
 
+      {/* Quiz-CTA */}
+      <section className="border-b border-black/[0.06] bg-[#f8f8fa] py-8">
+        <div className="mx-auto max-w-5xl px-4 md:px-8">
+          <div className="flex flex-col items-center gap-4 rounded-sm border-l-4 border-[#58b046] bg-white p-5 shadow-sm sm:flex-row sm:gap-6 md:p-6">
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#58b046]/10 text-2xl">
+              👤
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#58b046]">
+                Spielerisch kennenlernen
+              </p>
+              <p className="mt-0.5 text-base font-bold text-[#1a1a2e] md:text-lg">
+                Wie gut kennen Sie Heiko persönlich?
+              </p>
+              <p className="mt-1 text-sm text-[#6b6b7b]">
+                11 Fragen mit Augenzwinkern – ca. 3 Minuten.
+              </p>
+            </div>
+            <Link
+              href="/quiz/heiko"
+              className="inline-flex flex-shrink-0 items-center gap-2 rounded-sm bg-[#58b046] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#4e9e3f]"
+            >
+              Quiz starten
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+              >
+                <path d="m12 19 7-7-7-7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Key Numbers */}
       <section className="border-b bg-white py-10">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 md:grid-cols-4 md:px-8">
